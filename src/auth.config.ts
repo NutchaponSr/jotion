@@ -63,10 +63,10 @@ export default {
       }
     })
   ],
-  // pages: {
-  //   signIn: "/sign-in",
-  //   error: "/sign-in",
-  // },
+  pages: {
+    signIn: "/sign-in",
+    error: "/sign-in",
+  },
   callbacks: {
     async session({ session, token }) {
       if (token.sub && session.user) {

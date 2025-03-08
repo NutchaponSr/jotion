@@ -1,8 +1,4 @@
-import { protectServer } from "@/modules/auth/utils";
-
-const HomePage = async () => {
-  await protectServer();
-
+const HomePage = () => {
   return (
     <div>
       Home Page
