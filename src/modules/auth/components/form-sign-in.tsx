@@ -103,7 +103,7 @@ export const SignInForm = () => {
             Use an organization email to easily collaborate with teammates
           </div>
         </div>
-        <Button className="w-full" type="submit">
+          <Button variant="primary" type="submit">
           Continue
         </Button>
       </form>
