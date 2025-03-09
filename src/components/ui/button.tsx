@@ -37,7 +37,7 @@ const buttonVariants = cva(baseStyles.join(" "), {
         "bg-neutral-800 text-white ring-1 ring-neutral-800",
         variantBaseStyles.shadow,
         variantBaseStyles.beforeGradient,
-        `${variantBaseStyles.afterGradient} after:from-[36%] after:to-[44%]`
+        `${variantBaseStyles.afterGradient} after:from-[36%] after:to-[64%]`
       ].join(" "),
       
       supper: [
@@ -55,7 +55,7 @@ const buttonVariants = cva(baseStyles.join(" "), {
       ].join(" "),
       
       primary: [
-        "bg-marine text-white ring-1 ring-marine",
+        "bg-sky-600 text-white ring-1 ring-sky-600",
         variantBaseStyles.shadow,
         variantBaseStyles.beforeGradient,
         `${variantBaseStyles.afterGradient} after:from-[36%] after:to-[64%]`

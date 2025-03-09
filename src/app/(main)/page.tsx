@@ -1,15 +1,15 @@
-import { IntroduceButton } from "@/components/introduce-button";
-import { Button } from "@/components/ui/button";
-import { SignnedOut } from "@/modules/auth/components/signned-out";
-import Image from "next/image";
-import { Hero } from "./components/hero";
-import { GridPattern } from "@/components/magicui/grid-pattern";
 import { cn } from "@/lib/utils";
 
-const Home = () => {
+import { Hero } from "@/app/(main)/components/hero";
 
+import { GridPattern } from "@/components/magicui/grid-pattern";
+import { IntroduceButton } from "@/components/introduce-button";
+
+import { Signed } from "@/modules/auth/components/signed";
+
+const Home = () => {
   return (
-    <SignnedOut>
+    <Signed.Out>
       <section className="md:px-8 px-6 mt-32 max-w-[80rem] relative mx-auto h-full text-center">
         <div className="relative flex flex-col space-y-5 mx-auto max-w-7xl pb-[16vh]">
           <GridPattern
@@ -34,7 +34,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-    </SignnedOut>
+    </Signed.Out>
   );
 }
 
