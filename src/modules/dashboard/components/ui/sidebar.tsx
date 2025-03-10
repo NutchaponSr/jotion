@@ -29,7 +29,7 @@ const SidebarItem = ({
   icon,
   label,
   action,
-  variant
+  fill
 }: SidebarItemProps) => {
   return (
     <div role="button" className="flex items-center w-full text-sm min-h-7 h-[30px] py-1 px-2 transition hover:bg-[#00000008] space-x-2 cursor-pointer group/item">
@@ -41,7 +41,7 @@ const SidebarItem = ({
               "absolute inset-0 flex items-center justify-center rounded-sm transition-opacity duration-100 group-hover/workspace:opacity-0 text-lg",
             )}
           >
-            {React.createElement(icon, { variant: IconVaraint.BULK, className: cn(iconVaraint({ variant })) })}
+            {React.createElement(icon, { variant: IconVaraint.BULK, className: cn(iconVaraint({ fill })) })}
           </div>
         </div>
       </div>

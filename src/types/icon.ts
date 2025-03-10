@@ -57,16 +57,13 @@ export const iconVaraint = cva("",{
       pink: "fill-pink-500",
       orange: "fill-orange-500",
     },
-    background: {
-
-    },
     size: {
       lg: "size-8",
       sm: "size-5",
     },
   },
   defaultVariants: {
-    variant: "default",
+    fill: "default",
     size: "sm",
   }
 });
