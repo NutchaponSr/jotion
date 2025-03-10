@@ -5,3 +5,5 @@ export const useCurrentUser = () => {
 
   return session.data?.user;
 }
+
+export type ClientSession = Exclude<ReturnType<typeof useCurrentUser>, undefined>;

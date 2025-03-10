@@ -3,7 +3,7 @@ import { JWT } from "next-auth/jwt";
 import { roles } from "@/db/schema";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import NextAuth, { type DefaultSession } from "next-auth";
+import NextAuth, { User, type DefaultSession } from "next-auth";
 
 export type ExtendedUser = DefaultSession["user"] & {
   role: typeof roles.enumValues[number];

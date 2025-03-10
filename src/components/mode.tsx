@@ -19,7 +19,7 @@ export const Mode = {
         <div className="flex bg-stone-200/50 dark:bg-[#202020] rounded-sm mx-1">
           {themes.map(({ value, icon }) => (
             <button key={value} className={cn(
-              "relative py-2 rounded-md font-medium focus:outline-none transition-colors flex items-center justify-center shrink-0 w-20",
+              "relative py-2 rounded-md font-medium focus:outline-none transition-colors flex items-center justify-center shrink-0 w-20 h-9",
             )}
               onClick={() => setTheme(value)}
             >
@@ -34,7 +34,7 @@ export const Mode = {
               <span className="relative z-10">
                 {React.createElement(
                   icon, { 
-                    className: "dark:fill-stone-300 size-6",
+                    className: "dark:fill-stone-300 size-5",
                     variant: IconVaraint.SOLID 
                   }
                 )}

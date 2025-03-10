@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils"
 
 const baseStyles = [
   // Layout and typography
-  "relative isolate items-center justify-center overflow-hidden whitespace-nowrap",
-  "px-3 py-[0.1875rem] text-sm font-medium md:inline-flex",
+  "relativ isolate items-center justify-center overflow-hidden whitespace-nowrap",
+  "px-3 py-[0.1875rem] text-sm font-medium md:inline-flex shrink-0",
   
   // Transitions
   "transition duration-300 ease-[cubic-bezier(0.4,0.36,0,1)]",
@@ -81,6 +81,20 @@ function Button({
       {...props}
     />
   )
+}
+
+Button.Icon = function ButtonIcon({
+  children,
+  className,
+}: React.ComponentProps<"button">) {
+  return (
+    <button className={cn(
+      "flex items-center justify-center shrink-0 rounded-[4px] transition",
+      className,
+    )}>
+      {children}
+    </button>
+  );
 }
 
 export { Button, buttonVariants }

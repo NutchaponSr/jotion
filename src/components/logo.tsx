@@ -13,7 +13,7 @@ export const Logo = () => {
 
 Logo.Text = function LogoText() {
   return (
-    <Link href="/">
+    <Link href="/" className="w-fit shrink-0">
       <div className="flex items-center space-x-1">
         <Image src="/logo.svg" alt="Logo" width={28} height={28} className="dark:hidden block" />
         <Image src="/logo-dark.svg" alt="Logo" width={28} height={28} className="dark:block hidden" />

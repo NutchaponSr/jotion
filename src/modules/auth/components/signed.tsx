@@ -19,5 +19,14 @@ export const Signed = {
 
     return <>{children}</>
   },
+  Protect: async ({ children }: SignedProps) => {
+    const session = await auth();
+
+    const isAdmin = session?.user.role === "ADMIN";
+
+    if (!isAdmin) return null;
+
+    return <>{children}</>
+  }
 }
 
