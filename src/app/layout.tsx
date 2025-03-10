@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { auth } from "@/auth";
 
 import { QueryProvider } from "@/components/providers/query-provider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 const font = Inter({
   subsets: ["latin"],
@@ -34,7 +35,9 @@ export default async function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body className={cn(font.className, "antialiased")}>
           <QueryProvider>
-            {children}
+            <ThemeProvider>
+              {children}
+            </ThemeProvider>
           </QueryProvider>
         </body>
       </html>

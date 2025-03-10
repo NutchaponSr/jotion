@@ -1,46 +1,33 @@
-import { auth } from "@/auth";
-
 import { UserAvatar } from "./user-avatart";
 
 import { UserWrapper } from "./user-wrapper";
+import { getSession } from "../actions/get-session";
 
 export const UserButton = async () => {
-  const session = await auth();
+  const user = await getSession();
 
-  // TODO: Skeleton
-  if (
-    !session
-  ) {
-    return null;
-  }
-
-  const name = session.user.name ?? "?";
-  const imageUrl = session.user.image ?? "";
-
+  if (!user) return null;
 
   return (
-    <UserWrapper align="end">
-      <UserAvatar name={name} imageUrl={imageUrl} />
+    <UserWrapper align="end" user={user}>
+      <UserAvatar 
+        name={user.name} 
+        imageUrl={user.imageUrl}
+        className="hover:opacity-85 transition-opacity outline-none size-9" 
+      />
     </UserWrapper>
   )
 }
 
 UserButton.ShowText = async function UserButtonShowText() {
-  const session = await auth();
+  const user = await getSession();
 
   // TODO: Skeleton
-  if (
-    !session
-  ) {
-    return null;
-  }
-
-  const name = session.user.name ?? "?";
-  const imageUrl = session.user.image ?? "";
+  if (!user) return null;
 
   return (
     <div className="flex">
-      <UserAvatar name={name} imageUrl={imageUrl} />
+      <UserAvatar name={user.name} imageUrl={user.imageUrl} />
       <div>
         <h1>{}</h1>
       </div>

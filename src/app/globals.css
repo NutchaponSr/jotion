@@ -6,6 +6,7 @@
 
 @layer base {
   button:not([disabled]),
+  [role="menuitem"]:not([disabled])
   [role="button"]:not([disabled]) {
     cursor: pointer;
   }
@@ -67,7 +68,7 @@ body,
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(32.89% 0.0107 91.66);
+  --primary: oklch(0.27 0.01 34);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -99,13 +100,13 @@ body,
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
+  --background: oklch(0.21 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.145 0 0);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
+  --popover: oklch(0.21 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
+  --primary: oklch(100% 0 0 / 81.18%);
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);

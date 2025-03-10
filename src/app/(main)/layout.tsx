@@ -7,7 +7,7 @@ interface MainLayoutProps {
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <div className="min-h-screen bg-[#fffefc]">
+    <div className="min-h-screen bg-[#fffefc] dark:bg-background">
       <Header />
       <main className="mx-auto flex-1 overflow-hidden">
         {children}

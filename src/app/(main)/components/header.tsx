@@ -9,11 +9,16 @@ import { UserButton } from "@/modules/auth/components/user-button";
 
 export const Header = () => {
   return (
-    <header className="fixed left-0 top-0 z-50 w-full bg-[#fffefc]">
+    <header className="fixed left-0 top-0 z-50 w-full bg-[#fffefc] dark:bg-background">
       <nav className="flex items-center justify-between h-[3.5rem] p-4">
         <Logo.Text />
         <Signed.In>
-          <UserButton />
+          <div className="flex items-center">
+            <div className="">
+              
+            </div>
+            <UserButton />
+          </div>
         </Signed.In>
         <Signed.Out>
           <div className="flex items-center space-x-4">

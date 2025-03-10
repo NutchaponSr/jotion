@@ -1,4 +1,4 @@
-import { JSX, SVGAttributes } from "react";
+import React, { JSX, SVGAttributes } from "react";
 
 export enum IconVaraint {
   BULK = "BULK",
@@ -28,7 +28,7 @@ export function createIcon(iconDefinition: IconDefinition) {
     variant = IconVaraint.STROKE,
     fill = "#37352f",
     className,
-    ...svgProps,
+    ...svgProps
   }: IconBaseProps ) => {
     const icons = iconDefinition;
     const baseIcon = icons[variant];

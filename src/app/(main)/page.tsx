@@ -24,10 +24,10 @@ const Home = () => {
           />
           <IntroduceButton />
           <div className="relative z-10">
-            <h1 className="bg-gradient-to-t from-primary to-[#787774] bg-clip-text text-transparent text-6xl tracking-tighter font-semibold text-balance">
+            <h1 className="bg-gradient-to-t from-primary to-[#787774] dark:from-[#787774] dark:to-primary bg-clip-text text-transparent text-6xl tracking-tighter font-semibold text-balance">
               Drive Success with Precision.
             </h1>
-            <p className="tracking-tight text-primary text-balance mx-auto">
+            <p className="tracking-tight text-primary dark:text-stone-300 text-balance mx-auto">
               Empower your organization with tailored strategies and actionable insights.
             </p>
             <Hero />

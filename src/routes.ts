@@ -9,4 +9,4 @@ export const authRoutes = [
 
 export const apiPrefix = "/api";
 
-export const DEFAULT_SIGNIN_REDIRECT = "/home";
+export const DEFAULT_SIGNIN_REDIRECT = "/";

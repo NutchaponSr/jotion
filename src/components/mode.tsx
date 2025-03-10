@@ -1,39 +1,48 @@
 "use client";
 
+import React from "react";
 import { motion } from "framer-motion";
+import { useTheme } from "next-themes";
+
+import { cn } from "@/lib/utils";
 
 import { themes } from "@/constants/settings";
 
-import { useSettings } from "@/stores/use-settings";
-import { cn } from "@/lib/utils";
+import { IconVaraint } from "@/types/icon";
 
-export const Mode = () => {
-  const { theme, onTheme } = useSettings();
-
-  return (
-    <div className="flex flex-col items-center">
-      <div className="flex bg-neutral-800 rounded-sm">
-        {themes.map((item) => (
-          <button key={item.value} className={cn(
-            "relative px-4 py-2 mx-1 rounded-md font-medium focus:outline-none transition-colors",
-            item.value === theme ? "text-white" : "text-gray-600 hover:text-gray-900",
-          )}
-            onClick={() => onTheme(item.value)}
-          >
-            {item.value === theme && (
-              <motion.div 
-                layoutId="activeTab"
-                className="absolute inset-0 bg-blue-500 rounded-md"
-                initial={false}
-                transition={{ type: "spring", duration: 0.6 }}
-              />
+export const Mode = {
+  Tabs: () => {
+    const { theme, setTheme } = useTheme();
+  
+    return (
+      <div className="flex flex-col items-center py-1">
+        <div className="flex bg-stone-200/50 dark:bg-[#202020] rounded-sm mx-1">
+          {themes.map(({ value, icon }) => (
+            <button key={value} className={cn(
+              "relative py-2 rounded-md font-medium focus:outline-none transition-colors flex items-center justify-center shrink-0 w-20",
             )}
-            <span className="relative z-10">
-              <item.icon />
-            </span>
-          </button>
-        ))}
+              onClick={() => setTheme(value)}
+            >
+              {value === theme && (
+                <motion.div 
+                  layoutId="activeTab"
+                  className="absolute inset-0 rounded-sm shadow-[inset_0_0_0_1px_rgba(15,15,15,0.1),0_2px_4px_rgba(15,15,15,0.1)] dark:shadow-[inset_0_0_0_1px_rgba(225,225,225,0.094),0_2px_4px_rgba(0,0,0,0.2)]"
+                  initial={false}
+                  transition={{ type: "keyframes", duration: 0.3 }}
+                />
+              )}
+              <span className="relative z-10">
+                {React.createElement(
+                  icon, { 
+                    className: "dark:fill-stone-300 size-6",
+                    variant: IconVaraint.SOLID 
+                  }
+                )}
+              </span>
+            </button>
+          ))}
+        </div>
       </div>
-    </div>
-  );
+    )
+  }
 }

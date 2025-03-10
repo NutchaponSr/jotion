@@ -15,8 +15,9 @@ Logo.Text = function LogoText() {
   return (
     <Link href="/">
       <div className="flex items-center space-x-1">
-        <Image src="/logo.svg" alt="Logo" width={28} height={28} />
-        <div className="text-lg font-bold text-primary">
+        <Image src="/logo.svg" alt="Logo" width={28} height={28} className="dark:hidden block" />
+        <Image src="/logo-dark.svg" alt="Logo" width={28} height={28} className="dark:block hidden" />
+        <div className="text-lg font-bold text-stone-800 dark:text-stone-300">
           Jotion
         </div>
       </div>
