@@ -1,3 +1,4 @@
+import { cva } from "class-variance-authority";
 import React, { JSX, SVGAttributes } from "react";
 
 export enum IconVaraint {
@@ -48,3 +49,25 @@ export function createIcon(iconDefinition: IconDefinition) {
     return React.cloneElement(baseIcon, mergedProps);
   };
 }
+
+export const iconVaraint = cva("",{
+  variants: {
+    fill: {
+      default: "fill-zinc-500",
+      pink: "fill-pink-500",
+      orange: "fill-orange-500",
+    },
+    background: {
+
+    },
+    size: {
+      lg: "size-8",
+      sm: "size-5",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+    size: "sm",
+  }
+});
+

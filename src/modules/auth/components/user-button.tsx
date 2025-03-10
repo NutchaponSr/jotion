@@ -5,7 +5,6 @@ import { UserAvatar } from "./user-avatart";
 import { UserWrapper } from "./user-wrapper";
 
 import { useCurrentUser } from "../hooks/use-current-user";
-import { ChevronsUpDownIcon } from "lucide-react";
 
 export const UserButton = () => {
   const user = useCurrentUser();
@@ -39,15 +38,12 @@ UserButton.Text = function UserButtonText() {
           className="rounded-md" 
         />
         <div className="flex flex-col text-start">
-          <h3 className="text-sm text-stone-800 dark:text-stone-300 whitespace-nowrap text-ellipsis overflow-hidden">
+          <h3 className="text-sm text-zinc-700 dark:text-zinc-300 whitespace-nowrap text-ellipsis overflow-hidden font-medium">
             {user.name}
           </h3>
-          <p className="text-xs text-stone-500 dark:text-[#9b9b9b] whitespace-nowrap text-ellipsis overflow-hidden font-normal">
+          <p className="text-xs text-zinc-500 dark:text-[#9b9b9b] whitespace-nowrap text-ellipsis overflow-hidden font-normal">
             {user.email}
           </p>
-        </div>
-        <div className="flex items-center justify-center w-full">
-          <ChevronsUpDownIcon className="size-4" />
         </div>
       </div>
     </UserWrapper>
