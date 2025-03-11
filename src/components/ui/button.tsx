@@ -46,7 +46,7 @@ const buttonVariants = cva(baseStyles, {
       destructive: `bg-destructive text-white ring-1 ring-destructive ${variantEffects}`,
       primary: `bg-sky-500 text-white ring-1 ring-sky-500 ${variantEffects}`,
       warning: `bg-warning text-white ring-1 ring-warning ${variantEffects}`,
-      ghost: "hover:bg-accent hover:text-accent-foreground",
+      ghost: "hover:bg-accent hover:text-stone-800 text-stone-800",
     },
     size: {
       default: "h-9 has-[>svg]:px-3 rounded-md",
@@ -54,6 +54,7 @@ const buttonVariants = cva(baseStyles, {
       md: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
       lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
       icon: "size-7",
+      smIcon: "size-6",
     },
   },
   defaultVariants: {
@@ -86,12 +87,13 @@ function Button({
 Button.Icon = function ButtonIcon({
   children,
   className,
+  ...props
 }: React.ComponentProps<"button">) {
   return (
     <button className={cn(
-      "flex items-center justify-center shrink-0 rounded-[4px] transition",
+      "flex items-center justify-center shrink-0 rounded-sm transition",
       className,
-    )}>
+    )} {...props}>
       {children}
     </button>
   );

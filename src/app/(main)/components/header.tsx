@@ -24,21 +24,21 @@ export const Header = () => {
               </nav>
             <UserButton />
           </Signed.In>
-          <Signed.Out>
-            <div className="flex items-center space-x-4">
-              <Button size="sm" variant="ghost" className="text-primary hover:text-primary" asChild>
-                <Link href="/sign-in">
-                  Sign In
-                </Link>
-              </Button>
-              <Button size="sm" asChild>
-                <Link href="/request">
-                  Get Jotion Free
-                </Link>
-              </Button>
-            </div>
-          </Signed.Out>
         </div>
+        <Signed.Out>
+          <div className="flex items-center space-x-4">
+            <Button size="sm" variant="ghost" className="text-primary hover:text-primary" asChild>
+              <Link href="/sign-in">
+                Sign In
+              </Link>
+            </Button>
+            <Button size="sm" asChild>
+              <Link href="/request">
+                Get Jotion Free
+              </Link>
+            </Button>
+          </div>
+        </Signed.Out>
       </div>
     </header>
   );

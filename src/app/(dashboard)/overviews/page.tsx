@@ -1,7 +1,6 @@
 const OverviewPage = () => {
   return (
     <div>
-      Home Page
     </div>
   );
 }

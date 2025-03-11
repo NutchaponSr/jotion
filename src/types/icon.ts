@@ -18,12 +18,6 @@ export type IconDefinition = Record<IconVaraint, JSX.Element>;
 
 export type IconType = (props: IconBaseProps) => JSX.Element;
 
-export const sidebarIconProps = {
-  variant: IconVaraint.BULK,
-  className: "size-[18px]",
-  fill: "#91918e",
-}
-
 export function createIcon(iconDefinition: IconDefinition) {
   return ({
     variant = IconVaraint.STROKE,
@@ -52,19 +46,19 @@ export function createIcon(iconDefinition: IconDefinition) {
 
 export const iconVaraint = cva("",{
   variants: {
-    fill: {
+    variant: {
       default: "fill-zinc-500",
-      pink: "fill-pink-500",
-      orange: "fill-orange-500",
+      pink: "fill-pink-600",
+      orange: "fill-orange-600",
+      sky: "fill-sky-600",
     },
     size: {
       lg: "size-8",
-      sm: "size-5",
+      sm: "size-[18px]",
     },
   },
   defaultVariants: {
-    fill: "default",
+    variant: "default",
     size: "sm",
   }
 });
-
