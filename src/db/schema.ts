@@ -20,12 +20,6 @@ export const users = pgTable("user", {
   password: text("password").notNull(),
 });
 
-export const sessions = pgTable("session", {
-  sessionToken: text("sessionToken").primaryKey(),
-  userId: text("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
-  expires: timestamp("expires", { mode: "date" }).notNull(),
-});
-
 export const groups = pgTable("group", {
   id: text("id").primaryKey().$defaultFn(() => cuid()),
   name: text("name").notNull(),

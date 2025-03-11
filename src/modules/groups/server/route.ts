@@ -29,8 +29,51 @@ const app = new Hono()
         data.map(async (group) => {
           const [updatedByUser] = await db
             .select({ name: users.name })
-            .from()
-        })
-      )
+            .from(users)
+            .where(eq(users.id, group.updatedBy))
+
+          return {
+            ...group,
+            updatedBy: updatedByUser.name,
+          };
+        }),
+      );
+
+      return c.json({ data: populatedData });
     }
   )
+  .post(
+    "/",
+    verifyAuth(),
+    zValidator(
+      "json",
+      groupsInsertSchema.pick({
+        icon: true,
+        name: true,
+        year: true,
+      }),
+    ),
+    async (c) => {
+      const auth = c.get("authUser");
+
+      const { icon, name, year } = c.req.valid("json");
+
+      if (!auth.token?.id) {
+        return c.json({ error: "Unauthorized" }, 401);
+      }
+
+      await db
+        .insert(groups)
+        .values({
+          icon,
+          year,
+          name: name || "Untitled",
+          createdBy: auth.token.id,
+          updatedBy: auth.token.id,
+        });
+
+      return c.json(null, 200);
+    }
+  )
+
+export default app;

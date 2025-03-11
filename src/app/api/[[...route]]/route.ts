@@ -4,6 +4,8 @@ import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import { AuthConfig, initAuthConfig } from "@hono/auth-js";
 
+import groups from "@/modules/groups/server/route";
+
 export const runtime = "nodejs";
 
 function getAuthConfig(): AuthConfig {
@@ -25,6 +27,7 @@ app.use("*", initAuthConfig(getAuthConfig));
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const routes = app
+  .route("/groups", groups)
 
 export const GET = handle(app);
 export const POST = handle(app);

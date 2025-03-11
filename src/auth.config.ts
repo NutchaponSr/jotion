@@ -7,10 +7,10 @@ import { DrizzleAdapter } from "@auth/drizzle-adapter";
 
 import { eq } from "drizzle-orm";
 import { db } from "@/db/drizzle";
-import { roles, users } from "@/db/schema";
+import { roles, users, sessions } from "@/db/schema";
 
 import { SignInSchema } from "@/modules/auth/schema/sign-in";
-import { encode } from "next-auth/jwt";
+import { decode, encode } from "next-auth/jwt";
 
 declare module "@auth/core/jwt" {
   interface JWT {
@@ -101,30 +101,6 @@ export default {
 
       return token;
     },
-  },
-  jwt: {
-    encode: async function (params) {
-      if (params.token?.credentials) {
-        const sessionToken = crypto.randomUUID();
-
-        if (!params.token.sub) {
-          throw new Error("No user ID found in token");
-        }
-
-        const createSession = await DrizzleAdapter(db).createSession?.({
-          sessionToken: sessionToken,
-          userId: params.token.sub,
-          expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-        });
-
-        if (!createSession) {
-          throw new Error("Failed to create session");
-        }
-
-        return sessionToken;
-      }
-      return encode(params)
-    }
   },
   session: {
     strategy: "jwt",
