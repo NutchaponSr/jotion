@@ -46,7 +46,7 @@ const buttonVariants = cva(baseStyles, {
       destructive: `bg-destructive text-white ring-1 ring-destructive ${variantEffects}`,
       primary: `bg-sky-500 text-white ring-1 ring-sky-500 ${variantEffects}`,
       warning: `bg-warning text-white ring-1 ring-warning ${variantEffects}`,
-      ghost: "hover:bg-accent hover:text-stone-800 text-stone-800",
+      ghost: "hover:bg-accent hover:text-primary text-primary",
     },
     size: {
       default: "h-9 has-[>svg]:px-3 rounded-md",

@@ -39,10 +39,10 @@ export const UserWrapper = ({
         <DropdownMenuLabel className="flex items-center space-x-2.5">
           <UserAvatar name={user.name ?? "?"} className="size-10 text-lg" />
           <div className="flex flex-col justify-start">
-            <h3 className="text-sm text-stone-800 dark:text-stone-300 whitespace-nowrap text-ellipsis overflow-hidden">
+            <h3 className="text-sm text-primary whitespace-nowrap text-ellipsis overflow-hidden">
               {user.name}
             </h3>
-            <p className="text-xs text-stone-500 dark:text-[#9b9b9b] whitespace-nowrap text-ellipsis overflow-hidden font-normal">
+            <p className="text-xs text-primary-foreground dark:text-muted-foreground whitespace-nowrap text-ellipsis overflow-hidden font-normal">
               {user.email}
             </p>
           </div>

@@ -38,10 +38,10 @@ UserButton.Text = function UserButtonText() {
           className="rounded-md" 
         />
         <div className="flex flex-col text-start">
-          <h3 className="text-sm text-zinc-700 dark:text-zinc-300 whitespace-nowrap text-ellipsis overflow-hidden font-medium">
+          <h3 className="text-sm text-primary whitespace-nowrap text-ellipsis overflow-hidden font-medium">
             {user.name}
           </h3>
-          <p className="text-xs text-zinc-500 dark:text-[#9b9b9b] whitespace-nowrap text-ellipsis overflow-hidden font-normal">
+          <p className="text-xs text-primary-foreground dark:text-muted-foreground whitespace-nowrap text-ellipsis overflow-hidden font-normal">
             {user.email}
           </p>
         </div>

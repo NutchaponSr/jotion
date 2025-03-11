@@ -15,6 +15,20 @@
       "when": 1741660400199,
       "tag": "0001_amusing_gunslinger",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1741707160384,
+      "tag": "0002_woozy_quentin_quire",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1741707245558,
+      "tag": "0003_unique_killer_shrike",
+      "breakpoints": true
     }
   ]
 }

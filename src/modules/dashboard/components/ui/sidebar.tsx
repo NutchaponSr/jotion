@@ -225,7 +225,7 @@ const SidebarItem = ({
             </div>
           </div>
         </div>
-        <p className="flex-auto whitespace-nowrap overflow-hidden text-ellipsis text-sm text-zinc-700 dark:text-[#9b9b9b]">
+        <p className="flex-auto whitespace-nowrap overflow-hidden text-ellipsis text-sm font-medium text-primary-foreground dark:text-muted-foreground">
           {label}
         </p>
         {action && <Sidebar.Action>{action}</Sidebar.Action>}
@@ -252,7 +252,7 @@ const SidebarLabel = ({
   children: React.ReactNode;
 }) => {
   return (
-    <h2 className="flex items-center px-3 py-1.5 text-xs text-zinc-500 dark:text-[#9b9b9b]">
+    <h2 className="flex items-center px-3 py-1.5 text-xs text-muted dark:text-muted-foreground">
       {children}
     </h2>
   );
