@@ -19,7 +19,7 @@ export const Workspace = ({ headers }: WorkspaceProps) => {
           variant="default"
           label={header}
           action={
-            <Button.Icon className="hover:bg-[#37352f0f] size-6">
+            <Button.Icon className="hover:bg-[#37352f0f] dark:hover:bg-[#ffffff0e] size-6">
               <PlusIcon className="text-[#91918e] size-4" />
             </Button.Icon>
           }

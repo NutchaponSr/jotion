@@ -130,15 +130,15 @@ const Sidebar = () => {
       <aside 
         ref={sidebarRef}
         className={cn(
-          "h-full overflow-hidden select-none relative flex flex-col z-[100] bg-[#f7f7f5] group [&:has(>.resize-handle:hover)]:shadow-[inset_-2px_0_0_0_rgba(0,0,0,0.1)]",
+          "h-full overflow-hidden select-none relative flex flex-col z-[100] group [&:has(>.resize-handle:hover)]:shadow-[inset_-2px_0_0_0_rgba(0,0,0,0.1)] dark:[&:has(>.resize-handle:hover)]:shadow-[inset_-2px_0_0_0_rgba(255,255,255,0.1)] bg-[#f7f7f5] dark:bg-[#202020]",
           isResetting && "transition-all ease-in-out duration-300",
           isDragging 
-            ? "shadow-[inset_-2px_0_0_0_rgba(0,0,0,0.1)]"
-            : "shadow-[inset_-1px_0_0_0_rgba(0,0,0,0.024)]",
+            ? "shadow-[inset_-2px_0_0_0_rgba(0,0,0,0.1)] dark:shadow-[inset_-2px_0_0_0_rgba(255,255,255,0.1)]"
+            : "shadow-[inset_-1px_0_0_0_rgba(0,0,0,0.024)] dark:shadow-[inset_-1px_0_0_0_rgba(255,255,255,0.05)]",
           isOpenSidebar ? "w-0" : "w-60",
         )}
       >
-        <Button.Icon onClick={collapse} className="size-6 hover:bg-[#00000008] opacity-0 group-hover:opacity-100 transition-opacity absolute right-1 top-1 z-[110]">
+        <Button.Icon onClick={collapse} className="size-6 hover:bg-[#37352f0f] dark:hover:bg-[#ffffff0e] opacity-0 group-hover:opacity-100 transition-opacity absolute right-1 top-1 z-[110]">
           <ChevronsLeftIcon className="size-4 text-neutral-400 stroke-[1.75]" />
         </Button.Icon>
         <UserButton.Text />
@@ -203,7 +203,7 @@ const SidebarItem = ({
   return (
     <div 
       role="button" 
-      className="flex items-center w-full text-sm min-h-8 p-1 transition hover:bg-[#00000008] space-x-2 cursor-pointer group/item"
+      className="flex items-center w-full text-sm min-h-8 p-1 transition hover:bg-[#00000008] dark:hover:bg-[#ffffff0e] space-x-2 cursor-pointer group/item"
       style={{ paddingLeft: `${indent}px` }}
     >
       <div className="flex items-center w-full">
@@ -225,7 +225,7 @@ const SidebarItem = ({
             </div>
           </div>
         </div>
-        <p className="flex-auto whitespace-nowrap overflow-hidden text-ellipsis text-sm text-zinc-700">
+        <p className="flex-auto whitespace-nowrap overflow-hidden text-ellipsis text-sm text-zinc-700 dark:text-[#9b9b9b]">
           {label}
         </p>
         {action && <Sidebar.Action>{action}</Sidebar.Action>}
@@ -252,7 +252,7 @@ const SidebarLabel = ({
   children: React.ReactNode;
 }) => {
   return (
-    <h2 className="flex items-center px-3 py-1.5 text-xs text-zinc-500">
+    <h2 className="flex items-center px-3 py-1.5 text-xs text-zinc-500 dark:text-[#9b9b9b]">
       {children}
     </h2>
   );
@@ -288,7 +288,7 @@ const SidebarSubTrigger = ({
   return (
     <motion.div
       role="button"
-      className="absolute inset-0 flex items-center justify-center rounded-sm bg-[#37352f0f] opacity-0 transition-opacity duration-100 group-hover/item:opacity-100"
+      className="absolute inset-0 flex items-center justify-center rounded-sm hover:bg-[#37352f0f] dark:hover:bg-[#ffffff0e] opacity-0 transition-opacity duration-100 group-hover/item:opacity-100"
       onClick={(e) => {
         e.stopPropagation();
         onToggle?.();

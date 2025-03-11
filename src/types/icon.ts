@@ -47,9 +47,9 @@ export function createIcon(iconDefinition: IconDefinition) {
 export const iconVaraint = cva("",{
   variants: {
     variant: {
-      default: "fill-zinc-500",
-      pink: "fill-pink-600",
-      orange: "fill-orange-600",
+      default: "fill-[#91918e]",
+      pink: "fill-[#b24b78]",
+      orange: "fill-[#c37a38]",
       sky: "fill-sky-600",
     },
     size: {

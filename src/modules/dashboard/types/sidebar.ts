@@ -6,9 +6,9 @@ export const sidebarItemVariant = cva(
   "flex items-center justify-center rounded-sm transition-opacity duration-100 group-hover/item:opacity-0 size-6", {
     variants: {
       variant: {
-        default: "bg-[#37352f0f]",
-        pink: "bg-pink-100",
-        orange: "bg-orange-100",
+        default: "bg-[#37352f0f] dark:bg-[#ffffff0e]",
+        pink: "bg-[#e188b345] dark:bg-[#4e2c3c]",
+        orange: "bg-[#e07c3945] dark:bg-[#5c3b23]",
         sky: "bg-sky-100",
       }
     }

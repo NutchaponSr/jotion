@@ -31,7 +31,7 @@ UserButton.Text = function UserButtonText() {
 
   return (
     <UserWrapper align="start" user={user} alignOffset={8} sideOffset={4}>
-      <div role="button" className="flex items-center min-h-14 space-x-2.5 px-2.5 py-2 cursor-pointer hover:bg-[#00000008] transition">
+      <div role="button" className="flex items-center min-h-14 space-x-2.5 px-2.5 py-2 cursor-pointer hover:bg-[#00000008] dark:hover:bg-[#ffffff0e] transition">
         <UserAvatar 
           name={user.name!} 
           imageUrl={user.image}
