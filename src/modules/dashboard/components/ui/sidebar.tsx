@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 
 import { 
   ChevronRightIcon, 
@@ -17,7 +17,10 @@ import {
   IconVaraint 
 } from "@/types/icon";
 
+import { useLocalStorage } from "@/stores/use-localstorage";
+
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { 
@@ -31,8 +34,9 @@ import {
 } from "@/components/icons";
 import { Accordion } from "@/components/accordion";
 
+import { Navbar } from "@/modules/dashboard/components/navbar";
 import { UserButton } from "@/modules/auth/components/user-button";
-import { Workspace } from "@/modules/dashboard/components/workspace";
+import { GroupSpace } from "@/modules/groups/components/group-space";
 
 import { 
   BackgroundVariant, 
@@ -41,12 +45,8 @@ import {
   sidebarItemVariant, 
   SidebarSubContentProps 
 } from "@/modules/dashboard/types/sidebar";
-import { useGroupsWorkspace } from "@/modules/groups/hooks/use-groups-workspace";
-import { useLocalStorage } from "@/stores/use-localstorage";
-import { Navbar } from "../navbar";
 
 const Sidebar = () => {
-  const { years } = useGroupsWorkspace();
   const { isOpenSidebar, onToggleSidebar } = useLocalStorage(); 
 
   const isMobile = useMedia("(max-width: 768px)");
@@ -160,7 +160,9 @@ const Sidebar = () => {
                 label="Group"
                 variant="pink"
               >
-                <Workspace headers={years}/>
+                <Suspense fallback={<Sidebar.Skeleton length={5} />}>
+                  <GroupSpace />
+                </Suspense>
               </Sidebar.SubContent>
             </Sidebar.Content>
             <Sidebar.Item icon={TrashIcon} label="Trash" />
@@ -194,6 +196,7 @@ const Sidebar = () => {
 const SidebarItem = ({
   icon,
   label,
+  emoji,
   variant,
   isOpen = false,
   onToggle,
@@ -218,7 +221,10 @@ const SidebarItem = ({
                     !onToggle && "group-hover/item:opacity-100",
                   )}
                 >
-                  {React.createElement(icon, { variant: IconVaraint.BULK, className: cn(iconVaraint({ variant }))})}
+                  {icon 
+                    ? React.createElement(icon, { variant: IconVaraint.BULK, className: cn(iconVaraint({ variant }))})
+                    : emoji
+                  }
                 </div>
                 {onToggle && <Sidebar.SubTrigger onToggle={onToggle} isOpen={isOpen} />}
               </div>
@@ -316,11 +322,29 @@ const SidebarAction = ({
   );
 }
 
+const SidebarSkeleton = ({ length = 1 }: { length: number }) => {
+  return (
+    Array.from({ length }, (_, index) => (
+      <div key={index} className="flex items-center w-full text-sm min-h-8 py-1 px-2 transition hover:bg-[#00000008] dark:hover:bg-[#ffffff0e] space-x-2">
+        <div className="flex items-center w-full space-x-2">
+          <div className="shrink-0 grow-0 rounded-sm flex justify-center items-center transition-all">
+            <div className="flex items-center justify-center shrink-0 grow-0 size-6 relative">
+              <Skeleton className="size-6 rounded-sm" />
+            </div>
+          </div>
+          <Skeleton className="h-2.5 w-full rounded-full" />
+        </div>
+      </div>
+    ))
+  );
+}
+
 Sidebar.Item = SidebarItem;
 Sidebar.Content = SidebarContent;
 Sidebar.Label = SidebarLabel;
 Sidebar.SubContent = SidebarSubContent;
 Sidebar.SubTrigger = SidebarSubTrigger;
 Sidebar.Action = SidebarAction;
+Sidebar.Skeleton = SidebarSkeleton;
 
 export default Sidebar

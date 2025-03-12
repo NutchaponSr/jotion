@@ -18,7 +18,8 @@ export const sidebarItemVariant = cva(
 export type BackgroundVariant = Exclude<VariantProps<typeof iconVaraint>["variant"],  null | undefined>
 
 interface SidebarBaseProps {
-  icon: React.ElementType;
+  emoji?: string | null;
+  icon?: React.ElementType;
   label: string;
 }
 
@@ -32,6 +33,7 @@ export interface SidebarItemProps extends VariantProps<typeof iconVaraint>, Side
   onToggle?: () => void;
   action?: React.ReactNode;
   indent?: number;
+  
 }
 
 export interface SidebarSubContentProps extends VariantProps<typeof iconVaraint>, SidebarBaseProps {

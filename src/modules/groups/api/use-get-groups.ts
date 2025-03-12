@@ -1,12 +1,12 @@
 import { InferResponseType } from "hono";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { client } from "@/lib/rpc";
 
 export type ResponseType = InferResponseType<typeof client.api.groups.$get, 200>["data"][0];
 
 export const useGetGroups = () => {
-  const query = useQuery({
+  const query = useSuspenseQuery({
     queryKey: ["groups"],
     queryFn: async () => {
       const response = await client.api.groups.$get();
