@@ -1,56 +1,55 @@
 "use client";
 
 import Sidebar from "@/modules/dashboard/components/ui/sidebar";
-import { useGetGroups } from "../api/use-get-groups";
-import { CalendarDaysIcon } from "@/components/icons";
-import { Button } from "@/components/ui/button";
+
 import { PlusIcon } from "lucide-react";
-import { useCreateGroup } from "../api/use-create-group";
+
+import { Button } from "@/components/ui/button";
+
+import { CalendarDaysIcon } from "@/components/icons";
+
+import { GroupItem } from "./group-item";
+
+import { useGetGroups } from "@/modules/groups/api/use-get-groups";
+import { useCreateGroup } from "@/modules/groups/api/use-create-group";
 
 export const GroupSpace = () => {
-  const { data } = useGetGroups();
+  const { data: groups } = useGetGroups();
   const { mutate } = useCreateGroup();
 
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 5 }, (_, i) => String(currentYear - i));
 
   return (  
-    years.map((year) => (
-      <Sidebar.SubContent
-        key={year}
-        label={year}
-        variant="default"
-        indent={12}
-        icon={CalendarDaysIcon}
-        action={
-          <Button.Icon 
-            className="size-6 hover:bg-[#37352f0f] dark:hover:bg-[#ffffff0e]"
-            onClick={() => {
-              mutate({
-                json: {
-                  year,
-                  name: "Untitled",
-                },
-              })
-            }}
-          >
-            <PlusIcon className="size-4 text-[#91918e]" />
-          </Button.Icon>
-        }
-      >
-        {data
-          .filter((item) => item.year === year)
-          .map((item) => (
-            <Sidebar.SubContent
-              key={item.id}
-              label={item.name}
-              emoji={item.icon}
+    <>
+      {years.map((year) => (
+        <Sidebar.SubContent
+          key={year}
+          label={year}
+          variant="default"
+          indent={12}
+          icon={CalendarDaysIcon}
+          action={
+            <Button.Icon 
+              className="size-6 hover:bg-[#37352f0f] dark:hover:bg-[#ffffff0e]"
+              onClick={() => {mutate({ json: { year, name: "Untitled" }})}}
             >
-              <Sidebar.Item label="Competency" />
-            </Sidebar.SubContent>
+              <PlusIcon className="size-4 text-muted" />
+            </Button.Icon>
+          }
+        >
+        {groups
+          .filter((group) => group.year === year)
+          .map((group, index) => (
+            <GroupItem key={index} group={group} />
         ))}
-        
-      </Sidebar.SubContent>
-    ))
+        </Sidebar.SubContent>
+      ))}
+      <Sidebar.SubItem indent={20}>
+        <span className="text-xs text-muted dark:text-muted-foreground">
+          More detail...
+        </span>
+      </Sidebar.SubItem>
+    </>
   );
 }

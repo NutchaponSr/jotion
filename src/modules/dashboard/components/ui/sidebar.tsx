@@ -1,10 +1,11 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React, { Suspense, useCallback, useEffect } from "react";
 
 import { 
   ChevronRightIcon, 
-  ChevronsLeftIcon 
+  ChevronsLeftIcon, 
+  CircleIcon
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useMedia, useToggle } from "react-use";
@@ -17,8 +18,6 @@ import {
   IconVaraint 
 } from "@/types/icon";
 
-import { useLocalStorage } from "@/stores/use-localstorage";
-
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -26,6 +25,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { 
   AiChatIcon, 
   FolderLibraryIcon, 
+  HashIcon, 
   HomeIcon, 
   InboxIcon, 
   SearchIcon, 
@@ -43,23 +43,22 @@ import {
   SidebarActionProps, 
   SidebarItemProps, 
   sidebarItemVariant, 
-  SidebarSubContentProps 
+  SidebarSubContentProps, 
+  SidebarSubItemProps
 } from "@/modules/dashboard/types/sidebar";
 
-const Sidebar = () => {
-  const { isOpenSidebar, onToggleSidebar } = useLocalStorage(); 
-
+const Sidebar = () => {;
   const isMobile = useMedia("(max-width: 768px)");
 
   const [isDragging, setIsDragging] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
-  const [sidebarWidth, setSidebarWidth] = useState(240);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const isResizingRef = useRef(false);
   const navbarRef = useRef<ComponentRef<"div">>(null);
   const sidebarRef = useRef<ComponentRef<"aside">>(null);
 
-  const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseDown = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.preventDefault();
     event.stopPropagation();
 
@@ -68,7 +67,7 @@ const Sidebar = () => {
     
     document.addEventListener("mouseup", handleMouseUp);
     document.addEventListener("mousemove", handleMouseMove);
-  }
+  };
 
   const handleMouseMove = (event: globalThis.MouseEvent) => {
     if (!isResizingRef.current) return;
@@ -77,9 +76,6 @@ const Sidebar = () => {
 
     if (newWidth < 240) newWidth = 240;
     if (newWidth > 360) newWidth = 360;
-    if (isOpenSidebar) newWidth = 0;
-
-    setSidebarWidth(newWidth);
 
     if (sidebarRef.current && navbarRef.current) {
       sidebarRef.current.style.width = `${newWidth}px`;
@@ -96,13 +92,10 @@ const Sidebar = () => {
     document.removeEventListener("mousemove", handleMouseMove);
   }
 
-  const resetWidth = () => {
+  const resetWidth = useCallback(() => {
     if (sidebarRef.current && navbarRef.current) {
-      onToggleSidebar();
+      setIsCollapsed(false);
       setIsResetting(true);
-
-      const defaultWidth = isMobile ? window.innerWidth : 240;
-      setSidebarWidth(defaultWidth);
 
       sidebarRef.current.style.width = isMobile ? "100%" : "240px";
       navbarRef.current.style.setProperty("width", isMobile ? "0" : "calc(100%-240px)");
@@ -110,11 +103,11 @@ const Sidebar = () => {
 
       setTimeout(() => setIsResetting(false), 300);
     }
-  }
+  }, [isMobile, setIsCollapsed]);
 
-  const collapse = () => {
+  const collapse = useCallback(() => {
     if (sidebarRef.current && navbarRef.current) {
-      onToggleSidebar();
+      setIsCollapsed(true);
       setIsResetting(true);
 
       sidebarRef.current.style.width = "0";
@@ -123,22 +116,36 @@ const Sidebar = () => {
 
       setTimeout(() => setIsResetting(false), 300);
     }
-  }
+  }, [setIsCollapsed])
+
+  useEffect(() => {
+    if (isMobile) {
+      collapse();
+    } else {
+      resetWidth();
+    }
+  }, [isMobile, resetWidth, collapse]);
 
   return (
     <>
       <aside 
         ref={sidebarRef}
         className={cn(
-          "h-full overflow-hidden select-none relative flex flex-col z-[100] group [&:has(>.resize-handle:hover)]:shadow-[inset_-2px_0_0_0_rgba(0,0,0,0.1)] dark:[&:has(>.resize-handle:hover)]:shadow-[inset_-2px_0_0_0_rgba(255,255,255,0.1)] bg-[#f7f7f5] dark:bg-[#202020]",
+          "h-full w-60 overflow-hidden select-none relative flex flex-col z-[100] group [&:has(>.resize-handle:hover)]:shadow-[inset_-2px_0_0_0_rgba(0,0,0,0.1)] dark:[&:has(>.resize-handle:hover)]:shadow-[inset_-2px_0_0_0_rgba(255,255,255,0.1)] bg-[#f7f7f5] dark:bg-[#202020]",
           isResetting && "transition-all ease-in-out duration-300",
           isDragging 
             ? "shadow-[inset_-2px_0_0_0_rgba(0,0,0,0.1)] dark:shadow-[inset_-2px_0_0_0_rgba(255,255,255,0.1)]"
             : "shadow-[inset_-1px_0_0_0_rgba(0,0,0,0.024)] dark:shadow-[inset_-1px_0_0_0_rgba(255,255,255,0.05)]",
-          isOpenSidebar ? "w-0" : "w-60",
+          isMobile && "w-0"
         )}
       >
-        <Button.Icon onClick={collapse} className="size-6 hover:bg-[#37352f0f] dark:hover:bg-[#ffffff0e] opacity-0 group-hover:opacity-100 transition-opacity absolute right-1 top-1 z-[110]">
+        <Button.Icon 
+          onClick={collapse} 
+          className={cn(
+            "size-6 hover:bg-[#37352f0f] dark:hover:bg-[#ffffff0e] opacity-0 group-hover:opacity-100 transition-opacity absolute right-1 top-1 z-[110]",
+            isMobile && "opacity-100"
+          )}
+        >
           <ChevronsLeftIcon className="size-4 text-neutral-400 stroke-[1.75]" />
         </Button.Icon>
         <UserButton.Text />
@@ -183,10 +190,11 @@ const Sidebar = () => {
         className={cn(
           "absolute top-0 z-[80] w-[calc(100%-15rem)]",
           isResetting && "transition-all ease-in-out duration-300",
+          isMobile && "left-0 w-full",
         )}
       >
         <div className="order-3 flex flex-col w-full overflow-hidden isolation-auto">
-          <Navbar onResetWidth={resetWidth} />
+          <Navbar onResetWidth={resetWidth} isCollapsed={isCollapsed} />
         </div>
       </div>
     </>
@@ -198,6 +206,7 @@ const SidebarItem = ({
   label,
   emoji,
   variant,
+  lastChild,
   isOpen = false,
   onToggle,
   action,
@@ -214,18 +223,24 @@ const SidebarItem = ({
           <div className="flex items-center justify-center shrink-0 grow-0 size-6 relative">
             <div className="grid">
               <div className="row-start-1 col-start-1 row-auto col-auto">
-                <div 
-                  role="button"
-                  className={cn(
-                    sidebarItemVariant({ variant: variant as BackgroundVariant }),
-                    !onToggle && "group-hover/item:opacity-100",
-                  )}
-                >
-                  {icon 
-                    ? React.createElement(icon, { variant: IconVaraint.BULK, className: cn(iconVaraint({ variant }))})
-                    : emoji
-                  }
-                </div>
+                {!lastChild ? (
+                  <div 
+                    role="button"
+                    className={cn(
+                      sidebarItemVariant({ variant: variant as BackgroundVariant }),
+                      !onToggle && "group-hover/item:opacity-100",
+                    )}
+                  >
+                    {icon 
+                      ? React.createElement(icon, { variant: IconVaraint.BULK, className: cn(iconVaraint({ variant }))})
+                      : emoji
+                        ? emoji
+                        : <HashIcon className="size-5 text-muted" />
+                    }
+                  </div>
+                ) : (
+                  <CircleIcon className="fill-muted text-muted size-1.5" />
+                )}
                 {onToggle && <Sidebar.SubTrigger onToggle={onToggle} isOpen={isOpen} />}
               </div>
             </div>
@@ -304,7 +319,7 @@ const SidebarSubTrigger = ({
         animate={{ rotate: isOpen ? 90 : 0 }}
         transition={{ duration: 0.2 }}
       >
-        <ChevronRightIcon className="h-[18px] w-[18px] text-[#91918e]" />
+        <ChevronRightIcon className="h-[18px] w-[18px] text-muted" />
       </motion.div>
     </motion.div>
   );
@@ -339,12 +354,28 @@ const SidebarSkeleton = ({ length = 1 }: { length: number }) => {
   );
 }
 
+const SidebarSubItem = ({
+  children,
+  indent
+}: SidebarSubItemProps) => {
+  return (
+    <div 
+      role="button" 
+      className="flex items-center w-full min-h-8 p-1 transition hover:bg-[#00000008] dark:hover:bg-[#ffffff0e] space-x-2 cursor-pointer"
+      style={{ paddingLeft: `${indent}px` }}
+    >
+      {children}
+    </div>
+  );
+}
+
+Sidebar.Action = SidebarAction;
 Sidebar.Item = SidebarItem;
 Sidebar.Content = SidebarContent;
 Sidebar.Label = SidebarLabel;
 Sidebar.SubContent = SidebarSubContent;
 Sidebar.SubTrigger = SidebarSubTrigger;
-Sidebar.Action = SidebarAction;
 Sidebar.Skeleton = SidebarSkeleton;
+Sidebar.SubItem = SidebarSubItem;
 
 export default Sidebar

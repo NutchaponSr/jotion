@@ -21,23 +21,26 @@ interface SidebarBaseProps {
   emoji?: string | null;
   icon?: React.ElementType;
   label: string;
+  action?: React.ReactNode;
+  indent?: number;
 }
 
 export interface SidebarActionProps {
   children: React.ReactNode;
 }
 
+export interface SidebarSubItemProps {
+  children: React.ReactNode;
+  indent?: number;
+}
+
 export interface SidebarItemProps extends VariantProps<typeof iconVaraint>, SidebarBaseProps {
   href?: string;
   isOpen?: boolean;
   onToggle?: () => void;
-  action?: React.ReactNode;
-  indent?: number;
-  
+  lastChild?: boolean;
 }
 
 export interface SidebarSubContentProps extends VariantProps<typeof iconVaraint>, SidebarBaseProps {
   children: React.ReactNode;
-  action?: React.ReactNode;
-  indent?: number;
 }

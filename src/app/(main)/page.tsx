@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { Hero } from "@/app/(main)/components/hero";
 
 import { GridPattern } from "@/components/magicui/grid-pattern";
-import { IntroduceButton } from "@/components/introduce-button";
+import { IntroduceButton } from "@/app/(main)/components/introduce-button";
 
 import { Signed } from "@/modules/auth/components/signed"
 
