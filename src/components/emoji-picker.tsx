@@ -12,6 +12,7 @@ import {
   PopoverContent,
   PopoverTrigger
 } from "@/components/ui/popover";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import { 
@@ -19,9 +20,7 @@ import {
   ShuffleIcon, 
   TrashIcon 
 } from "@/components/icons";
-import { Input } from "./ui/input";
 import { emojiCategories } from "@/constants/emojis";
-import { ScrollArea } from "./ui/scroll-area";
 
 interface EmojiPickerProps {
   children: React.ReactNode;
@@ -119,13 +118,38 @@ export const EmojiPicker = ({
             <TrashIcon className="size-[18px] text-[#A5A29A]" />
           </Button.Icon>
         </div>
-        <ScrollArea 
+        <div 
           ref={scrollContainerRef} 
-          onScroll={() => {}}
+          onScroll={handleScroll}
           className="overflow-y-scroll custom-scrollbar h-full"
         >
-          
-        </ScrollArea>
+          {filteredItems.map(({ category, emojis }) => (
+            <div 
+              key={category} 
+              ref={(el) => { categoryRefs.current[category] = el; }}
+              className="flex flex-col items-stretch"
+            >
+              <div className="flex p-2 text-[#37352fa6] text-xs">
+                <p className="self-center whitespace-nowrap overflow-hidden text-ellipsis">
+                  {category}
+                </p>
+              </div>
+              <div className="flex flex-wrap px-2">
+                <div className="flex flex-wrap justify-start">
+                  {emojis.map((emoji, index) => (
+                    <button
+                      key={index}
+                      onClick={() => onSelect(emoji.emoji)}
+                      className="transition flex items-center justify-center size-8 rounded-sm hover:bg-[#37352f0f] shrink-0 text-2xl"
+                    >
+                      {emoji.emoji}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
         <div className="border-t dark:border-popover-foreground flex px-2 py-1 justify-between">
           {emojiCategories.map((emojiCat, index) => (
             <Button.Icon
@@ -133,7 +157,7 @@ export const EmojiPicker = ({
               onClick={() => scrollToCategory(emojiCat.hint)}
               className={cn(
                 "size-7 hover:bg-popover-foreground",
-                // currentCategory === emojiCat.hint && "bg-[#37352f0f]",
+                category === emojiCat.hint && "bg-[#37352f0f]",
               )}
             >
               <emojiCat.icon className="h-4 w-4 text-gray-500 dark:text-[#91918e]" />

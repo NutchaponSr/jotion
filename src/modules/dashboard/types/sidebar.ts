@@ -37,10 +37,16 @@ export interface SidebarSubItemProps {
 export interface SidebarItemProps extends VariantProps<typeof iconVaraint>, SidebarBaseProps {
   href?: string;
   isOpen?: boolean;
-  onToggle?: () => void;
   lastChild?: boolean;
+  onClick?: () => void;
+  onToggle?: () => void;
 }
 
 export interface SidebarSubContentProps extends VariantProps<typeof iconVaraint>, SidebarBaseProps {
   children: React.ReactNode;
+}
+
+export enum Workspace {
+  GROUP = "GROUP",
+  COMPETENCY = "COMPETENCY",
 }

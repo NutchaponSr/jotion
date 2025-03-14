@@ -1,6 +1,7 @@
 "use client";
 
 import ErrorBoundary from "@/components/error-boundary";
+import Trash from "@/modules/dashboard/components/ui/trash";
 
 import React, { Suspense, useCallback, useEffect } from "react";
 
@@ -32,7 +33,6 @@ import {
   InboxIcon, 
   SearchIcon, 
   Settings1Icon, 
-  TrashIcon, 
 } from "@/components/icons";
 import { Accordion } from "@/components/accordion";
 
@@ -176,7 +176,7 @@ const Sidebar = () => {;
                 </Suspense>
               </Sidebar.SubContent>
             </Sidebar.Content>
-            <Sidebar.Item icon={TrashIcon} label="Trash" />
+            <Trash />
           </div>
         </ScrollArea>
         <div className="resize-handle absolute right-0 w-0 grow-0 z-[1] top-0 bottom-0">
@@ -212,13 +212,15 @@ const SidebarItem = ({
   variant,
   lastChild,
   isOpen = false,
-  onToggle,
   action,
-  indent
+  indent,
+  onToggle,
+  onClick
 }: SidebarItemProps) => {
   return (
     <div 
       role="button" 
+      onClick={onClick}
       className="flex items-center w-full text-sm min-h-8 p-1 transition hover:bg-[#00000008] dark:hover:bg-[#ffffff0e] space-x-2 cursor-pointer group/item"
       style={{ paddingLeft: `${indent}px` }}
     >
@@ -250,7 +252,7 @@ const SidebarItem = ({
             </div>
           </div>
         </div>
-        <p className="flex-auto whitespace-nowrap overflow-hidden text-ellipsis text-sm font-medium text-primary-foreground dark:text-muted-foreground">
+        <p className="flex-auto whitespace-nowrap overflow-hidden text-start text-ellipsis text-sm font-medium text-primary-foreground dark:text-muted-foreground">
           {label}
         </p>
         {action && <Sidebar.Action>{action}</Sidebar.Action>}
