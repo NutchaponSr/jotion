@@ -45,10 +45,11 @@ const buttonVariants = cva(baseStyles, {
       supper: `bg-violet-600 text-white ring-1 ring-violet-600 ${variantEffects}`,
       destructive: `bg-destructive text-white ring-1 ring-destructive ${variantEffects}`,
       primary: `bg-sky-500 text-white ring-1 ring-sky-500 ${variantEffects}`,
+      primaryForeground: "bg-marine hover:bg-[#0077d4] shadow-[inset_0_0_0_1px_rgba(15,15,15,0.1),0_1px_2px_rgba(15,15,15,0.1)] text-white",
       warning: `bg-warning text-white ring-1 ring-warning ${variantEffects}`,
       ghost: "hover:bg-accent hover:text-primary text-primary",
     },
-    size: {
+    size: { 
       default: "h-9 has-[>svg]:px-3 rounded-md",
       sm: "h-7 rounded-sm gap-1.5 px-2 has-[>svg]:px-2.5",
       md: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",

@@ -49,6 +49,9 @@ export const GroupRename = ({
             variant="secondary"
             onChange={(e) => setName(e.target.value)}
           />
+          <Button variant="primaryForeground" size="sm">
+            Submit
+          </Button>
         </form>
       </PopoverContent>
     </Popover>
