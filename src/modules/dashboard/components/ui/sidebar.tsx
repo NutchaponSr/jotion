@@ -1,5 +1,7 @@
 "use client";
 
+import ErrorBoundary from "@/components/error-boundary";
+
 import React, { Suspense, useCallback, useEffect } from "react";
 
 import { 
@@ -149,7 +151,7 @@ const Sidebar = () => {;
           <ChevronsLeftIcon className="size-4 text-neutral-400 stroke-[1.75]" />
         </Button.Icon>
         <UserButton.Text />
-        <div className="flex flex-col max-h-full justify-between overflow-hidden relative">
+        <div className="flex flex-col max-h-full justify-between relative">
           <Sidebar.Item icon={SearchIcon} label="Search" />
           <Sidebar.Item icon={AiChatIcon} label="Jotion AI" />
           <Sidebar.Item icon={HomeIcon} label="Overview" />
@@ -168,7 +170,9 @@ const Sidebar = () => {;
                 variant="pink"
               >
                 <Suspense fallback={<Sidebar.Skeleton length={5} />}>
-                  <GroupSpace />
+                  <ErrorBoundary>
+                    <GroupSpace />
+                  </ErrorBoundary>
                 </Suspense>
               </Sidebar.SubContent>
             </Sidebar.Content>
