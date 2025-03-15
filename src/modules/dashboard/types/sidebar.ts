@@ -1,9 +1,12 @@
 import { cva, VariantProps } from "class-variance-authority";
 
 import { iconVaraint } from "@/types/icon";
+import { FilterCommandData } from "@/types/filter";
+
+import { FolderLibraryIcon, Notebook1Icon } from "@/components/icons";
 
 export const sidebarItemVariant = cva(
-  "flex items-center justify-center rounded-sm transition-opacity duration-100 group-hover/item:opacity-0 size-6", {
+  "flex items-center justify-center rounded-sm transition-opacity duration-100 group-hover/item:opacity-0 size-6 text-lg", {
     variants: {
       variant: {
         default: "bg-[#37352f0f] dark:bg-[#ffffff0e]",
@@ -15,7 +18,7 @@ export const sidebarItemVariant = cva(
   }
 );
 
-export type BackgroundVariant = Exclude<VariantProps<typeof iconVaraint>["variant"],  null | undefined>
+export type BackgroundVariant = Exclude<VariantProps<typeof iconVaraint>["variant"], null | undefined>
 
 interface SidebarBaseProps {
   emoji?: string | null;
@@ -47,6 +50,11 @@ export interface SidebarSubContentProps extends VariantProps<typeof iconVaraint>
 }
 
 export enum Workspace {
-  GROUP = "GROUP",
-  COMPETENCY = "COMPETENCY",
+  GROUP = "Group",
+  COMPETENCY = "Competency",
 }
+
+export const workspaces: FilterCommandData[] = [
+  { icon: Notebook1Icon, label: "Group" },
+  { icon: FolderLibraryIcon, label: "Competency" },
+]

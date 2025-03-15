@@ -39,12 +39,22 @@ const app = new Hono()
       //   description: String(item.description),
       // }));
 
-      const populatedData = [
-        ...(group.map(group => ({
-          ...group,
-          type: Workspace.GROUP,
-        })) || []),
-      ].sort((a, b) => (b.updatedAt > a.updatedAt ? 1 : -1)); 
+      const populatedData = await Promise.all(
+        group.map(async (group) => {
+          const [updatedByUser] = await db
+            .select({ name: users.name })
+            .from(users)
+            .where(eq(users.id, group.updatedBy));
+      
+          return {
+            ...group,
+            updatedBy: updatedByUser.name,
+            type: Workspace.GROUP,
+          };
+        })
+      );
+      
+      populatedData.sort((a, b) => (b.updatedAt > a.updatedAt ? 1 : -1));
 
       const updatedPeoples = await db
         .select({
@@ -55,7 +65,7 @@ const app = new Hono()
         .from(users)
         .where(
           inArray(
-            users.id,
+            users.name,
             Array.from(new Set(populatedData.map((item) => item.updatedBy)))
           )
         );

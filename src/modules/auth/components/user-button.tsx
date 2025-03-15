@@ -1,6 +1,6 @@
 "use client";
 
-import { UserAvatar } from "./user-avatart";
+import { UserAvatar } from "./user-avatar";
 
 import { UserWrapper } from "./user-wrapper";
 

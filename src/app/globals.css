@@ -164,3 +164,7 @@ body,
 .custom-scrollbar::-webkit-scrollbar-track {
   background-color: transparent;
 }
+
+.lucide {
+  stroke-width: 1.75;
+}

@@ -11,7 +11,7 @@ import {
   DropdownMenuItem
 } from "@/components/ui/dropdown-menu";
 import { Mode } from "@/components/mode";
-import { UserAvatar } from "./user-avatart";
+import { UserAvatar } from "./user-avatar";
 import { LogOutIcon, SettingsIcon } from "lucide-react";
 import { ClientSession } from "../hooks/use-current-user";
 
