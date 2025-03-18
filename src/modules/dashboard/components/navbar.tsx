@@ -1,5 +1,6 @@
-import { Button } from "@/components/ui/button";
 import { MenuIcon } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 
 interface NavbarProps {
   isCollapsed: boolean;

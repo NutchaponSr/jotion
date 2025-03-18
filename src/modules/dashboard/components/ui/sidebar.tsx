@@ -10,7 +10,7 @@ import {
   ChevronsLeftIcon, 
   CircleIcon
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useMedia, useToggle } from "react-use";
 import { useRef, useState, ComponentRef } from "react";
 
@@ -36,6 +36,7 @@ import {
 } from "@/components/icons";
 import { Accordion } from "@/components/accordion";
 
+import { Inbox } from "@/modules/dashboard/components/inbox";
 import { Navbar } from "@/modules/dashboard/components/navbar";
 import { UserButton } from "@/modules/auth/components/user-button";
 import { GroupSpace } from "@/modules/groups/components/group-space";
@@ -49,8 +50,14 @@ import {
   SidebarSubItemProps
 } from "@/modules/dashboard/types/sidebar";
 
+import { useSearchCommand } from "@/modules/dashboard/stores/use-search-command";
+
 const Sidebar = () => {;
+  const { onOpen } = useSearchCommand();
+
   const isMobile = useMedia("(max-width: 768px)");
+
+  const [isInbox, toggleInbox] = useToggle(false);
 
   const [isDragging, setIsDragging] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
@@ -148,14 +155,14 @@ const Sidebar = () => {;
             isMobile && "opacity-100"
           )}
         >
-          <ChevronsLeftIcon className="size-4 text-neutral-400 stroke-[1.75]" />
+          <ChevronsLeftIcon className="size-4 text-[#a5a29a] stroke-[1.75]" />
         </Button.Icon>
         <UserButton.Text />
         <div className="flex flex-col max-h-full justify-between relative">
-          <Sidebar.Item icon={SearchIcon} label="Search" />
+          <Sidebar.Item icon={SearchIcon} label="Search" onClick={onOpen} />
           <Sidebar.Item icon={AiChatIcon} label="Jotion AI" />
           <Sidebar.Item icon={HomeIcon} label="Overview" />
-          <Sidebar.Item icon={InboxIcon} label="Inbox" />
+          <Sidebar.Item icon={InboxIcon} label="Inbox" onClick={toggleInbox} />
           <Sidebar.Item icon={Settings1Icon} label="Settings" />
         </div>
         <ScrollArea className="pt-1.5 grow overflow-x-hidden overflow-y-auto">
@@ -201,6 +208,22 @@ const Sidebar = () => {;
           <Navbar onResetWidth={resetWidth} isCollapsed={isCollapsed} />
         </div>
       </div>
+      <AnimatePresence>
+        {isInbox && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0"
+            onClick={() => toggleInbox(false)}
+            aria-hidden="true"
+          />
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {isInbox && <Inbox />}
+      </AnimatePresence>
     </>
   );
 }

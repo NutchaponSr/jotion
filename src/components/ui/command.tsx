@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { Command as CommandPrimitive } from "cmdk";
-import { SearchIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -22,7 +21,7 @@ function Command({
     <CommandPrimitive
       data-slot="command"
       className={cn(
-        "bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md",
+        "bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md focus:outline-none",
         className
       )}
       {...props}
@@ -56,24 +55,38 @@ function CommandDialog({
 
 function CommandInput({
   className,
+  variant,
   ...props
-}: React.ComponentProps<typeof CommandPrimitive.Input>) {
-  return (
-    <div
-      data-slot="command-input-wrapper"
-      className="flex h-9 items-center gap-2 border-b px-3"
-    >
-      <SearchIcon className="size-4 shrink-0 opacity-50" />
-      <CommandPrimitive.Input
-        data-slot="command-input"
-        className={cn(
-          "placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50",
-          className
-        )}
-        {...props}
-      />
-    </div>
-  )
+}: React.ComponentProps<typeof CommandPrimitive.Input> & {
+  variant?: "dialog";
+}) {
+  switch (variant) {
+    case "dialog":
+      return (
+        <div data-slot="command-input-wrapper" className="flex w-full">
+          <CommandPrimitive.Input 
+            className={cn(
+              "w-full whitespace-nowrap text-primary text-ellipsis focus-visible:outline-none placeholder:text-[#a4a4a2]",
+              className,
+            )}
+            {...props}
+          />
+        </div>
+      );
+    default:
+      return (
+        <div data-slot="command-input-wrapper" className="flex items-center p-1">
+          <CommandPrimitive.Input
+            data-slot="command-input"
+            className={cn(
+              "max-w-full w-full whitespace-pre-wrap break-words grow text-sm py-1 px-2.5 rounded-sm shadow-[inset_0_0_0_1px_rgba(15,15,15,0.1)] bg-[#f2f1ee99] focus-visible:outline-none text-[#37352f] placeholder:text-[#91918e] font-light dark:bg-[#ffffff0e] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.075)] dark:text-[#ffffffcf] focus-within:shadow-[inset_0_0_0_1px_rgba(35,131,226,0.57),0_0_0_2px_rgba(35,131,226,0.35)]",
+              className
+            )}
+            {...props}
+          />
+        </div>
+      );
+  }
 }
 
 function CommandList({
@@ -84,7 +97,7 @@ function CommandList({
     <CommandPrimitive.List
       data-slot="command-list"
       className={cn(
-        "max-h-[300px] scroll-py-1 overflow-x-hidden overflow-y-auto",
+        "scroll-py-1 overflow-x-hidden overflow-y-auto w-full",
         className
       )}
       {...props}
@@ -93,15 +106,39 @@ function CommandList({
 }
 
 function CommandEmpty({
+  className,
+  variant,
   ...props
-}: React.ComponentProps<typeof CommandPrimitive.Empty>) {
-  return (
-    <CommandPrimitive.Empty
-      data-slot="command-empty"
-      className="py-6 text-center text-sm"
-      {...props}
-    />
-  )
+}: React.ComponentProps<typeof CommandPrimitive.Empty> & {
+  variant?: "dialog";
+}) {
+  switch (variant) {
+    case "dialog":
+      return (
+        <CommandPrimitive.Empty data-slot="command-empty" className="flex flex-col h-full" {...props}>
+          <div className="flex flex-col items-center justify-center h-full">
+            <div className="text-sm font-medium text-primary-foreground">No results</div>
+            <div className="text-sm text-secondary">Some result may be in your the Trash</div>
+            <div className="text-sm text-sky-500 cursor-pointer">Search in trash</div>
+          </div>
+        </CommandPrimitive.Empty>
+      );
+    default: 
+      return (
+        <CommandPrimitive.Empty className={cn("py-1", className)} {...props}>
+          <div className="mb-1.5 mt-0.5 flex items-center w-full py-1">
+            <div className="mx-3 min-w-0 flex-auto">
+              <div
+                data-slot="command-empty"
+                className="text-xs whitespace-nowrap text-ellipsis overflow-hidden text-[#787774] min-h-full"
+              >
+                {props.children}
+              </div>
+            </div>
+          </div>
+        </CommandPrimitive.Empty>
+      );
+  }
 }
 
 function CommandGroup({
@@ -112,7 +149,7 @@ function CommandGroup({
     <CommandPrimitive.Group
       data-slot="command-group"
       className={cn(
-        "text-foreground [&_[cmdk-group-heading]]:text-muted-foreground overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium",
+        "text-foreground [&_[cmdk-group-heading]]:text-[#373530a6] overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium",
         className
       )}
       {...props}
@@ -141,7 +178,7 @@ function CommandItem({
     <CommandPrimitive.Item
       data-slot="command-item"
       className={cn(
-        "data-[selected=true]:bg-accent data-[selected=true]:text-primary [&_svg:not([class*='text-'])]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1 h-7 text-sm outline-hidden select-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "data-[selected=true]:bg-popover-foreground data-[selected=true]:text-primary [&_svg:not([class*='text-'])]:text-muted-foreground relative flex items-center rounded-sm text-sm outline-hidden select-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 cursor-pointer focus:shadow-[inset_0_0_0_1px_rgba(14,165,233,0.57),0_0_0_2px_rgba(14,165,233,0.35)]",
         className
       )}
       {...props}
@@ -154,14 +191,16 @@ function CommandShortcut({
   ...props
 }: React.ComponentProps<"span">) {
   return (
-    <span
-      data-slot="command-shortcut"
-      className={cn(
-        "text-muted-foreground ml-auto text-xs tracking-widest",
-        className
-      )}
-      {...props}
-    />
+    <div className="flex items-center grow-0 shrink-0">
+      <span
+        data-slot="command-shortcut"
+        className={cn(
+          "text-muted-foreground ml-auto self-start text-xs font-light basis-auto",
+          className
+        )}
+        {...props}
+      />
+    </div>
   )
 }
 

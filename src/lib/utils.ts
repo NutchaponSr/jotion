@@ -1,5 +1,6 @@
 import { twMerge } from "tailwind-merge";
 import { clsx, type ClassValue } from "clsx";
+import { formatDistanceToNowStrict } from "date-fns";
 
 import { EmojiData, EmojiItem } from "@/types/emoji";
 
@@ -42,4 +43,20 @@ export function getEmojis() {
     category,
     emojis
   }));
+}
+
+export function formatTimeElapsed(date: string) {
+  let timeElapsed = formatDistanceToNowStrict(new Date(date));
+
+  timeElapsed = timeElapsed
+    .replace(" second", "s")
+    .replace(" seconds", "s")
+    .replace(" minute", "m")
+    .replace(" minutes", "m")
+    .replace(" hour", "hr")
+    .replace(" hours", "hr")
+    .replace(" days", "d")
+    .replace(" day", "d")
+
+  return `${timeElapsed} ago`;
 }

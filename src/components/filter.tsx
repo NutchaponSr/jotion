@@ -1,9 +1,18 @@
-import React from "react";
-import Search from "@/components/search";
+import React, { useState } from "react";
+
+import { XIcon } from "lucide-react";
 
 import { IconVaraint } from "@/types/icon";
 import { FilterBaseProps, FilterCommandProps } from "@/types/filter";
 
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
@@ -38,21 +47,33 @@ const Filter = {
     onSelectionChange,
     ...props 
   }: FilterCommandProps) => {
+    const [search, setSearch] = useState("");
+
     return (
       <Popover>
         <PopoverTrigger>
           <FilterButton {...props} />
         </PopoverTrigger>
         <PopoverContent align="start" className="max-w-[calc(100vw-24px)] min-w-[180px] w-[250px] h-full max-h-[40vh] shadow-[0_14px_28px_-6px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06),0_0_0_1px_rgba(84,72,49,0.08)] flex flex-col p-0">
-          <Search>
-            <Search.Input placeholder={placeholder} />
-            <Search.List>
-              <Search.Empty>No result</Search.Empty>
-              <Search.Group>
+          <Command>
+            <div className="relative">
+              <CommandInput placeholder={placeholder} value={search} onValueChange={setSearch} />
+              {search && (
+                <Button.Icon
+                  className="absolute right-2.5 top-2.5"
+                  onClick={() => setSearch("")}
+                >
+                  <XIcon className="h-4 w-4 text-muted-foreground" />
+                </Button.Icon>
+              )}
+            </div>
+            <CommandList>
+              <CommandEmpty>No result</CommandEmpty>
+              <CommandGroup>
                 {data.map((item, index) => {
                   const isSelected = selectedValues.includes(item.label);
                   return (
-                    <Search.Item 
+                    <CommandItem 
                       key={index}
                       onSelect={() => {
                         if (isSelected) {
@@ -61,6 +82,7 @@ const Filter = {
                           onSelectionChange([...selectedValues, item.label]);
                         }
                       }}
+                      className="gap-2 leading-[120%] w-full min-h-7 text-sm px-2 py-1"
                     >
                       {item.icon ? (
                         <div className="flex items-center justify-center size-5 shrink-0 text-base">
@@ -77,12 +99,12 @@ const Filter = {
                         {item.label}
                       </span>
                       {isSelected && <Check1Icon className="ml-2 h-4 w-4" />}
-                    </Search.Item>
+                    </CommandItem>
                   );
                 })}
-              </Search.Group>
-            </Search.List>
-          </Search>
+              </CommandGroup>
+            </CommandList>
+          </Command>
         </PopoverContent>
       </Popover>
     );

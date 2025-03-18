@@ -6,6 +6,7 @@ import { AuthConfig, initAuthConfig } from "@hono/auth-js";
 
 import groups from "@/modules/groups/server/route";
 import trashs from "@/modules/dashboard/server/trashs";
+import searchs from "@/modules/dashboard/server/searchs";
 
 export const runtime = "nodejs";
 
@@ -30,6 +31,7 @@ app.use("*", initAuthConfig(getAuthConfig));
 const routes = app
   .route("/groups", groups)
   .route("/trashs", trashs)
+  .route("/searchs", searchs)
 
 export const GET = handle(app);
 export const POST = handle(app);
