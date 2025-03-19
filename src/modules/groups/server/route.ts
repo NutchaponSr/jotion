@@ -75,7 +75,7 @@ const app = new Hono()
     }
   )
   .get(
-    "/:year",
+    "/year/:year",
     verifyAuth(),
     zValidator(
       "param",

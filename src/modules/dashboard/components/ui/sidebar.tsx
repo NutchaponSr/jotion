@@ -223,7 +223,7 @@ const Sidebar = () => {;
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0"
+            className="fixed inset-0 h-full z-[999]"
             onClick={() => toggleInbox(false)}
             aria-hidden="true"
           />

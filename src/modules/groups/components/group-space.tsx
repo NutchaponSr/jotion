@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 import { CalendarDaysIcon } from "@/components/icons";
 
-import { GroupItem } from "./group-item";
+import { GroupItem } from "@/modules/groups/components/group-item";
 
 import { useGetGroups } from "@/modules/groups/api/use-get-groups";
 import { useCreateGroup } from "@/modules/groups/api/use-create-group";

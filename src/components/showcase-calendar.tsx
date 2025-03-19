@@ -20,7 +20,7 @@ export const ShowcaseCalendar = () => {
           </Button.Icon>
         </div>
       </div>
-      <div className="p-4 relative flex flex-col rounded-xl bg-[#ffffffe6] shadow-[0_12px_32px_rgba(0,0,0,0.02),0_0_0_1px_rgba(0,0,0,0.05)] min-h-[270px] max-h-[270px]">
+      <div className="p-4 relative flex flex-col rounded-xl bg-[#ffffffe6] dark:bg-[#202020e6] shadow-[0_12px_32px_rgba(0,0,0,0.02),0_0_0_1px_rgba(0,0,0,0.05)] min-h-[270px] max-h-[270px]">
         <div className="flex flex-col grow w-full h-full justify-center items-center px-[15%] gap-4">
           <CalendarDaysIcon className="size-12 text-secondary" style={{ strokeWidth: 1.25 }} />
           <p className="text-secondary text-sm text-center">No upcoming events in the next 3 days</p>
