@@ -62,6 +62,7 @@ const Sidebar = () => {;
   const [isDragging, setIsDragging] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [sidebarWidth, setSidebarWidth] = useState(240);
 
   const isResizingRef = useRef(false);
   const navbarRef = useRef<ComponentRef<"div">>(null);
@@ -90,6 +91,8 @@ const Sidebar = () => {;
       sidebarRef.current.style.width = `${newWidth}px`;
       navbarRef.current.style.setProperty("left", `${newWidth}px`);
       navbarRef.current.style.setProperty("width", `calc(100%-${newWidth}px)`);
+
+      setSidebarWidth(newWidth);
     }
   }
 
@@ -106,9 +109,12 @@ const Sidebar = () => {;
       setIsCollapsed(false);
       setIsResetting(true);
 
+      const newWidth = isMobile ? window.innerWidth : 240;
       sidebarRef.current.style.width = isMobile ? "100%" : "240px";
       navbarRef.current.style.setProperty("width", isMobile ? "0" : "calc(100%-240px)");
       navbarRef.current.style.setProperty("left", isMobile ? "100%" : "240px");
+
+      setSidebarWidth(newWidth);
 
       setTimeout(() => setIsResetting(false), 300);
     }
@@ -122,6 +128,8 @@ const Sidebar = () => {;
       sidebarRef.current.style.width = "0";
       navbarRef.current.style.setProperty("width", "100%");
       navbarRef.current.style.setProperty("left", "0");
+
+      setSidebarWidth(0);
 
       setTimeout(() => setIsResetting(false), 300);
     }
@@ -222,7 +230,7 @@ const Sidebar = () => {;
         )}
       </AnimatePresence>
       <AnimatePresence>
-        {isInbox && <Inbox />}
+        {isInbox && <Inbox sidebarWidth={sidebarWidth} />}
       </AnimatePresence>
     </>
   );

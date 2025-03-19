@@ -7,6 +7,7 @@ import {
   MessageSquareDotIcon
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 import {
   DropdownMenu,
@@ -17,15 +18,28 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
-export const Inbox = () => {
+interface InboxProps {
+  sidebarWidth: number;
+}
+
+export const Inbox = ({ sidebarWidth }: InboxProps) => {
+  const inboxRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (inboxRef.current) {
+      inboxRef.current.style.left = `${sidebarWidth}px`;
+    }
+  }, [sidebarWidth]);
+
   return (
-    <motion.section 
+    <motion.section
+      ref={inboxRef}
       role="region" 
       initial={{ x: -200, opacity: 1 }}
       animate={{ x: 0, opacity: 1 }}   
       exit={{ x: -100, opacity: 0 }}      
       transition={{ type: "spring", stiffness: 300, damping: 30,}}
-      className="w-80 z-[90] bg-background shadow-[0_14px_28px_-6px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06),0_0_0_1px_rgba(84,72,49,0.08)] dark:shadow-[0_14px_28px_-6px_rgba(0,0,0,0.2),0_2px_4px_-1px_rgba(0,0,0,0.12),0_0_0_1px_rgba(255,255,255,0.094)] shrink-0 h-full group"
+      className="w-80 z-[90] bg-background shadow-[0_14px_28px_-6px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06),0_0_0_1px_rgba(84,72,49,0.08)] dark:shadow-[0_14px_28px_-6px_rgba(0,0,0,0.2),0_2px_4px_-1px_rgba(0,0,0,0.12),0_0_0_1px_rgba(255,255,255,0.094)] shrink-0 h-full group fixed"
     >
       <div className="flex flex-col">
         <div className="px-4 py-2 flex justify-between items-center">

@@ -50,7 +50,7 @@ export const iconVaraint = cva("",{
       default: "fill-[#91918e]",
       pink: "fill-[#b24b78]",
       orange: "fill-[#c37a38]",
-      sky: "fill-sky-600",
+      sky: "fill-[#527da5]",
     },
     size: {
       lg: "size-8",

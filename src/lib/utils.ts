@@ -5,6 +5,7 @@ import { formatDistanceToNowStrict } from "date-fns";
 import { EmojiData, EmojiItem } from "@/types/emoji";
 
 import emojisData from "@/constants/emojis.json";
+import { timesOfDay } from "@/types/date";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -59,4 +60,12 @@ export function formatTimeElapsed(date: string) {
     .replace(" day", "d")
 
   return `${timeElapsed} ago`;
+}
+
+export function formatGreeting(date: Date): string {
+  const hour = date.getHours(); 
+
+  const timeOfDay = timesOfDay.find(({ from, to }) => from < to ? hour >= from && hour < to : hour >= from || hour < to);
+
+  return `Good ${timeOfDay?.time || "Day"}`;
 }
