@@ -14,7 +14,9 @@ export const groupColumns: ColumnProps<Group>[] = [
     icon: TextFontIcon,
     isLock: false,
     isHide: false,
+    isSort: false,
     isSorted: false,
+    isFilter: false,
     searchQuery: "",
     type: "TEXT",
     filterCondition: FilterCondition.CONTAINS,
@@ -40,4 +42,4 @@ export const groupColumns: ColumnProps<Group>[] = [
   //   order: 0,
   //   width: 144
   // },
-]
+] as const;

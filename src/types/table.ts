@@ -1,3 +1,5 @@
+import { JSX } from "react";
+
 export const columnType = ["TEXT", "NUMBER"] as const;
 export const sortOrder = ["asc", "desc"] as const;
 
@@ -35,7 +37,9 @@ export interface ColumnProps<T extends object> {
   label: string;
   isLock: boolean;
   isHide: boolean;
+  isSort: boolean;
   isSorted: boolean;
+  isFilter: boolean;
   searchQuery: string;
   type: ColumnType;
   filterCondition: FilterCondition;
@@ -46,8 +50,27 @@ export interface ColumnProps<T extends object> {
   width: number;
 }
 
-interface TableBaseProps<T extends { id: string }> {
+export interface TableBaseProps<T extends { id: string }> {
   columns: ColumnProps<T>[];
+  data: T[];
+  searchQuery: string;
+}
+
+export type RendenCellFn<T extends object> = (args: {
+  cell: T,
+  column: ColumnProps<T>,
+  searchQuery: string,
+}) => JSX.Element | undefined;
+
+export interface TableCellProps {
+  children: React.ReactNode;
+  width: number;
+}
+
+export interface TableRowProps<T extends { id: string }> extends Omit<TableBaseProps<T>, "data"> {
+  cell: T;
+  index: number;
+  renderCell: RendenCellFn<T>;
 }
 
 export interface TableHeadProps<T extends { id: string }> {
@@ -60,6 +83,5 @@ export interface TableHeaderProps<T extends { id: string }> extends TableBasePro
 }
 
 export interface TableBodyProps<T extends { id: string }> extends TableBaseProps<T> {
-  data: T[];
-  searchQuery: string;
+  renderCell: RendenCellFn<T>;
 }

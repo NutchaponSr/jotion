@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { XIcon } from "lucide-react";
 
 import { IconVaraint } from "@/types/icon";
-import { FilterBaseProps, FilterCommandProps } from "@/types/filter";
+import { FilterCommandProps } from "@/types/filter";
 
 import {
   Command,
@@ -24,35 +24,27 @@ import { Check1Icon } from "@/components/icons";
 
 import { UserAvatar } from "@/modules/auth/components/user-avatar";
 
-const FilterButton = ({
-  icon,
-  label,
-  isSelected
-}: FilterBaseProps) => {
-  return (
-    <Button variant={isSelected ? "filterActive" : "filter"} size="xs" className="w-fit gap-1">
-      {React.createElement(icon, { className: "size-3.5 stroke-[1.75]", variant: IconVaraint.STROKE })}
-      <span className="max-w-[150px] text-xs font-normal whitespace-nowrap overflow-hidden text-ellipsis">
-        {label}
-      </span>
-    </Button>
-  );
-}
-
 const Filter = {
   Command: ({ 
     data, 
     placeholder, 
     selectedValues,
+    icon,
+    label,
+    isSelected,
     onSelectionChange,
-    ...props 
   }: FilterCommandProps) => {
     const [search, setSearch] = useState("");
 
     return (
       <Popover>
-        <PopoverTrigger>
-          <FilterButton {...props} />
+        <PopoverTrigger asChild>
+          <Button variant={isSelected ? "filterActive" : "filter"} size="filter" className="w-fit gap-1">
+            {React.createElement(icon, { className: "size-3.5", variant: IconVaraint.STROKE })}
+            <span className="max-w-[150px] text-xs font-normal whitespace-nowrap overflow-hidden text-ellipsis">
+              {label}
+            </span>
+          </Button>
         </PopoverTrigger>
         <PopoverContent align="start" className="max-w-[calc(100vw-24px)] min-w-[180px] w-[250px] h-full max-h-[40vh] shadow-[0_14px_28px_-6px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06),0_0_0_1px_rgba(84,72,49,0.08)] flex flex-col p-0">
           <Command>

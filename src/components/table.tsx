@@ -1,14 +1,23 @@
-import { TableBodyProps, TableHeaderProps, TableHeadProps } from "@/types/table";
+import React from "react";
+
+import { GripVerticalIcon, PlusIcon } from "lucide-react";
+
+import { 
+  TableBodyProps, 
+  TableCellProps, 
+  TableHeaderProps, 
+  TableHeadProps, 
+  TableRowProps
+} from "@/types/table";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import React from "react";
 
 const TableHeader = <T extends { id: string }>({
   columns,
 }: TableHeaderProps<T>) => {
   return (
     <div className="h-[34px] relative">
-      <div className="flex h-[34px] text-secondary-foreground left-0 right-0 relative box-border shadow-[inset_0_-1px_0_rgb(233,233,231),inset_0_1px_0_rgb(233,233,231)] min-w-[calc(100%-192px)] group">
+      <div className="flex h-[34px] text-secondary-foreground left-0 right-0 relative box-border shadow-[inset_0_-1px_0_rgb(233,233,231),inset_0_1px_0_rgb(233,233,231)] dark:shadow-[-3px_0_0_rgb(25,25,25),inset_0_-1px_0_rgb(47,47,47),inset_0_1px_0_rgb(47,47,47)] min-w-[calc(100%-192px)] group">
         <Table.SelectAll />
         {columns.map((column, index) => (
           <Table.Head key={index} column={column} />
@@ -18,13 +27,22 @@ const TableHeader = <T extends { id: string }>({
   );
 }
 
-const TableBody = <T extends { id: string }>({ data }: TableBodyProps<T>) => {
+const TableBody = <T extends { id: string }>({ 
+  data, 
+  ...props
+}: TableBodyProps<T>) => {
   return (
     <div className="relative w-full isolation-auto">
-      <div style={{ height: `${data.length * 34}px` }} className="w-full relative shrink-0">
-        {data.map((item, rowIndex) => (
-          
+      <div style={{ height: `${data.length * 32}px` }} className="w-full relative shrink-0">
+        {data.map((cell, index) => (
+          <Table.Row key={index} index={index} cell={cell} {...props} />
         ))}
+      </div>
+      <div role="button" className="transition flex items-center gap-2 h-8 pl-2 leading-5 hover:bg-popover-foreground cursor-pointer">
+        <PlusIcon className="size-4 text-secondary" style={{ strokeWidth: 2 }} />
+        <span className="text-sm text-secondary inline-flex items-center sticky left-10">
+          New Page
+        </span>
       </div>
     </div>
   );
@@ -37,7 +55,41 @@ const TableSelectAll = () => {
         <div className="group-hover:opacity-100 opacity-0 transition-opacity">
           <div className="h-full items-start justify-center flex cursor-pointer">
             <div className="size-8 flex items-center justify-center">
-              <Checkbox />
+              <Checkbox className="size-3.5" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const TableSelect = () => {
+  return (
+    <div className="sticky -left-8 flex">
+      <div className="absolute -left-8">
+        <div className="group-hover:opacity-100 opacity-0 transition-opacity">
+          <div className="h-full items-start justify-center flex cursor-pointer">
+            <div className="size-8 flex items-center justify-center">
+              <Checkbox className="size-3.5" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const TableAction = () => {
+  return (
+    <div className="sticky -left-[50px] flex">
+      <div className="absolute -left-[50px]">
+        <div className="group-hover:opacity-100 opacity-0 h-full transition">
+          <div className="h-full items-center justify-center flex cursor-pointer">
+            <div className="w-[18px] h-8 flex items-center justify-center">
+              <button className="transition flex items-center justify-center w-[18px] h-6 rounded hover:bg-[#37352f0f]">
+                <GripVerticalIcon className="size-4 shrink-0 text-[#b9b9b7]" />
+              </button>
             </div>
           </div>
         </div>
@@ -68,9 +120,65 @@ const TableHead = <T extends { id: string }>({ column }: TableHeadProps<T>) => {
   );
 }
 
+const TableCell = ({ children, width }: TableCellProps) => {
+  return (
+    <div
+      style={{ width: `${width}px` }}
+      className="flex h-full relative border-r border-border"
+    >
+      <div role="button" className="transition relative flex overflow-clip w-full whitespace-normal min-h-8 py-1.5 px-2 items-center">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+const TableRow = <T extends { id: string }>({ 
+  cell,
+  index,
+  columns,
+  searchQuery,
+  renderCell
+}: TableRowProps<T>) => {
+  return (
+    <div 
+      className="absolute left-0 top-0 w-full group" 
+      style={{ transform: `translateY(${index * 32}px)` }}
+    >
+      <div className="flex h-8 border-b border-border">
+        <Table.Select />
+        <Table.Action />
+        {columns.map((column, colIndex) => (
+          <Table.Cell key={colIndex} width={column.width}
+          >
+            {renderCell({ cell, column, searchQuery })}
+          </Table.Cell>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const TableFooter = () => {
+  return (
+    <div className="h-12 w-full relative group">
+      <div className="border-t border-border flex min-w-full">
+        <div className="flex pr-8">
+          {/* TODO: Calculation */}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export const Table = {
+  Action: TableAction,
   Body: TableBody,
+  Cell: TableCell,
+  Footer: TableFooter,
   Head: TableHead,
   Header: TableHeader,
+  Row: TableRow,
+  Select: TableSelect,
   SelectAll: TableSelectAll,
 }
