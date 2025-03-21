@@ -1,6 +1,6 @@
 import Filter from "@/components/filter";
 
-import Sidebar from "@/modules/dashboard/components/ui/sidebar";
+import Sidebar from "@/modules/bloc/dashboard/components/ui/sidebar";
 
 import { 
   CornerUpLeftIcon, 

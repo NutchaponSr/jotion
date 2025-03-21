@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useMount } from "react-use";
 
-import { SearchCommand } from "@/modules/dashboard/components/search-command";
+import { SearchCommand } from "@/modules/bloc/dashboard/components/search-command";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);

@@ -9,7 +9,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db/drizzle";
 import { roles, users } from "@/db/schema";
 
-import { SignInSchema } from "@/modules/auth/schema/sign-in";
+import { SignInSchema } from "@/modules/routes/auth/schema/sign-in";
 
 declare module "@auth/core/jwt" {
   interface JWT {

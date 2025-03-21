@@ -1,5 +1,5 @@
-import { SignInForm } from "@/modules/auth/components/form-sign-in";
-import { AuthWrapper } from "@/modules/auth/components/auth-wrapper";
+import { SignInForm } from "@/modules/routes/auth/components/form-sign-in";
+import { AuthWrapper } from "@/modules/routes/auth/components/auth-wrapper";
 
 const SignInPage = () => {
   return (

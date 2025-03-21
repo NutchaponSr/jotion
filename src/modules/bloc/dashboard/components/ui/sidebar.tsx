@@ -38,8 +38,8 @@ import { Accordion } from "@/components/accordion";
 
 import { Inbox } from "@/modules/bloc/dashboard/components/inbox";
 import { Navbar } from "@/modules/bloc/dashboard/components/navbar";
-import { GroupSpace } from "@/modules/groups/components/group-space";
 import { UserButton } from "@/modules/routes/auth/components/user-button";
+import { GroupSpace } from "@/modules/routes/groups/components/group-space";
 
 import { 
   BackgroundVariant,

@@ -1,7 +1,8 @@
 import { group } from "@/constants/workspace";
 
 import { Banner } from "@/components/banner";
-import { GroupContent } from "@/modules/groups/components/group-content";
+
+import { GroupContent } from "@/modules/routes/groups/components/group-content";
 
 const GroupPage = async () => {
   return (
