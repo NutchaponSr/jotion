@@ -1,6 +1,7 @@
 "use client";
 
 import { signOut } from "next-auth/react";
+import { LogOutIcon, SettingsIcon } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -11,9 +12,10 @@ import {
   DropdownMenuItem
 } from "@/components/ui/dropdown-menu";
 import { Mode } from "@/components/mode";
-import { UserAvatar } from "./user-avatar";
-import { LogOutIcon, SettingsIcon } from "lucide-react";
-import { ClientSession } from "../hooks/use-current-user";
+
+import { UserAvatar } from "@/modules/routes/auth/components/user-avatar";
+
+import { ClientSession } from "@/modules/routes/auth/hooks/use-current-user";
 
 interface UserWrapperProps {
   children: React.ReactNode;

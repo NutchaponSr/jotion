@@ -1,14 +1,14 @@
-import Sidebar from "@/modules/dashboard/components/ui/sidebar";
+import Sidebar from "@/modules/bloc/dashboard/components/ui/sidebar";
 
 import { MoreHorizontalIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 
-import { GroupActions } from "@/modules/groups/components/group-actions";
+import { GroupRename } from "@/modules/routes/groups/components/group-rename";
+import { GroupActions } from "@/modules/routes/groups/components/group-actions";
 
-import { Group } from "@/modules/groups/api/use-get-group";
-import { GroupRename } from "./group-rename";
+import { Group } from "@/modules/routes/groups/api/use-get-group";
 
 interface GroupItemProps {
   group: Group

@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { client } from "@/lib/rpc";
 
-import { useSearchCommand } from "@/modules/dashboard/stores/use-search-command";
+import { useSearchCommand } from "@/modules/bloc/dashboard/stores/use-search-command";
 
 export type Search = InferResponseType<typeof client.api.searchs.$get, 200>["data"];
 

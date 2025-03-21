@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db/drizzle";
 import { users } from "@/db/schema";
 
-import { SignUpSchema, SignUpSchemaType } from "@/modules/auth/schema/sign-up";
+import { SignUpSchema, SignUpSchemaType } from "@/modules/routes/auth/schema/sign-up";
 
 export const SignUp = async (value: SignUpSchemaType) => {
   const validatedFields = SignUpSchema.safeParse(value);

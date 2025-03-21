@@ -16,7 +16,13 @@ export const useLayoutFilter = create<LayoutFilterStore<any>>((set) => ({
   onOpenFilter: () => set({ isOpenFilter: true }),
   onCloseFilter: () => set({ isOpenFilter: false }),
   addFilter: (id) => set((state) => ({
-    columns: state.columns.map((col) => col.id === id ? { ...col, isFilter: true } : col)
+    columns: state.columns.map((col) => col.id === id ? { 
+      ...col, 
+      filter: {
+        ...col.filter,
+        isFilter: true,
+      },
+    } : col)
   })),
   removeFilter: (id) => set((state) => ({
     columns: state.columns.map((col) => col.id === id ? { 
@@ -27,10 +33,22 @@ export const useLayoutFilter = create<LayoutFilterStore<any>>((set) => ({
     } : col)
   })),
   onCondition: (id, condition) => set((state) => ({
-    columns: state.columns.map((col) => col.id === id ? { ...col, filterCondition: condition } : col)
+    columns: state.columns.map((col) => col.id === id ? { 
+      ...col, 
+      filter: {
+        ...col.filter,
+        condition,
+      },
+    } : col)
   })),
   onSearchQuery: (query) => set((state) => ({
-    columns: state.columns.map((col) => ({ ...col, searchQuery: query }))
+    columns: state.columns.map((col) => ({ 
+      ...col, 
+      filter: { 
+        ...col.filter, 
+        searchQuery: query 
+      },
+    })),
   })),
 
   // Sort
@@ -38,31 +56,54 @@ export const useLayoutFilter = create<LayoutFilterStore<any>>((set) => ({
   onOpenSort: () => set({ isOpenSort: true }),
   onCloseSort: () => set({ isOpenSort: false }),
   addSort: (id) => set((state) => {
-    const maxOrder = Math.max(...state.columns.map((column) => column.sortOrder));
+    const maxOrder = Math.max(...state.columns.map((column) => column.sort.order));
     return {
-      columns: state.columns.map((col) => col.id === id ? { ...col, isSort: true, sortOrder: maxOrder + 100 } : col)
+      columns: state.columns.map((col) => col.id === id ? { 
+        ...col, 
+        isSort: true,
+        sort: {
+          ...col.sort,
+          order: maxOrder + 100
+        }
+      } : col)
     };
   }),
   removeSort: (id) => set((state) => ({
     columns: state.columns.map((col) => col.id === id ? { 
       ...col, 
-      isSort: false,
-      sortOrder: 0,
-      sortBy: "asc"
+      sort: {
+        isSort: false,
+        order: 0,
+        sortBy: "asc"
+      }
     } : col)
   })),
-  removeSortAll() {
-    set((state) => ({
-      columns: state.columns.map((col) => ({ ...col, 
+  removeSortAll: () => set((state) => ({
+    columns: state.columns.map((col) => ({ 
+      ...col, 
+      sort: {
+        ...col.sort,
         isSort: false,
-        sortOrder: 0, 
-      }))
-    }));
-  },
+        order: 0, 
+      }
+    }))
+  })),
   sortReorder: (columns) => set(() => ({
-    columns: columns.map((column, index) => ({ ...column, sortOrder: (index + 1) * 100 }))
+    columns: columns.map((column, index) => ({ 
+      ...column, 
+      sort: {
+        ...column.sort,
+        order: (index + 1) * 100,
+      },
+    })),
   })),
   onSortBy: (id, sortBy) => set((state) => ({
-    columns: state.columns.map((col) => col.id === id ? { ...col, sortBy } : col)
+    columns: state.columns.map((col) => col.id === id ? { 
+      ...col, 
+      sort: {
+        ...col.sort,
+        sortBy,
+      },
+    } : col),
   })),
 }));

@@ -21,8 +21,8 @@ import { FormSuccess } from "@/components/form-success";
 import {
   SignUpSchema,
   SignUpSchemaType
-} from "@/modules/auth/schema/sign-up";
-import { SignUp } from "@/modules/auth/actions/sign-up";
+} from "@/modules/routes/auth/schema/sign-up";
+import { SignUp } from "@/modules/routes/auth/actions/sign-up";
 
 export const SignUpForm = () => {
   const [pending, startTransition] = useTransition();

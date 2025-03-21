@@ -3,8 +3,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 import { Logo } from "@/components/logo";
-import { Signed } from "@/modules/auth/components/signed";
-import { UserButton } from "@/modules/auth/components/user-button";
+import { Signed } from "@/modules/routes/auth/components/signed";
+import { UserButton } from "@/modules/routes/auth/components/user-button";
 
 export const Header = () => {
   return (

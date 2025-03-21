@@ -45,7 +45,7 @@ const Text = <T extends object>({ column }: LayoutFilterProps<T>) => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="transition px-0.5 rounded flex items-center font-medium text-muted hover:bg-popover-foreground gap-0.5">
-              {filterCondition[column.filterCondition]}
+              {filterCondition[column.filter.condition]}
               <ChevronDownIcon className="size-3" />
             </button>
           </DropdownMenuTrigger>
@@ -79,7 +79,7 @@ const Text = <T extends object>({ column }: LayoutFilterProps<T>) => {
       <div className="flex items-center min-h-7 px-0.5 pb-0.5">
         <ClearableInput 
           area="sm"
-          value={column.searchQuery}
+          value={column.filter.searchQuery}
           onChange={(e) => onSearchQuery(e.target.value)}
           variant="search"
           placeholder="Type a value..."

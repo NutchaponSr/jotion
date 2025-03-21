@@ -5,7 +5,7 @@ import { Hero } from "@/app/(main)/components/hero";
 import { GridPattern } from "@/components/magicui/grid-pattern";
 import { IntroduceButton } from "@/app/(main)/components/introduce-button";
 
-import { Signed } from "@/modules/auth/components/signed"
+import { Signed } from "@/modules/routes/auth/components/signed";
 
 const Home = () => {
   return (

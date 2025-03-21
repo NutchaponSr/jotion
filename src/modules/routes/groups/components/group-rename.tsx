@@ -10,8 +10,9 @@ import { Button } from "@/components/ui/button";
 import { HashIcon } from "@/components/icons";
 import { EmojiPicker } from "@/components/emoji-picker";
 
-import { Group } from "@/modules/groups/api/use-get-group";
-import { useRenameGroup } from "../api/use-rename-group";
+import { Group } from "@/modules/routes/groups/api/use-get-group";
+
+import { useRenameGroup } from "@/modules/routes/groups/api/use-rename-group";
 
 interface GroupRenameProps {
   group: Group;
@@ -62,7 +63,7 @@ export const GroupRename = ({
             variant="secondary"
             onChange={(e) => setName(e.target.value)}
           />
-          <Button variant="primaryForeground" size="sm">
+          <Button variant="primary" size="sm">
             Submit
           </Button>
         </form>

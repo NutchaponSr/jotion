@@ -13,9 +13,9 @@ import { Toolbar } from "@/components/toolbar";
 
 import { LayoutsHub } from "@/components/layouts/layouts-hub";
 
-import { GroupCells } from "@/modules/groups/components/group-cells";
+import { GroupCells } from "@/modules/routes/groups/components/group-cells";
 
-import { useGetGroupsByYear } from "@/modules/groups/api/use-get-groups-by-year";
+import { useGetGroupsByYear } from "@/modules/routes/groups/api/use-get-groups-by-year";
 
 export const GroupContent = () => {
   const { setColumns, columns } = useLayoutFilter();

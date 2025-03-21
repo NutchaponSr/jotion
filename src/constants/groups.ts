@@ -3,7 +3,7 @@ import {
   FilterCondition, 
 } from "@/types/layouts";
 
-import { Group } from "@/modules/groups/api/use-get-group";
+import { Group } from "@/modules/routes/groups/api/use-get-group";
 import { HashIcon, TextFontIcon } from "@/components/icons";
 
 export const groupColumns: ColumnProps<Group>[] = [
@@ -13,13 +13,17 @@ export const groupColumns: ColumnProps<Group>[] = [
     icon: TextFontIcon,
     isLock: false,
     isHide: false,
-    isSort: false,
-    isFilter: false,
-    searchQuery: "",
+    sort: {
+      isSort: false,
+      sortBy: "asc",
+      order: 0,
+    },
+    filter: {
+      isFilter: false,
+      searchQuery: "",
+      condition: FilterCondition.CONTAINS,
+    },
     type: "TEXT",
-    filterCondition: FilterCondition.CONTAINS,
-    sortBy: "asc",
-    sortOrder: 0,
     calculation: null,
     order: 0,
     width: 256

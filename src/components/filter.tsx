@@ -22,7 +22,7 @@ import { Button } from "@/components/ui/button";
 
 import { Check1Icon } from "@/components/icons";
 
-import { UserAvatar } from "@/modules/auth/components/user-avatar";
+import { UserAvatar } from "@/modules/routes/auth/components/user-avatar";
 
 const Filter = {
   Command: ({ 

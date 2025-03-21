@@ -23,9 +23,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { HashIcon, TrashIcon } from "@/components/icons";
 import { ClearableInput } from "@/components/clearable-input";
 
-import { Workspace, workspaces } from "@/modules/dashboard/types/sidebar";
+import { Workspace, workspaces } from "@/modules/bloc/dashboard/types/sidebar";
 
-import { useGetTrashs } from "@/modules/dashboard/api/use-get-trashs";
+import { useGetTrashs } from "@/modules/bloc/dashboard/api/use-get-trashs";
 
 const Trash = () => {
   const [on, toggle] = useToggle(false);

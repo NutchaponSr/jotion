@@ -1,5 +1,6 @@
 import { toast } from "sonner";
 import { format } from "date-fns";
+import { useCallback } from "react";
 
 import {
   DropdownMenu,
@@ -19,10 +20,10 @@ import {
   TrashIcon 
 } from "@/components/icons";
 
-import { Group } from "@/modules/groups/api/use-get-group";
-import { useTrashGroup } from "../api/use-trash-group";
-import { useDuplicateGroup } from "../api/use-duplicate-group";
-import { useCallback } from "react";
+import { Group } from "@/modules/routes/groups/api/use-get-group";
+
+import { useTrashGroup } from "@/modules/routes/groups/api/use-trash-group";
+import { useDuplicateGroup } from "@/modules/routes/groups/api/use-duplicate-group";
 
 interface GroupActionsProps {
   group: Group;

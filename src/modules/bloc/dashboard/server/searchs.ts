@@ -8,9 +8,9 @@ import { db } from "@/db/drizzle";
 import { groups, users } from "@/db/schema";
 import { and, eq, ilike, inArray } from "drizzle-orm";
 
-import { Workspace } from "@/modules/dashboard/types/sidebar";
-import { formatDateCondition } from "@/modules/dashboard/utils";
-import { sortCatalog, SortLevel } from "@/modules/dashboard/types/sort";
+import { Workspace } from "@/modules/bloc/dashboard/types/sidebar";
+import { formatDateCondition } from "@/modules/bloc/dashboard/utils";
+import { sortCatalog, SortLevel } from "@/modules/bloc/dashboard/types/sort";
 
 const app = new Hono()
   .get(

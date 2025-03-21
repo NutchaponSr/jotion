@@ -27,7 +27,7 @@ export const SortContent = <T extends object>({ columns }: SortContentProps<T>) 
     <>
       <div className="flex flex-col py-2">
         {columns
-          .filter((column) => column.isSort)
+          .filter((column) => column.sort.isSort)
           .map((column, index) => (
             <div key={index} className="flex items-center min-h-8 text-sm gap-2 mx-2">
               <div className="flex items-center justify-center size-7 shrink-0 cursor-grab">
@@ -43,7 +43,7 @@ export const SortContent = <T extends object>({ columns }: SortContentProps<T>) 
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button size="md" variant="outline">
-                        {sorts[column.sortBy]}
+                        {sorts[column.sort.sortBy]}
                         <ChevronDownIcon className="size-4 text-icon" />
                       </Button>
                     </DropdownMenuTrigger>

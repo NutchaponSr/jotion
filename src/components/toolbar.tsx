@@ -39,7 +39,7 @@ export const Toolbar = <T extends object>({
 
   const [isOpenToolbarFilter, toggleToolbarFilter] = useToggle(false);
 
-  const isSomeFilter = columns.some((column) => column.isFilter && column.searchQuery !== "");
+  const isSomeFilter = columns.some((column) => column.filter.isFilter && column.filter.searchQuery !== "");
 
   return (
     <section className="min-h-10 px-24 sticky left-0 shrink-0 z-[86]">
@@ -53,7 +53,7 @@ export const Toolbar = <T extends object>({
             placeholder="Filter by..."
             isOpen={isOpenFilter}
             onClose={onCloseFilter}
-            data={columns.filter((column) => !column.isFilter)} 
+            data={columns.filter((column) => !column.filter.isFilter)} 
             onSelect={(id) => {
               onCloseFilter();
               addFilter(id);
@@ -62,7 +62,7 @@ export const Toolbar = <T extends object>({
           >
             <Button.Icon 
               onClick={() => {
-                if (columns.some((column) => column.isFilter)) toggleToolbarFilter();
+                if (columns.some((column) => column.filter.isFilter)) toggleToolbarFilter();
                 else setTimeout(() => onOpenFilter(), 10);
               }} 
               className="size-7 hover:bg-popover-foreground"
@@ -74,7 +74,7 @@ export const Toolbar = <T extends object>({
             align="end"
             isOpen={isOpenSort}
             onClose={onCloseSort}
-            data={columns.filter((column) => !column.isSort)}
+            data={columns.filter((column) => !column.sort.isSort)}
             onSelect={(id) => {
               onCloseSort();
               addSort(id);
@@ -84,7 +84,7 @@ export const Toolbar = <T extends object>({
           >
             <Button.Icon 
               onClick={() => {
-                if (columns.some((column) => column.isSort)) toggleToolbarFilter();
+                if (columns.some((column) => column.sort.isSort)) toggleToolbarFilter();
                 else setTimeout(() => onOpenSort(), 10);
               }}
               className="size-7 hover:bg-popover-foreground"
@@ -103,7 +103,7 @@ export const Toolbar = <T extends object>({
           </Button.Icon>
         </div>
       </div>
-      {(isOpenToolbarFilter && columns.some((column) => column.isFilter || column.isSort)) && (
+      {(isOpenToolbarFilter && columns.some((column) => column.filter.isFilter || column.sort.isSort)) && (
         <ToolbarFilter columns={columns} />
       )}
     </section>

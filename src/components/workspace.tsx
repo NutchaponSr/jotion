@@ -1,14 +1,17 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 
 import { SquareDashedKanbanIcon } from "lucide-react";
 
-import { Workspace as WorkspaceType } from "@/types/workspace";
-import { workspaces } from "@/constants/workspace";
 import { cn } from "@/lib/utils";
-import React from "react";
+
 import { IconVaraint, iconVaraint } from "@/types/icon";
+import { Workspace as WorkspaceType } from "@/types/workspace";
+
+import { workspaces } from "@/constants/workspace";
+
 
 export const Workspace = () => {
   return (

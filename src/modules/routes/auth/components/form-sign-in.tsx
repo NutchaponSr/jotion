@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button";
 import {
   SignInSchema,
   SignInSchemaType
-} from "@/modules/auth/schema/sign-in";
+} from "@/modules/routes/auth/schema/sign-in";
 
 import { FormError } from "@/components/form-error";
 import { ClearableInput } from "@/components/clearable-input";

@@ -98,7 +98,7 @@ interface LayoutFilterProps<T extends object> {
 }
 
 const LayoutFilter = <T extends object>({ column }: LayoutFilterProps<T>) => {
-  const isFilter = column.searchQuery != "";
+  const isFilter = column.filter.searchQuery != "";
 
   return (
     <Popover>
@@ -129,7 +129,7 @@ const LayoutSort = <T extends object>({ columns }: LayoutSortProps<T>) => {
         <Button variant="filter" size="filter">
           <ArrowUpIcon />
           <span className="max-w-[150px] text-xs font-normal whitespace-nowrap overflow-hidden text-ellipsis">
-            {columns.filter((column) => column.isSort)[0].label}
+            {columns.filter((column) => column.sort.isSort)[0].label}
           </span>
           <ChevronDownIcon className="size-3 text-secondary" />
         </Button>

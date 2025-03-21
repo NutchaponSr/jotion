@@ -1,6 +1,7 @@
 
-import { Group } from "@/modules/groups/api/use-get-group";
-import { ColumnProps } from "@/types/table";
+import { ColumnProps } from "@/types/layouts";
+
+import { Group } from "@/modules/routes/groups/api/use-get-group";
 
 interface GroupCellsProps {
   cell: Group;
@@ -10,7 +11,6 @@ interface GroupCellsProps {
 
 export const GroupCells = ({ cell, column }: GroupCellsProps) => {
   const icon = cell["icon"];
-  const value = cell[column.id];
 
   switch (column.id) {
     case "name": 

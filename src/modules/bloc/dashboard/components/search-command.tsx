@@ -3,6 +3,11 @@ import {
   CornerDownLeftIcon, 
   SearchIcon
 } from "lucide-react";
+import { useState } from "react";
+
+import { cn, formatTimeElapsed } from "@/lib/utils";
+
+import { IconVaraint } from "@/types/icon";
 
 import { 
   Command, 
@@ -19,14 +24,16 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-import { AiChatIcon, CircleCancelIcon, FilterCircleIcon, HashIcon } from "@/components/icons";
+import { 
+  AiChatIcon, 
+  CircleCancelIcon, 
+  FilterCircleIcon, 
+  HashIcon 
+} from "@/components/icons";
 import { VisuallyHidden } from "@/components/visually-hidden";
 
-import { useSearchCommand } from "@/modules/dashboard/stores/use-search-command";
-import { Search, useGetSearchs } from "../api/use-get-searchs";
-import { useState } from "react";
-import { cn, formatTimeElapsed } from "@/lib/utils";
-import { IconVaraint } from "@/types/icon";
+import { useSearchCommand } from "@/modules/bloc/dashboard/stores/use-search-command";
+import { Search, useGetSearchs } from "@/modules/bloc/dashboard/api/use-get-searchs";
 
 export const SearchCommand = () => {
   const { data: queryData } = useGetSearchs({});

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { formatGreeting } from "@/lib/utils";
 
-import { useCurrentUser } from "@/modules/auth/hooks/use-current-user";
+import { useCurrentUser } from "@/modules/routes/auth/hooks/use-current-user";
 
 export const WelcomeMessage = () => {
   const user = useCurrentUser();

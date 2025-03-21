@@ -47,19 +47,27 @@ export const sorts: Record<SortOrder, string> = {
   desc: "Descending",
 }
 
+interface SortProps {
+  isSort: boolean;
+  sortBy: SortOrder;
+  order: number;
+}
+
+interface FilterProps {
+  isFilter: boolean;
+  searchQuery: string;
+  condition: FilterCondition;
+}
+
 export interface ColumnProps<T extends object> {
   id: keyof T;
   icon: React.ElementType;
   label: string;
   isLock: boolean;
   isHide: boolean;
-  isSort: boolean;
-  isFilter: boolean;
-  searchQuery: string;
+  sort: SortProps;
+  filter: FilterProps;
   type: ColumnType;
-  filterCondition: FilterCondition;
-  sortBy: SortOrder;
-  sortOrder: number;
   calculation: CalculationType | null;
   order: number;
   width: number;

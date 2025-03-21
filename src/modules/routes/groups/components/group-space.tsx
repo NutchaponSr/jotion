@@ -1,6 +1,6 @@
 "use client";
 
-import Sidebar from "@/modules/dashboard/components/ui/sidebar";
+import Sidebar from "@/modules/bloc/dashboard/components/ui/sidebar";
 
 import { PlusIcon } from "lucide-react";
 
@@ -10,8 +10,8 @@ import { CalendarDaysIcon } from "@/components/icons";
 
 import { GroupItem } from "@/modules/groups/components/group-item";
 
-import { useGetGroups } from "@/modules/groups/api/use-get-groups";
-import { useCreateGroup } from "@/modules/groups/api/use-create-group";
+import { useGetGroups } from "@/modules/routes/groups/api/use-get-groups";
+import { useCreateGroup } from "@/modules/routes/groups/api/use-create-group";
 
 export const GroupSpace = () => {
   const { data: groups } = useGetGroups();
