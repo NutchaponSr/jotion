@@ -2,13 +2,11 @@ import Layout from "@/components/layouts/layout";
 
 import { PlusIcon } from "lucide-react";
 
-import { ColumnProps } from "@/types/table";
+import { ColumnProps } from "@/types/layouts";
 
 import { useLayoutFilter } from "@/stores/use-layout-filter";
 
 import { Button } from "@/components/ui/button";
-
-import { LayoutFilter } from "@/components/layouts/layout-filter";
 
 interface ToolbarFilterProps<T extends object> {
   columns: ColumnProps<T>[];
@@ -22,10 +20,11 @@ export const ToolbarFilter = <T extends object>({ columns }: ToolbarFilterProps<
       <div className="flex pt-1">
         <div className="relative grow-0 overflow-hidden">
           <div className="flex items-center py-2 gap-1.5 overflow-x-auto overflow-y-hidden">
+            {columns.some((column) => column.isSort) && <Layout.Sort columns={columns} />}
             {columns
               .filter((column) => column.isFilter)
               .map((column, index) => (
-                <LayoutFilter key={index} column={column} /> 
+                <Layout.Filter key={index} column={column} /> 
             ))}
             <Layout.Popover
               showAdvanced

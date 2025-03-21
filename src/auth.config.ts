@@ -7,10 +7,9 @@ import { DrizzleAdapter } from "@auth/drizzle-adapter";
 
 import { eq } from "drizzle-orm";
 import { db } from "@/db/drizzle";
-import { roles, users, sessions } from "@/db/schema";
+import { roles, users } from "@/db/schema";
 
 import { SignInSchema } from "@/modules/auth/schema/sign-in";
-import { decode, encode } from "next-auth/jwt";
 
 declare module "@auth/core/jwt" {
   interface JWT {

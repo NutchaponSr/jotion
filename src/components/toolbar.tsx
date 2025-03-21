@@ -9,7 +9,9 @@ import {
 } from "lucide-react";
 import { useToggle } from "react-use";
 
-import { ColumnProps } from "@/types/table";
+import { cn } from "@/lib/utils";
+
+import { ColumnProps } from "@/types/layouts";
 
 import { useLayoutFilter } from "@/stores/use-layout-filter";
 
@@ -25,13 +27,19 @@ export const Toolbar = <T extends object>({
   columns
 }: ToolbarProps<T>) => {
   const { 
+    isOpenSort,
     isOpenFilter,
     addFilter,
+    addSort,
     onOpenFilter,
-    onCloseFilter 
+    onCloseFilter,
+    onCloseSort,
+    onOpenSort,
   } = useLayoutFilter();
 
   const [isOpenToolbarFilter, toggleToolbarFilter] = useToggle(false);
+
+  const isSomeFilter = columns.some((column) => column.isFilter && column.searchQuery !== "");
 
   return (
     <section className="min-h-10 px-24 sticky left-0 shrink-0 z-[86]">
@@ -59,23 +67,39 @@ export const Toolbar = <T extends object>({
               }} 
               className="size-7 hover:bg-popover-foreground"
             >
-              <ListFilterIcon className="size-4 text-[#9a9a97]" />
+              <ListFilterIcon className={cn("size-4 text-icon", isSomeFilter && "text-marine")} />
             </Button.Icon>
           </Layout.Popover>
-          {/* TODO: Sort columns */}
-          {/* <Layout.Popover align="end" data={columns} onSelect={() => {}}> */}
-            <Button.Icon className="size-7 hover:bg-popover-foreground">
-              <ArrowUpDownIcon className="size-4 text-[#9a9a97]" />
+          <Layout.Popover
+            align="end"
+            isOpen={isOpenSort}
+            onClose={onCloseSort}
+            data={columns.filter((column) => !column.isSort)}
+            onSelect={(id) => {
+              onCloseSort();
+              addSort(id);
+              toggleToolbarFilter(true);
+            }}
+            placeholder="Sort by..."
+          >
+            <Button.Icon 
+              onClick={() => {
+                if (columns.some((column) => column.isSort)) toggleToolbarFilter();
+                else setTimeout(() => onOpenSort(), 10);
+              }}
+              className="size-7 hover:bg-popover-foreground"
+            >
+              <ArrowUpDownIcon className="size-4 text-icon" />
             </Button.Icon>
-          {/* </Layout.Popover> */}
+          </Layout.Popover>
           <Button.Icon className="size-7 hover:bg-popover-foreground">
-            <ZapIcon className="size-4 text-[#9a9a97]" />
+            <ZapIcon className="size-4 text-icon" />
           </Button.Icon>
           <Button.Icon className="size-7 hover:bg-popover-foreground">
-            <SearchIcon className="size-4 text-[#9a9a97]" />
+            <SearchIcon className="size-4 text-icon" />
           </Button.Icon>
           <Button.Icon className="size-7 hover:bg-popover-foreground">
-            <MoreHorizontalIcon className="size-4 text-[#9a9a97]" />
+            <MoreHorizontalIcon className="size-4 text-icon" />
           </Button.Icon>
         </div>
       </div>

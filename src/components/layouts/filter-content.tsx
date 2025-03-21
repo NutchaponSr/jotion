@@ -1,4 +1,15 @@
-import { LayoutFilterProps } from "@/types/layouts";
+import { 
+  ChevronDownIcon, 
+  MoreHorizontalIcon 
+} from "lucide-react";
+
+import { 
+  FilterCondition, 
+  filterCondition, 
+  LayoutFilterProps 
+} from "@/types/layouts";
+
+import { useLayoutFilter } from "@/stores/use-layout-filter";
 
 import {
   DropdownMenu,
@@ -6,11 +17,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { ChevronDownIcon, MoreHorizontalIcon } from "lucide-react";
-import { Button } from "../ui/button";
-import { ClearableInput } from "../clearable-input";
-import { PlusIcon, TrashIcon } from "../icons";
-import { useLayoutFilter } from "@/stores/use-layout-filter";
+import { Button } from "@/components/ui/button";
+
+import { PlusIcon, TrashIcon } from "@/components/icons";
+import { ClearableInput } from "@/components/clearable-input";
 
 const Content = <T extends object>({ ...props }: LayoutFilterProps<T>) => {
   switch (props.column.type) {
@@ -20,7 +30,11 @@ const Content = <T extends object>({ ...props }: LayoutFilterProps<T>) => {
 }
 
 const Text = <T extends object>({ column }: LayoutFilterProps<T>) => {
-  const { removeFilter } = useLayoutFilter();
+  const { 
+    onCondition,
+    onSearchQuery,
+    removeFilter
+  } = useLayoutFilter();
 
   return (
     <div className="flex flex-col">
@@ -29,21 +43,23 @@ const Text = <T extends object>({ column }: LayoutFilterProps<T>) => {
           {column.label}
         </span>
         <DropdownMenu>
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger asChild>
             <button className="transition px-0.5 rounded flex items-center font-medium text-muted hover:bg-popover-foreground gap-0.5">
-              contain
+              {filterCondition[column.filterCondition]}
               <ChevronDownIcon className="size-3" />
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-[190px]">
-            <DropdownMenuItem>
-
-            </DropdownMenuItem>
+            {(Object.values(FilterCondition) as FilterCondition[]).map((condition) => (
+              <DropdownMenuItem key={condition} onClick={() => onCondition(column.id, condition)}>
+                {filterCondition[condition]}
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
         <div className="grow" />
         <DropdownMenu>
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger asChild>
             <Button.Icon className="size-5 hover:bg-popover-foreground">
               <MoreHorizontalIcon className="size-4 text-muted" />
             </Button.Icon>
@@ -63,11 +79,16 @@ const Text = <T extends object>({ column }: LayoutFilterProps<T>) => {
       <div className="flex items-center min-h-7 px-0.5 pb-0.5">
         <ClearableInput 
           area="sm"
+          value={column.searchQuery}
+          onChange={(e) => onSearchQuery(e.target.value)}
           variant="search"
           placeholder="Type a value..."
-          onClear={() => {}}
+          onClear={() => onSearchQuery("")}
         />
       </div>
+      <pre className="text-xs">
+        {JSON.stringify(column, null, 2)}
+      </pre>
     </div>
   );
 }

@@ -2,10 +2,11 @@ import { twMerge } from "tailwind-merge";
 import { clsx, type ClassValue } from "clsx";
 import { formatDistanceToNowStrict } from "date-fns";
 
+import { timesOfDay } from "@/types/date";
 import { EmojiData, EmojiItem } from "@/types/emoji";
+import { ColumnProps, FilterCondition } from "@/types/layouts";
 
 import emojisData from "@/constants/emojis.json";
-import { timesOfDay } from "@/types/date";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -68,4 +69,74 @@ export function formatGreeting(date: Date): string {
   const timeOfDay = timesOfDay.find(({ from, to }) => from < to ? hour >= from && hour < to : hour >= from || hour < to);
 
   return `Good ${timeOfDay?.time || "Day"}`;
+}
+
+function applyCondition(
+  condition: FilterCondition,
+  value: string,
+  searchQuery: string
+): boolean {
+  if (value === "") return false;
+
+  const stringValue = value.toLowerCase();
+  const query = searchQuery != null ? String(searchQuery).toLowerCase() : "";
+
+  switch (condition) {
+    case FilterCondition.IS:
+      return stringValue === query;
+    case FilterCondition.IS_NOT: 
+      return stringValue !== query;
+    case FilterCondition.CONTAINS:
+      return stringValue.includes(query);
+    case FilterCondition.DOES_NOT_CONTAIN:
+      return !stringValue.includes(query);
+    case FilterCondition.STARTS_WITH:
+      return stringValue.startsWith(query);
+    case FilterCondition.ENDS_WITH:
+      return stringValue.endsWith(query);
+    case FilterCondition.IS_EMPTY:
+      return stringValue === "";
+    case FilterCondition.IS_NOT_EMPTY:
+      return stringValue !== "";
+    default:
+      return false;
+  }
+}
+
+export function filterByConditions<T extends object>(
+  data: T[],
+  columns: ColumnProps<T>[],
+): T[] {
+  if (!data || !columns || columns.length === 0) return data;
+
+  return data.filter((item) => {
+    return columns.every((column) => {
+      const value = item[column.id] as string;
+      return applyCondition(column.filterCondition, value, column.searchQuery);
+    });
+  });
+}
+
+export function sortByColumns<T extends object>(
+  data: T[],
+  columns: ColumnProps<T>[],
+): T[] {
+  if (!data || columns.length === 0) return data;
+
+  return data.sort((a, b) => {
+    for (const column of columns) {
+      if (!column.isSort) continue;
+
+      const valueA = a[column.id] as string;
+      const valueB = b[column.id] as string;
+
+      const comparison = String(valueA).localeCompare(String(valueB), undefined, { numeric: true });
+
+      if (comparison !== 0) {
+        return column.sortBy === "asc" ? comparison : -comparison;
+      }
+    }
+
+    return 0;
+  });
 }

@@ -1,6 +1,9 @@
 "use client";
 
+import { useMemo } from "react";
 import { useMount } from "react-use";
+
+import { filterByConditions, sortByColumns } from "@/lib/utils";
 
 import { groupColumns } from "@/constants/groups";
 
@@ -12,14 +15,25 @@ import { LayoutsHub } from "@/components/layouts/layouts-hub";
 
 import { GroupCells } from "@/modules/groups/components/group-cells";
 
-import { useGroupsTable } from "@/modules/groups/hooks/use-groups-table";
+import { useGetGroupsByYear } from "@/modules/groups/api/use-get-groups-by-year";
 
 export const GroupContent = () => {
   const { setColumns, columns } = useLayoutFilter();
-
-  const { groups, isLoading } = useGroupsTable("2025");
+  const { data: groups, isLoading } = useGetGroupsByYear("2025");
 
   useMount(() => setColumns(groupColumns));
+
+  const filteredData = useMemo(() => {
+    if (!groups) return [];
+    return filterByConditions(groups, columns);
+  }, [columns, groups]);
+
+  const sortedData = useMemo(() => {
+    return sortByColumns(filteredData, columns);
+  }, [columns, filteredData]);
+  
+  // TODO: Global search
+  // TODO: Selection row
 
   if (isLoading) {
     return (
@@ -33,7 +47,7 @@ export const GroupContent = () => {
     <div className="contents">
       <Toolbar columns={columns} />
       <LayoutsHub 
-        data={groups} 
+        data={sortedData} 
         columns={groupColumns} 
         searchQuery="" 
         renderCell={({ ...props }) => <GroupCells {...props} />}

@@ -1,5 +1,10 @@
-import { CalendarDaysIcon, MoreHorizontalIcon, PlusIcon } from "lucide-react";
-import { Button } from "./ui/button";
+import { 
+  CalendarDaysIcon, 
+  MoreHorizontalIcon, 
+  PlusIcon 
+} from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 
 export const ShowcaseCalendar = () => {
   return (

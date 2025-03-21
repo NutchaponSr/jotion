@@ -1,5 +1,10 @@
-import { FolderLibraryIcon, Notebook1Icon, UsersIcon } from "@/components/icons";
 import { Workspace } from "@/types/workspace";
+
+import { 
+  FolderLibraryIcon, 
+  Notebook1Icon, 
+  UsersIcon 
+} from "@/components/icons";
 
 export const group: Workspace = {
     label: "Group",
