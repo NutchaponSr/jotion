@@ -112,7 +112,7 @@ export function filterByConditions<T extends object>(
   return data.filter((item) => {
     return columns.every((column) => {
       const value = item[column.id] as string;
-      return applyCondition(column.filterCondition, value, column.searchQuery);
+      return applyCondition(column.filter.condition, value, column.filter.searchQuery);
     });
   });
 }
@@ -125,7 +125,7 @@ export function sortByColumns<T extends object>(
 
   return data.sort((a, b) => {
     for (const column of columns) {
-      if (!column.isSort) continue;
+      if (!column.sort.isSort) continue;
 
       const valueA = a[column.id] as string;
       const valueB = b[column.id] as string;
@@ -133,7 +133,7 @@ export function sortByColumns<T extends object>(
       const comparison = String(valueA).localeCompare(String(valueB), undefined, { numeric: true });
 
       if (comparison !== 0) {
-        return column.sortBy === "asc" ? comparison : -comparison;
+        return column.sort.sortBy === "asc" ? comparison : -comparison;
       }
     }
 

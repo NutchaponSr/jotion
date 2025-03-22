@@ -86,9 +86,6 @@ const Text = <T extends object>({ column }: LayoutFilterProps<T>) => {
           onClear={() => onSearchQuery("")}
         />
       </div>
-      <pre className="text-xs">
-        {JSON.stringify(column, null, 2)}
-      </pre>
     </div>
   );
 }

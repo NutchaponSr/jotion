@@ -28,5 +28,11 @@ export const GroupCells = ({ cell, column }: GroupCellsProps) => {
           </span>
         </>
       );
+    case "year":
+      return (
+        <span className="leading-[1.5] whitespace-pre-wrap break-words font-medium text-primary text-sm">
+          {cell["year"]}
+        </span>
+      );
   }
 }

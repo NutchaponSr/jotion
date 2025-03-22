@@ -1,6 +1,8 @@
 import Content from "./filter-content";
 
 import { 
+  ArrowDownIcon,
+  ArrowUpDownIcon,
   ArrowUpIcon, 
   ChevronDownIcon, 
   PlusIcon 
@@ -10,8 +12,11 @@ import { createElement } from "react";
 import { 
   ColumnProps,
   LayoutBaseProps, 
+  LayoutDropdownProps, 
   LayoutPopoverProps 
 } from "@/types/layouts";
+
+import { useSearch } from "@/hooks/use-searchs";
 
 import {
   Command,
@@ -21,6 +26,13 @@ import {
   CommandItem,
   CommandList
 } from "@/components/ui/command";
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuLabel, 
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
 import {
   Popover,
   PopoverContent,
@@ -31,6 +43,8 @@ import { Button } from "@/components/ui/button";
 import { Table } from "@/components/table";
 
 import { SortContent } from "@/components/layouts/sort-content";
+import { Input } from "../ui/input";
+import { useLayoutFilter } from "@/stores/use-layout-filter";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -93,6 +107,53 @@ const LayoutPopover = <T extends object>({
   );
 }
 
+const LayoutDropDown = <T extends object>({ 
+  children, 
+  data,
+  onClick 
+}: LayoutDropdownProps<T>) => {
+  const {
+    searchQuery,
+    filteredItems,
+    setSearchQuery
+  } = useSearch(data, ["label"]);
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        {children}
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="w-60 flex flex-col gap-1">
+        <DropdownMenuLabel className="p-0">
+          <Input
+            area="sm"
+            variant="search"
+            value={searchQuery}
+            placeholder="Search for a property..."
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </DropdownMenuLabel>
+        <div className="flex flex-col">
+          {filteredItems.length ?
+            filteredItems.map(({ id, label }) => (
+            <DropdownMenuItem key={label} onClick={() => onClick(id)} className="min-h-[30px]">
+              {label}
+            </DropdownMenuItem>
+          )) : (
+            <div className="mb-1.5 mt-0.5 flex items-center w-full py-1">
+              <div className="mx-3 min-w-0 flex-auto">
+                <div className="text-xs whitespace-nowrap text-ellipsis overflow-hidden text-[#787774] min-h-full">
+                  No results
+                </div>
+              </div>
+            </div>
+          )}  
+        </div>
+      </DropdownMenuContent> 
+    </DropdownMenu>
+  );
+}
+
 interface LayoutFilterProps<T extends object> {
   column: ColumnProps<T>;
 }
@@ -123,18 +184,36 @@ interface LayoutSortProps<T extends object> {
 }
 
 const LayoutSort = <T extends object>({ columns }: LayoutSortProps<T>) => {
+  const isSort = columns.some((column) => column.sort.isSort);
+
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="filter" size="filter">
-          <ArrowUpIcon />
-          <span className="max-w-[150px] text-xs font-normal whitespace-nowrap overflow-hidden text-ellipsis">
-            {columns.filter((column) => column.sort.isSort)[0].label}
-          </span>
+        <Button variant={isSort ? "filterActive" : "filter"} size="filter">
+          {columns.filter((columns) => columns.sort.isSort).length > 1 
+            ? (
+              <>
+                <ArrowUpDownIcon className="size-4" />
+                <span className="max-w-[150px] text-xs font-normal whitespace-nowrap overflow-hidden text-ellipsis">
+                  {columns.filter((columns) => columns.sort.isSort).length} Sorts
+                </span>
+              </>
+            ) : (
+              <>
+                {columns.filter((column) => column.sort.isSort)[0].sort.sortBy === "asc" 
+                  ? <ArrowUpIcon className="size-4" />
+                  : <ArrowDownIcon className="size-4" />
+                }
+                <span className="max-w-[150px] text-xs font-normal whitespace-nowrap overflow-hidden text-ellipsis">
+                  {columns.filter((column) => column.sort.isSort)[0].label}
+                </span>
+              </>
+            )
+          }
           <ChevronDownIcon className="size-3 text-secondary" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="start" className="w-auto p-1">
+      <PopoverContent align="start" className="w-auto p-1 flex flex-col">
         <SortContent columns={columns} />
       </PopoverContent>
     </Popover>
@@ -142,9 +221,14 @@ const LayoutSort = <T extends object>({ columns }: LayoutSortProps<T>) => {
 }
 
 export const TableLayout = <T extends { id: string }>({ ...props }: LayoutBaseProps<T>) => {
+  const { selectedRows } = useLayoutFilter();
+
+  const ids = props.data.map((row) => row.id);
+  const allSelected = ids.every((id) => selectedRows.has(id));
+
   return (
     <Layout>
-      <Table.Header {...props} ids={[]} allSelected={false} />
+      <Table.Header {...props} ids={ids} allSelected={allSelected} />
       <Table.Body {...props} />
       <Table.Footer />
     </Layout>
@@ -155,5 +239,6 @@ Layout.Filter = LayoutFilter;
 Layout.Sort = LayoutSort;
 Layout.Table = TableLayout;
 Layout.Popover = LayoutPopover;
+Layout.DropDown = LayoutDropDown;
 
 export default Layout;

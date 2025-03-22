@@ -73,15 +73,22 @@ export interface ColumnProps<T extends object> {
   width: number;
 }
 
-export interface LayoutPopoverProps<T extends object> {
+interface LayoutSelectBase<T extends object> {
   align: "start" | "center" | "end";
-  children: React.ReactNode;
   data: ColumnProps<T>[];
+  children: React.ReactNode;
   placeholder?: string;
+}
+
+export interface LayoutPopoverProps<T extends object> extends LayoutSelectBase<T> {
   showAdvanced?: boolean;
   isOpen?: boolean;
   onClose?: () => void;
   onSelect: (id: keyof T) => void;
+}
+
+export interface LayoutDropdownProps<T extends object> extends LayoutSelectBase<T> {
+  onClick: (id: keyof T) => void;
 }
 
 export interface LayoutBaseProps<T extends { id: string }> extends TableBaseProps<T> {
@@ -112,12 +119,20 @@ type SortStore<T extends object> = {
   removeSortAll: () => void;
   sortReorder: (columns: ColumnProps<T>[]) => void;
   onSortBy: (id: keyof T, sortBy: SortOrder) => void;
+  onChangeSort: (oldId: keyof T, newId: keyof T) => void;
+}
+
+type PropertiesStore<T extends object> = {
+  selectedRows: Set<string>;
+  toggleRowSelection: (id: string) => void;
+  toggleAllSelection: (id: string[]) => void;
 }
 
 export type LayoutFilterStore<T extends object> = 
   BaseStore<T> & 
   FilterStore<T> &
-  SortStore<T>;
+  SortStore<T> &
+  PropertiesStore<T>;
 
 export interface LayoutFilterProps<T extends object> {
   column: ColumnProps<T>;

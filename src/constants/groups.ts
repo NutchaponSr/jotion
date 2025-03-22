@@ -28,20 +28,25 @@ export const groupColumns: ColumnProps<Group>[] = [
     order: 0,
     width: 256
   },
-  // {
-  //   id: "year",
-  //   label: "Year",
-  //   icon: HashIcon,
-  //   isLock: false,
-  //   isHide: false,
-  //   isSorted: false,
-  //   searchQuery: "",
-  //   type: "NUMBER",
-  //   filterCondition: FilterCondition.CONTAINS,
-  //   sortBy: sorts.asc,
-  //   sortOrder: 0,
-  //   calculation: null,
-  //   order: 0,
-  //   width: 144
-  // },
+  {
+    id: "year",
+    label: "Year",
+    icon: HashIcon,
+    isLock: false,
+    isHide: false,
+    sort: {
+      isSort: false,
+      sortBy: "asc",
+      order: 0,
+    },
+    filter: {
+      isFilter: false,
+      searchQuery: "",
+      condition: FilterCondition.CONTAINS,
+    },
+    type: "NUMBER",
+    calculation: null,
+    order: 0,
+    width: 169
+  },
 ] as const;

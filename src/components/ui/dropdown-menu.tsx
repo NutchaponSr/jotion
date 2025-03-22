@@ -239,8 +239,21 @@ function DropdownMenuSubContent({
   )
 }
 
+function DropdownMenuEmpty({ children }: { children: React.ReactNode; }) {
+  return (
+    <div className="mb-1.5 mt-0.5 flex items-center w-full py-1">
+      <div className="mx-3 min-w-0 flex-auto">
+        <div className="text-xs whitespace-nowrap text-ellipsis overflow-hidden text-[#787774] min-h-full">
+          No results
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export {
   DropdownMenu,
+  DropdownMenuEmpty,
   DropdownMenuPortal,
   DropdownMenuTrigger,
   DropdownMenuContent,

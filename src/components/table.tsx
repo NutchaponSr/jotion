@@ -2,23 +2,36 @@ import React from "react";
 
 import { GripVerticalIcon, PlusIcon } from "lucide-react";
 
+import { cn } from "@/lib/utils";
+
 import { 
   TableBodyProps, 
   TableCellProps, 
   TableHeaderProps, 
   TableHeadProps, 
-  TableRowProps
+  TableRowProps,
+  TableSelectAllProps,
+  TableSelectRowProps
 } from "@/types/table";
 
+import { useLayout } from "@/stores/use-layout";
+
 import { Checkbox } from "@/components/ui/checkbox";
+import { useLayoutFilter } from "@/stores/use-layout-filter";
 
 const TableHeader = <T extends { id: string }>({
   columns,
+  ...props
 }: TableHeaderProps<T>) => {
+  const { isOpenToolbarFilter } = useLayout();
+
   return (
     <div className="h-[34px] relative">
-      <div className="flex h-[34px] text-secondary-foreground left-0 right-0 relative box-border shadow-[inset_0_-1px_0_rgb(233,233,231),inset_0_1px_0_rgb(233,233,231)] dark:shadow-[-3px_0_0_rgb(25,25,25),inset_0_-1px_0_rgb(47,47,47),inset_0_1px_0_rgb(47,47,47)] min-w-[calc(100%-192px)] group">
-        <Table.SelectAll />
+      <div className={cn(
+        "flex h-[34px] text-secondary-foreground left-0 right-0 relative box-border shadow-[inset_0_-1px_0_rgb(233,233,231),inset_0_1px_0_rgb(233,233,231)] dark:shadow-[-3px_0_0_rgb(25,25,25),inset_0_-1px_0_rgb(47,47,47),inset_0_1px_0_rgb(47,47,47)] min-w-[calc(100%-192px)] group",
+        isOpenToolbarFilter && "shadow-[inset_0_-1px_0_rgb(233,233,231)] dark:shadow-[inset_0_-1px_0_rgb(47,47,47)]",
+      )}>
+        <Table.SelectAll {...props} />
         {columns.map((column, index) => (
           <Table.Head key={index} column={column} />
         ))}
@@ -48,14 +61,23 @@ const TableBody = <T extends { id: string }>({
   );
 }
 
-const TableSelectAll = () => {
+const TableSelectAll = ({ allSelected, ids }: TableSelectAllProps) => {
+  const { toggleAllSelection } = useLayoutFilter();
+
   return (
-    <div className="sticky -left-8 flex z-[83]">
+    <div className="sticky -left-8 flex z-[83] group/select">
       <div className="absolute -left-8">
-        <div className="group-hover:opacity-100 opacity-0 transition-opacity">
+        <div className={cn(
+          "group-hover:opacity-60 opacity-0 transition-opacity group-hover/select:opacity-100",
+          allSelected && "opacity-100",
+        )}>
           <div className="h-full items-start justify-center flex cursor-pointer">
             <div className="size-8 flex items-center justify-center">
-              <Checkbox className="size-3.5" />
+              <Checkbox 
+                className="size-3.5" 
+                checked={allSelected}
+                onCheckedChange={() => toggleAllSelection(ids)}
+              />
             </div>
           </div>
         </div>
@@ -64,14 +86,23 @@ const TableSelectAll = () => {
   );
 }
 
-const TableSelect = () => {
+const TableSelect = <T extends { id: string }>({ cell }: TableSelectRowProps<T>) => {
+  const { selectedRows, toggleRowSelection } = useLayoutFilter();
+
   return (
-    <div className="sticky -left-8 flex">
+    <div className="sticky -left-8 flex group/select">
       <div className="absolute -left-8">
-        <div className="group-hover:opacity-100 opacity-0 transition-opacity">
+        <div className={cn(
+          "group-hover:opacity-60 opacity-0 transition-opacity group-hover/select:opacity-100", 
+          selectedRows.has(cell.id) && "opacity-100",
+        )}>
           <div className="h-full items-start justify-center flex cursor-pointer">
             <div className="size-8 flex items-center justify-center">
-              <Checkbox className="size-3.5" />
+              <Checkbox 
+                className="size-3.5" 
+                checked={selectedRows.has(cell.id)}
+                onCheckedChange={() => toggleRowSelection(cell.id)}
+              />
             </div>
           </div>
         </div>
@@ -87,8 +118,8 @@ const TableAction = () => {
         <div className="group-hover:opacity-100 opacity-0 h-full transition">
           <div className="h-full items-center justify-center flex cursor-pointer">
             <div className="w-[18px] h-8 flex items-center justify-center">
-              <button className="transition flex items-center justify-center w-[18px] h-6 rounded hover:bg-[#37352f0f]">
-                <GripVerticalIcon className="size-4 shrink-0 text-[#b9b9b7]" />
+              <button className="transition flex items-center justify-center w-[18px] h-6 rounded hover:bg-popover-foreground">
+                <GripVerticalIcon className="size-4 shrink-0 text-icon" />
               </button>
             </div>
           </div>
@@ -99,10 +130,12 @@ const TableAction = () => {
 }
 
 const TableHead = <T extends { id: string }>({ column }: TableHeadProps<T>) => {
+  const { isOpenToolbarFilter } = useLayout();
+
   return (
     <div
       style={{ width: `${column.width}px` }}
-      className="flex shrink-0 overflow-hidden text-sm border-r border-border"
+      className={cn("flex shrink-0 overflow-hidden text-sm border-r border-border", isOpenToolbarFilter && "border-none")}
     >
       <div role="button" className="transition flex items-center w-full h-full px-2 hover:bg-popover-foreground cursor-pointer">
         <div className="flex items-center leading-[120%] text-sm flex-auto">
@@ -146,7 +179,7 @@ const TableRow = <T extends { id: string }>({
       style={{ transform: `translateY(${index * 32}px)` }}
     >
       <div className="flex h-8 border-b border-border">
-        <Table.Select />
+        <Table.Select cell={cell} />
         <Table.Action />
         {columns.map((column, colIndex) => (
           <Table.Cell key={colIndex} width={column.width}

@@ -19,6 +19,15 @@ export interface TableCellProps {
   width: number;
 }
 
+export interface TableSelectAllProps {
+  ids: string[];
+  allSelected: boolean;
+}
+
+export interface TableSelectRowProps<T extends { id: string }> {
+  cell: T;
+}
+
 export interface TableRowProps<T extends { id: string }> extends Omit<TableBaseProps<T>, "data"> {
   cell: T;
   index: number;

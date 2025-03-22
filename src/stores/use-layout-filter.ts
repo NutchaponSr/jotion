@@ -2,7 +2,8 @@ import { create } from "zustand";
 
 import { 
   FilterCondition,
-  LayoutFilterStore 
+  LayoutFilterStore, 
+  SortOrder
 } from "@/types/layouts";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -60,24 +61,34 @@ export const useLayoutFilter = create<LayoutFilterStore<any>>((set) => ({
     return {
       columns: state.columns.map((col) => col.id === id ? { 
         ...col, 
-        isSort: true,
         sort: {
           ...col.sort,
+          isSort: true,
           order: maxOrder + 100
         }
       } : col)
     };
   }),
-  removeSort: (id) => set((state) => ({
-    columns: state.columns.map((col) => col.id === id ? { 
-      ...col, 
+  removeSort: (id) => set((state) => {
+    const updatedColumns = state.columns.map((column) => column.id === id ? { 
+      ...column, 
       sort: {
         isSort: false,
         order: 0,
-        sortBy: "asc"
-      }
-    } : col)
-  })),
+        sortBy: "asc" as SortOrder,
+      }, 
+    } : column);
+
+    const sortColumn = updatedColumns
+      .filter((column) => column.sort.isSort)
+      .sort((a, b) => a.sort.order - b.sort.order);
+      
+    sortColumn.forEach((column, index) => {
+      column.sort.order = (index + 1) * 100;
+    });
+
+    return { columns: updatedColumns }
+  }),
   removeSortAll: () => set((state) => ({
     columns: state.columns.map((col) => ({ 
       ...col, 
@@ -106,4 +117,36 @@ export const useLayoutFilter = create<LayoutFilterStore<any>>((set) => ({
       },
     } : col),
   })),
+  onChangeSort: (id1, id2) => set((state) => {
+    const columns = [...state.columns];
+  
+    const index1 = columns.findIndex(col => col.id === id1);
+    const index2 = columns.findIndex(col => col.id === id2);
+  
+    if (index1 !== -1 && index2 !== -1) {
+      [columns[index1].sort, columns[index2].sort] = [columns[index2].sort, columns[index1].sort];
+    }
+  
+    return { columns };
+  }),
+
+  // Properties
+  selectedRows: new Set<string>(),
+  toggleAllSelection: (ids) => set((state) => {
+    const selectedRows = new Set(state.selectedRows);
+    const allSelected = ids.every((id) => selectedRows.has(id));
+
+    if (allSelected) ids.forEach((id) => selectedRows.delete(id));
+    else ids.forEach((id) => selectedRows.add(id));
+
+    return { selectedRows };
+  }),
+  toggleRowSelection: (id) => set((state) => {
+    const selectedRows = new Set(state.selectedRows);
+
+    if (selectedRows.has(id)) selectedRows.delete(id);
+    else selectedRows.add(id);
+
+    return { selectedRows };
+  }),
 }));

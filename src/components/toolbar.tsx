@@ -18,6 +18,7 @@ import { useLayoutFilter } from "@/stores/use-layout-filter";
 import { Button } from "@/components/ui/button";
 
 import { ToolbarFilter } from "@/components/toolbar-filter";
+import { useLayout } from "@/stores/use-layout";
 
 interface ToolbarProps<T extends object> {
   columns: ColumnProps<T>[];
@@ -36,9 +37,13 @@ export const Toolbar = <T extends object>({
     onCloseSort,
     onOpenSort,
   } = useLayoutFilter();
+  const {
+    isOpenToolbarFilter,
+    onOpenToolbarFilter,
+    onToggleToolbarFilter
+  } = useLayout();
 
-  const [isOpenToolbarFilter, toggleToolbarFilter] = useToggle(false);
-
+  const isSomeSort = columns.some((column) => column.sort.isSort);
   const isSomeFilter = columns.some((column) => column.filter.isFilter && column.filter.searchQuery !== "");
 
   return (
@@ -57,12 +62,12 @@ export const Toolbar = <T extends object>({
             onSelect={(id) => {
               onCloseFilter();
               addFilter(id);
-              toggleToolbarFilter(true);
+              onOpenToolbarFilter();
             }}
           >
             <Button.Icon 
               onClick={() => {
-                if (columns.some((column) => column.filter.isFilter)) toggleToolbarFilter();
+                if (columns.some((column) => column.filter.isFilter)) onToggleToolbarFilter();
                 else setTimeout(() => onOpenFilter(), 10);
               }} 
               className="size-7 hover:bg-popover-foreground"
@@ -78,18 +83,18 @@ export const Toolbar = <T extends object>({
             onSelect={(id) => {
               onCloseSort();
               addSort(id);
-              toggleToolbarFilter(true);
+              onOpenToolbarFilter();
             }}
             placeholder="Sort by..."
           >
             <Button.Icon 
               onClick={() => {
-                if (columns.some((column) => column.sort.isSort)) toggleToolbarFilter();
+                if (columns.some((column) => column.sort.isSort)) onToggleToolbarFilter();
                 else setTimeout(() => onOpenSort(), 10);
               }}
               className="size-7 hover:bg-popover-foreground"
             >
-              <ArrowUpDownIcon className="size-4 text-icon" />
+              <ArrowUpDownIcon className={cn("size-4 text-icon", isSomeSort && "text-marine")} />
             </Button.Icon>
           </Layout.Popover>
           <Button.Icon className="size-7 hover:bg-popover-foreground">

@@ -35,6 +35,7 @@ export const GroupContent = () => {
   // TODO: Global search
   // TODO: Selection row
 
+  // TODO: Skleton loading
   if (isLoading) {
     return (
       <div className="text-lg">
@@ -48,7 +49,7 @@ export const GroupContent = () => {
       <Toolbar columns={columns} />
       <LayoutsHub 
         data={sortedData} 
-        columns={groupColumns} 
+        columns={columns} 
         searchQuery="" 
         renderCell={({ ...props }) => <GroupCells {...props} />}
       />

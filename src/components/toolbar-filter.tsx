@@ -7,6 +7,7 @@ import { ColumnProps } from "@/types/layouts";
 import { useLayoutFilter } from "@/stores/use-layout-filter";
 
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 interface ToolbarFilterProps<T extends object> {
   columns: ColumnProps<T>[];
@@ -21,6 +22,9 @@ export const ToolbarFilter = <T extends object>({ columns }: ToolbarFilterProps<
         <div className="relative grow-0 overflow-hidden">
           <div className="flex items-center py-2 gap-1.5 overflow-x-auto overflow-y-hidden">
             {columns.some((column) => column.sort.isSort) && <Layout.Sort columns={columns} />}
+            {columns.some((column) => column.filter.isFilter && column.sort.isSort) && (
+              <Separator orientation="vertical" className="h-6 rounded-md" />
+            )}
             {columns
               .filter((column) => column.filter.isFilter)
               .map((column, index) => (
