@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 import { group } from "@/constants/workspace";
 
-import { useLayout } from "@/stores/use-layout";
+import { useLayout } from "@/modules/ui/layouts/stores/use-layout";
 
 import { Banner } from "@/components/banner";
 

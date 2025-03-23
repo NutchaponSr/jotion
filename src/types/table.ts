@@ -1,6 +1,6 @@
 import { JSX } from "react";
 
-import { ColumnProps } from "@/types/layouts";
+import { ColumnProps } from "@/modules/ui/layouts/types/layouts";
 
 export interface TableBaseProps<T extends { id: string }> {
   columns: ColumnProps<T>[];

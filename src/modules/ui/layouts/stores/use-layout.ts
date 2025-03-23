@@ -1,14 +1,6 @@
 import { create } from "zustand";
 
-type LayoutStore = {
-  isOpenToolbarFilter: boolean;
-  isOpenViewOption: boolean;
-  onOpenToolbarFilter: () => void;
-  onCloseToolbarFilter: () => void;
-  onCloseViewOption: () => void;
-  onToggleToolbarFilter: () => void;
-  onToogleViewOption: () => void;
-}
+import { LayoutStore } from "@/modules/ui/layouts/types/layouts";
 
 export const useLayout = create<LayoutStore>((set) => ({
   isOpenToolbarFilter: false,
@@ -19,3 +11,4 @@ export const useLayout = create<LayoutStore>((set) => ({
   onToggleToolbarFilter: () => set((state) => ({ isOpenToolbarFilter: !state.isOpenToolbarFilter })),
   onToogleViewOption: () => set((state) => ({ isOpenViewOption: !state.isOpenViewOption })),
 }));
+

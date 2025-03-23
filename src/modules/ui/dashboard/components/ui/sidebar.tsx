@@ -1,7 +1,7 @@
 "use client";
 
 import ErrorBoundary from "@/components/error-boundary";
-import Trash from "@/modules/bloc/dashboard/components/ui/trash";
+import Trash from "@/modules/ui/dashboard/components/ui/trash";
 
 import React, { Suspense, useCallback, useEffect } from "react";
 
@@ -36,8 +36,8 @@ import {
 } from "@/components/icons";
 import { Accordion } from "@/components/accordion";
 
-import { Inbox } from "@/modules/bloc/dashboard/components/inbox";
-import { Navbar } from "@/modules/bloc/dashboard/components/navbar";
+import { Inbox } from "@/modules/ui/dashboard/components/inbox";
+import { Navbar } from "@/modules/ui/dashboard/components/navbar";
 import { UserButton } from "@/modules/routes/auth/components/user-button";
 import { GroupSpace } from "@/modules/routes/groups/components/group-space";
 
@@ -48,9 +48,9 @@ import {
   sidebarItemVariant, 
   SidebarSubContentProps, 
   SidebarSubItemProps
-} from "@/modules/bloc/dashboard/types/sidebar";
+} from "@/modules/ui/dashboard/types/sidebar";
 
-import { useSearchCommand } from "@/modules/bloc/dashboard/stores/use-search-command";
+import { useSearchCommand } from "@/modules/ui/dashboard/stores/use-search-command";
 
 const Sidebar = () => {;
   const { onOpen } = useSearchCommand();

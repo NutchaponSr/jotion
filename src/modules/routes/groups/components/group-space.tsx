@@ -1,6 +1,6 @@
 "use client";
 
-import Sidebar from "@/modules/bloc/dashboard/components/ui/sidebar";
+import Sidebar from "@/modules/ui/dashboard/components/ui/sidebar";
 
 import { PlusIcon } from "lucide-react";
 

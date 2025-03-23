@@ -81,7 +81,7 @@ interface LayoutSelectBase<T extends object> {
 }
 
 export interface LayoutPopoverProps<T extends object> extends LayoutSelectBase<T> {
-  label: string;
+  label?: string;
   tooltipOpen?: boolean;
   showTooltip?: boolean;
   showAdvanced?: boolean;
@@ -125,7 +125,7 @@ type SortStore<T extends object> = {
   onChangeSort: (oldId: keyof T, newId: keyof T) => void;
 }
 
-type PropertiesStore<T extends object> = {
+type PropertiesStore = {
   selectedRows: Set<string>;
   toggleRowSelection: (id: string) => void;
   toggleAllSelection: (id: string[]) => void;
@@ -135,8 +135,23 @@ export type LayoutFilterStore<T extends object> =
   BaseStore<T> & 
   FilterStore<T> &
   SortStore<T> &
-  PropertiesStore<T>;
+  PropertiesStore;
 
 export interface LayoutFilterProps<T extends object> {
   column: ColumnProps<T>;
 } 
+
+type ToolbarFilterProps = {
+  isOpenToolbarFilter: boolean;
+  onOpenToolbarFilter: () => void;
+  onCloseToolbarFilter: () => void;
+  onToggleToolbarFilter: () => void;
+}
+
+type ViewOptionProps = {
+  isOpenViewOption: boolean;
+  onCloseViewOption: () => void;
+  onToogleViewOption: () => void;
+}
+
+export type LayoutStore = ToolbarFilterProps & ViewOptionProps;

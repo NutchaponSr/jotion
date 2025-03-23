@@ -4,7 +4,7 @@ import {
   FilterCondition,
   LayoutFilterStore, 
   SortOrder
-} from "@/types/layouts";
+} from "@/modules/ui/layouts/types/layouts";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useLayoutFilter = create<LayoutFilterStore<any>>((set) => ({

@@ -1,8 +1,8 @@
 
-import { ColumnProps } from "@/types/layouts";
+import { ColumnProps } from "@/modules/ui/layouts/types/layouts";
 
 import { Group } from "@/modules/routes/groups/api/use-get-group";
-import { highlightText } from "@/modules/bloc/layouts/utils";
+import { highlightText } from "@/modules/ui/layouts/utils";
 
 interface GroupCellsProps {
   cell: Group;

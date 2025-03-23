@@ -5,8 +5,8 @@ import { handle } from "hono/vercel";
 import { AuthConfig, initAuthConfig } from "@hono/auth-js";
 
 import groups from "@/modules/routes/groups/server/route";
-import trashs from "@/modules/bloc/dashboard/server/trashs";
-import searchs from "@/modules/bloc/dashboard/server/searchs";
+import trashs from "@/modules/ui/dashboard/server/trashs";
+import searchs from "@/modules/ui/dashboard/server/searchs";
 
 export const runtime = "nodejs";
 

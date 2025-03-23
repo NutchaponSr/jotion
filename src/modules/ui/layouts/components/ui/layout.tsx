@@ -1,4 +1,4 @@
-import Content from "./filter-content";
+import Content from "../filter-content";
 
 import { 
   ArrowDownIcon,
@@ -14,11 +14,11 @@ import {
   LayoutBaseProps, 
   LayoutDropdownProps, 
   LayoutPopoverProps 
-} from "@/types/layouts";
+} from "@/modules/ui/layouts/types/layouts";
 
 import { useSearch } from "@/hooks/use-searchs";
 
-import { useLayoutFilter } from "@/stores/use-layout-filter";
+import { useLayoutFilter } from "@/modules/ui/layouts/stores/use-layout-filter";
 
 import {
   Command,
@@ -49,9 +49,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-import { Table } from "@/components/table";
+import { Table } from "@/modules/ui/layouts/components/ui/table";
 
-import { SortContent } from "@/modules/bloc/layouts/components/sort-content";
+import { SortContent } from "@/modules/ui/layouts/components/sort-content";
 
 interface LayoutProps {
   children: React.ReactNode;

@@ -1,4 +1,4 @@
-import Layout from "./layout";
+import Layout from "./ui/layout";
 
 import { 
   ChevronDownIcon, 
@@ -12,9 +12,9 @@ import {
   ColumnProps, 
   SortOrder, 
   sorts 
-} from "@/types/layouts";
+} from "@/modules/ui/layouts/types/layouts";
 
-import { useLayoutFilter } from "@/stores/use-layout-filter";
+import { useLayoutFilter } from "@/modules/ui/layouts/stores/use-layout-filter";
 
 import { useSearch } from "@/hooks/use-searchs";
 

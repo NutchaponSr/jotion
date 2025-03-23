@@ -14,10 +14,10 @@ import {
   TableSelectRowProps
 } from "@/types/table";
 
-import { useLayout } from "@/stores/use-layout";
+import { useLayout } from "@/modules/ui/layouts/stores/use-layout";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { useLayoutFilter } from "@/stores/use-layout-filter";
+import { useLayoutFilter } from "@/modules/ui/layouts/stores/use-layout-filter";
 
 const TableHeader = <T extends { id: string }>({
   columns,

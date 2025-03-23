@@ -1,4 +1,4 @@
-import Sidebar from "@/modules/bloc/dashboard/components/ui/sidebar";
+import Sidebar from "@/modules/ui/dashboard/components/ui/sidebar";
 
 import { MoreHorizontalIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";

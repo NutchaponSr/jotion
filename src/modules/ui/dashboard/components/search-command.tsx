@@ -32,8 +32,8 @@ import {
 } from "@/components/icons";
 import { VisuallyHidden } from "@/components/visually-hidden";
 
-import { useSearchCommand } from "@/modules/bloc/dashboard/stores/use-search-command";
-import { Search, useGetSearchs } from "@/modules/bloc/dashboard/api/use-get-searchs";
+import { useSearchCommand } from "@/modules/ui/dashboard/stores/use-search-command";
+import { Search, useGetSearchs } from "@/modules/ui/dashboard/api/use-get-searchs";
 
 export const SearchCommand = () => {
   const { data: queryData } = useGetSearchs({});

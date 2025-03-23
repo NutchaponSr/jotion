@@ -1,6 +1,6 @@
 import Filter from "@/components/filter";
 
-import Sidebar from "@/modules/bloc/dashboard/components/ui/sidebar";
+import Sidebar from "@/modules/ui/dashboard/components/ui/sidebar";
 
 import { 
   CornerUpLeftIcon, 
@@ -23,9 +23,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { HashIcon, TrashIcon } from "@/components/icons";
 import { ClearableInput } from "@/components/clearable-input";
 
-import { Workspace, workspaces } from "@/modules/bloc/dashboard/types/sidebar";
+import { Workspace, workspaces } from "@/modules/ui/dashboard/types/sidebar";
 
-import { useGetTrashs } from "@/modules/bloc/dashboard/api/use-get-trashs";
+import { useGetTrashs } from "@/modules/ui/dashboard/api/use-get-trashs";
 
 const Trash = () => {
   const [on, toggle] = useToggle(false);

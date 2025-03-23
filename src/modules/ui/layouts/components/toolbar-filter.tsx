@@ -1,10 +1,10 @@
-import Layout from "@/modules/bloc/layouts/components/layout";
+import Layout from "@/modules/ui/layouts/components/ui/layout";
 
 import { PlusIcon } from "lucide-react";
 
-import { ColumnProps } from "@/types/layouts";
+import { ColumnProps } from "@/modules/ui/layouts/types/layouts";
 
-import { useLayoutFilter } from "@/stores/use-layout-filter";
+import { useLayoutFilter } from "@/modules/ui/layouts/stores/use-layout-filter";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";

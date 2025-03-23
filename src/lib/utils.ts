@@ -4,7 +4,7 @@ import { formatDistanceToNowStrict } from "date-fns";
 
 import { timesOfDay } from "@/types/date";
 import { EmojiData, EmojiItem } from "@/types/emoji";
-import { ColumnProps, FilterCondition } from "@/types/layouts";
+import { ColumnProps, FilterCondition } from "@/modules/ui/layouts/types/layouts";
 
 import emojisData from "@/constants/emojis.json";
 

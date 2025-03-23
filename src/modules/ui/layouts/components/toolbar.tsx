@@ -1,4 +1,4 @@
-import Layout from "@/modules/bloc/layouts/components/layout";
+import Layout from "@/modules/ui/layouts/components/ui/layout";
 
 import { 
   ArrowUpDownIcon,
@@ -12,20 +12,20 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 
-import { ColumnProps } from "@/types/layouts";
+import { ColumnProps } from "@/modules/ui/layouts/types/layouts";
 
-import { useLayout } from "@/stores/use-layout";
-import { useLayoutFilter } from "@/stores/use-layout-filter";
+import { useLayout } from "@/modules/ui/layouts/stores/use-layout";
+import { useLayoutFilter } from "@/modules/ui/layouts/stores/use-layout-filter";
 
 import { Button } from "@/components/ui/button";
 
 import { Hint } from "@/components/hint";
-import { ToolbarFilter } from "@/components/toolbar-filter";
-import { Input } from "./ui/input";
-import { CircleCancelIcon } from "./icons";
+import { ToolbarFilter } from "@/modules/ui/layouts/components/toolbar-filter";
+import { Input } from "../../../../components/ui/input";
+import { CircleCancelIcon } from "../../../../components/icons";
 import { IconVaraint } from "@/types/icon";
 import { useToggle } from "react-use";
-import { ViewOption } from "./view-option";
+import { ViewOption } from "@/modules/ui/layouts/components/view-option";
 
 interface ToolbarProps<T extends object> {
   columns: ColumnProps<T>[];
@@ -73,7 +73,7 @@ export const Toolbar = <T extends object>({
     if (noFilters) {
       onCloseToolbarFilter();
     }
-  }, [columns, isOpenToolbarFilter]);
+  }, [columns, isOpenToolbarFilter, onCloseToolbarFilter]);
 
   const handleClearSearch = () => {
     onClear();

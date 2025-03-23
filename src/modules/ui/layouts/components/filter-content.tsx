@@ -7,9 +7,9 @@ import {
   FilterCondition, 
   filterCondition, 
   LayoutFilterProps 
-} from "@/types/layouts";
+} from "@/modules/ui/layouts/types/layouts";
 
-import { useLayoutFilter } from "@/stores/use-layout-filter";
+import { useLayoutFilter } from "@/modules/ui/layouts/stores/use-layout-filter";
 
 import {
   DropdownMenu,

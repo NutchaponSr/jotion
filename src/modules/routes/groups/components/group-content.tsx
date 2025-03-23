@@ -12,11 +12,11 @@ import { groupColumns } from "@/constants/groups";
 
 import { useSearch } from "@/hooks/use-searchs";
 
-import { useLayoutFilter } from "@/stores/use-layout-filter";
+import { useLayoutFilter } from "@/modules/ui/layouts/stores/use-layout-filter";
 
-import { Toolbar } from "@/components/toolbar";
-import { SelectMenu } from "@/components/select-menu";
-import { LayoutsHub } from "@/modules/bloc/layouts/components/layouts-hub";
+import { Toolbar } from "@/modules/ui/layouts/components/toolbar";
+import { SelectMenu } from "@/modules/ui/layouts/components/select-menu";
+import { LayoutsHub } from "@/modules/ui/layouts/components/layouts-hub";
 
 import { GroupCells } from "@/modules/routes/groups/components/group-cells";
 

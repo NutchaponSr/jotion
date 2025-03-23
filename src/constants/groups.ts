@@ -1,7 +1,7 @@
 import { 
   ColumnProps, 
   FilterCondition, 
-} from "@/types/layouts";
+} from "@/modules/ui/layouts/types/layouts";
 
 import { Group } from "@/modules/routes/groups/api/use-get-group";
 import { HashIcon, TextFontIcon } from "@/components/icons";

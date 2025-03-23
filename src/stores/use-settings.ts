@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { LayoutType } from "@/types/layouts";
+import { LayoutType } from "@/modules/ui/layouts/types/layouts";
 
 type SettingsStore = {
   layout: LayoutType;

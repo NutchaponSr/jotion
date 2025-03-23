@@ -4,7 +4,7 @@ import {
   useState
 } from "react";
 import { motion } from "framer-motion";
-import View from "@/modules/bloc/layouts/components/ui/view";
+import View from "@/modules/ui/layouts/components/ui/view";
 import { FilterIcon, LinkIcon, ListIcon, TableIcon } from "./icons";
 import { ArrowUpDownIcon, TableRowsSplitIcon, ZapIcon } from "lucide-react";
 
