@@ -1,12 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { 
   RendenCellFn, 
   TableBaseProps 
 } from "@/types/table";
 
-export type LayoutType = "table";
-
-export const columnType = ["TEXT", "NUMBER"] as const;
-export const sortOrder = ["asc", "desc"] as const;
+const columnType = ["TEXT", "NUMBER"] as const;
+const sortOrder = ["asc", "desc"] as const;
 
 type ColumnType = (typeof columnType)[number];
 export type SortOrder = (typeof sortOrder)[number];
@@ -141,6 +140,26 @@ export interface LayoutFilterProps<T extends object> {
   column: ColumnProps<T>;
 } 
 
+const layouts = [
+  "table",
+  "board",
+  "calendar",
+  "list",
+  "gallery",
+] as const;
+
+const viewOption = [
+  "layout",
+  "filter",
+  "sort",
+  "groping",
+  "properties",
+  "automations",
+] as const; 
+
+export type LayoutType = (typeof layouts)[number];
+export type ViewOptionType = (typeof viewOption)[number];
+
 type ToolbarFilterProps = {
   isOpenToolbarFilter: boolean;
   onOpenToolbarFilter: () => void;
@@ -155,3 +174,11 @@ type ViewOptionProps = {
 }
 
 export type LayoutStore = ToolbarFilterProps & ViewOptionProps;
+
+export type viewOptionStore = {
+  type: ViewOptionType | null;
+  isOpen: boolean;
+  onOpen: (type: ViewOptionType) => void;
+  onClose: () => void;
+}
+

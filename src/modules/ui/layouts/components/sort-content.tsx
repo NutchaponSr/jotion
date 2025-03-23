@@ -65,7 +65,7 @@ export const SortContent = <T extends object>({ columns }: SortContentProps<T>) 
           {columns
             .filter((column) => column.sort.isSort)
             .sort((a, b) => a.sort.order - b.sort.order)
-            .map((column, index, arr) => (
+            .map((column) => (
               <Reorder.Item 
                 key={String(column.id)} 
                 value={column} 

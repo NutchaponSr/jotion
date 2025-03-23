@@ -4,9 +4,7 @@ import {
   useState
 } from "react";
 import { motion } from "framer-motion";
-import View from "@/modules/ui/layouts/components/ui/view";
-import { FilterIcon, LinkIcon, ListIcon, TableIcon } from "./icons";
-import { ArrowUpDownIcon, TableRowsSplitIcon, ZapIcon } from "lucide-react";
+import { ViewsHubs } from "./view-options-hub";
 
 export const ViewOption = () => {
   const [height, setHeight] = useState(window.innerHeight);
@@ -38,20 +36,7 @@ export const ViewOption = () => {
     >
       <div className="flex h-full shadow-[inset_0_1px_0_rgb(233,233,231)] dark:shadow-[inset_0_1px_0_rgb(47,47,47)]">
         <div className="flex flex-col min-w-[290px] max-w-[290px] h-full max-h-full">
-          <View.Header />
-          <div className="p-1 flex flex-col">
-            <View.Item icon={TableIcon} label="Layout" description="Table" />
-          </div>
-          <div className="p-1 flex flex-col shadow-[0_-1px_0_rgba(55,53,47,0.094)] dark:shadow-[0_-1px_0_rgba(255,255,255,0.094)]">
-            <View.Item icon={ListIcon} label="Properties" description="4 shown" />
-            <View.Item icon={FilterIcon} label="Filter" description="3 filters" />
-            <View.Item icon={ArrowUpDownIcon} label="Sort" description="None" />
-            <View.Item icon={TableRowsSplitIcon} label="Group" description="None" />
-            <View.Item icon={ZapIcon} label="Automations" description="None" />
-          </div>
-          <div className="p-1 flex flex-col shadow-[0_-1px_0_rgba(55,53,47,0.094)] dark:shadow-[0_-1px_0_rgba(255,255,255,0.094)]">
-            <View.Item icon={LinkIcon} label="Copy link" />
-          </div>
+          <ViewsHubs />
         </div>  
         <div className="w-24" />
       </div>

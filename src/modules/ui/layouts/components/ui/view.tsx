@@ -1,16 +1,23 @@
 import { ChevronRightIcon, XIcon } from "lucide-react";
 
-import { ViewItemProps } from "../../types/view";
+import { ViewHeaderProps, ViewItemProps } from "../../types/view";
 import { Button } from "@/components/ui/button";
 import { createElement } from "react";
 import { cn } from "@/lib/utils";
 
 const View = {
-  Header: () => {
+  Content: ({ children, line }: { children: React.ReactNode; line?: boolean }) => {
+    return (
+      <div className={cn("p-1 flex flex-col", line && "shadow-[0_-1px_0_rgba(55,53,47,0.094)] dark:shadow-[0_-1px_0_rgba(255,255,255,0.094)]")}>
+        {children}
+      </div>
+    );
+  },
+  Header: ({ label } :ViewHeaderProps) => {
     return (
       <div className="flex items-center px-4 py-3">
         <h2 className="grow font-bold text-sm whitespace-nowrap overflow-hidden text-ellipsis text-primary">
-          View options
+          {label}
         </h2>
         <button className="flex items-center justify-center rounded-full bg-[#37352f0f] size-[18px] hover:bg-[#37352f29]">
           <XIcon className="size-3.5 text-[#787874]" />
@@ -21,10 +28,11 @@ const View = {
   Item: ({
     label,
     icon,
-    description
+    description,
+    onClick
   }: ViewItemProps) => {
     return (
-      <Button variant="item" size="md" className="gap-2.5">
+      <Button variant="item" size="md" className="gap-2.5" onClick={onClick}>
         <div className="flex items-center">
           {createElement(icon, { className: "size-4 text-primary" })}
         </div>
@@ -39,7 +47,7 @@ const View = {
         )}
       </Button>
     );
-  }
+  },
 }
 
 export default View;
