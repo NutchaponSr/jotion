@@ -18,6 +18,8 @@ import {
 
 import { useSearch } from "@/hooks/use-searchs";
 
+import { useLayoutFilter } from "@/stores/use-layout-filter";
+
 import {
   Command,
   CommandEmpty,
@@ -38,13 +40,18 @@ import {
   PopoverContent,
   PopoverTrigger
 } from "@/components/ui/popover";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from "@/components/ui/tooltip";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import { Table } from "@/components/table";
 
-import { SortContent } from "@/components/layouts/sort-content";
-import { Input } from "../ui/input";
-import { useLayoutFilter } from "@/stores/use-layout-filter";
+import { SortContent } from "@/modules/bloc/layouts/components/sort-content";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -62,48 +69,66 @@ const Layout = ({ children }: LayoutProps) => {
 
 const LayoutPopover = <T extends object>({ 
   align,
+  label,
   children,
   data,
   placeholder,
+  showTooltip,
   showAdvanced,
+  tooltipOpen,
   isOpen,
   onClose,
   onSelect
 }: LayoutPopoverProps<T>) => {
   return (
-    <Popover open={isOpen} onOpenChange={onClose}>
-      <PopoverTrigger asChild>
-        {children}
-      </PopoverTrigger>
-      <PopoverContent align={align} className="p-0 w-60">
-        <Command>
-          <CommandInput placeholder={placeholder} />
-          <CommandList>
-            <CommandEmpty>No Result</CommandEmpty>
-            <CommandGroup>
-              {data.map((item, index) => (
-                <CommandItem 
-                  key={index}
-                  value={item.label}
-                  onSelect={() => onSelect(item.id)}
-                  className="gap-2 leading-[120%] w-full min-h-[30px] text-sm px-2 py-1"
-                >
-                  {item.label}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-        {showAdvanced && (
-          <div className="p-1 shadow-[0_-1px_0_rgba(55,53,47,0.09)] dark:shadow-[0_-1px_0_rgba(255,255,255,0.094)] mt-px">
-            <Button variant="item" size="item">
-              <PlusIcon style={{ strokeWidth: 2 }} />
-              Add advanced filter
-            </Button>
-          </div>
+    <TooltipProvider>
+      <Popover open={isOpen} onOpenChange={onClose}>
+        {showTooltip ? (
+          <Tooltip open={tooltipOpen} delayDuration={100}>
+            <TooltipTrigger asChild>
+              <PopoverTrigger asChild>
+                {children}
+              </PopoverTrigger>
+            </TooltipTrigger>
+            <TooltipContent side="top" className="py-1 px-2">
+              <p className="text-xs font-medium">{label}</p>
+            </TooltipContent>
+          </Tooltip>
+        ) : (
+          <PopoverTrigger asChild>
+            {children}
+          </PopoverTrigger>
         )}
-      </PopoverContent>
-    </Popover>
+        <PopoverContent align={align} className="p-0 w-60">
+          <Command>
+            <CommandInput placeholder={placeholder} />
+            <CommandList>
+              <CommandEmpty>No Result</CommandEmpty>
+              <CommandGroup>
+                {data.map((item, index) => (
+                  <CommandItem 
+                    key={index}
+                    value={item.label}
+                    onSelect={() => onSelect(item.id)}
+                    className="gap-2 leading-[120%] w-full min-h-[30px] text-sm px-2 py-1"
+                  >
+                    {item.label}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+          {showAdvanced && (
+            <div className="p-1 shadow-[0_-1px_0_rgba(55,53,47,0.09)] dark:shadow-[0_-1px_0_rgba(255,255,255,0.094)] mt-px">
+              <Button variant="item" size="item">
+                <PlusIcon style={{ strokeWidth: 2 }} />
+                Add advanced filter
+              </Button>
+            </div>
+          )}
+        </PopoverContent>
+      </Popover>
+    </TooltipProvider>
   );
 }
 
@@ -165,7 +190,7 @@ const LayoutFilter = <T extends object>({ column }: LayoutFilterProps<T>) => {
     <Popover>
       <PopoverTrigger asChild>
         <Button variant={isFilter ? "filterActive" : "filter"} size="filter">
-          {createElement(column.icon, { className: "size-3.5 text-secondary-foreground" })}
+          {createElement(column.icon, { className: "size-4 text-secondary-foreground" })}
           <span className="max-w-[150px] text-xs font-normal whitespace-nowrap overflow-hidden text-ellipsis">
             {column.label}
           </span>

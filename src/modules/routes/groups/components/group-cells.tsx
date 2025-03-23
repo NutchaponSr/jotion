@@ -2,6 +2,7 @@
 import { ColumnProps } from "@/types/layouts";
 
 import { Group } from "@/modules/routes/groups/api/use-get-group";
+import { highlightText } from "@/modules/bloc/layouts/utils";
 
 interface GroupCellsProps {
   cell: Group;
@@ -9,8 +10,9 @@ interface GroupCellsProps {
   searchQuery: string;
 }
 
-export const GroupCells = ({ cell, column }: GroupCellsProps) => {
+export const GroupCells = ({ cell, column, searchQuery }: GroupCellsProps) => {
   const icon = cell["icon"];
+  const value = cell[column.id];
 
   switch (column.id) {
     case "name": 
@@ -24,14 +26,14 @@ export const GroupCells = ({ cell, column }: GroupCellsProps) => {
             </div>
           )}
           <span className="leading-[1.5] whitespace-pre-wrap break-words font-medium bg-gradient-to-r from-neutral-400/20 to-neutral-400/20 bg-repeat-x bg-[position:0_100%] bg-[size:100%_1px] text-primary text-sm">
-            {cell["name"]}
+            {highlightText(value as string, searchQuery)}
           </span>
         </>
       );
     case "year":
       return (
         <span className="leading-[1.5] whitespace-pre-wrap break-words font-medium text-primary text-sm">
-          {cell["year"]}
+          {highlightText(value as string, searchQuery)}
         </span>
       );
   }

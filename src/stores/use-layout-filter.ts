@@ -28,9 +28,11 @@ export const useLayoutFilter = create<LayoutFilterStore<any>>((set) => ({
   removeFilter: (id) => set((state) => ({
     columns: state.columns.map((col) => col.id === id ? { 
       ...col, 
-      isFilter: false, 
-      searchQuery: "", 
-      filterCondition: FilterCondition.CONTAINS 
+      filter: {
+        isFilter: false, 
+        searchQuery: "", 
+        condition: FilterCondition.CONTAINS 
+      },
     } : col)
   })),
   onCondition: (id, condition) => set((state) => ({

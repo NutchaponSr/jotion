@@ -81,6 +81,9 @@ interface LayoutSelectBase<T extends object> {
 }
 
 export interface LayoutPopoverProps<T extends object> extends LayoutSelectBase<T> {
+  label: string;
+  tooltipOpen?: boolean;
+  showTooltip?: boolean;
   showAdvanced?: boolean;
   isOpen?: boolean;
   onClose?: () => void;

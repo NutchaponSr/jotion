@@ -1,4 +1,4 @@
-import Layout from "@/components/layouts/layout";
+import Layout from "@/modules/bloc/layouts/components/layout";
 
 import { PlusIcon } from "lucide-react";
 

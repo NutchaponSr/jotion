@@ -69,7 +69,7 @@ const TableSelectAll = ({ allSelected, ids }: TableSelectAllProps) => {
       <div className="absolute -left-8">
         <div className={cn(
           "group-hover:opacity-60 opacity-0 transition-opacity group-hover/select:opacity-100",
-          allSelected && "opacity-100",
+          allSelected && "opacity-100 group-hover:opacity-100",
         )}>
           <div className="h-full items-start justify-center flex cursor-pointer">
             <div className="size-8 flex items-center justify-center">
@@ -94,7 +94,7 @@ const TableSelect = <T extends { id: string }>({ cell }: TableSelectRowProps<T>)
       <div className="absolute -left-8">
         <div className={cn(
           "group-hover:opacity-60 opacity-0 transition-opacity group-hover/select:opacity-100", 
-          selectedRows.has(cell.id) && "opacity-100",
+          selectedRows.has(cell.id) && "opacity-100 group-hover:opacity-100",
         )}>
           <div className="h-full items-start justify-center flex cursor-pointer">
             <div className="size-8 flex items-center justify-center">
@@ -173,6 +173,8 @@ const TableRow = <T extends { id: string }>({
   searchQuery,
   renderCell
 }: TableRowProps<T>) => {
+  const { selectedRows } = useLayoutFilter();
+
   return (
     <div 
       className="absolute left-0 top-0 w-full group" 
@@ -187,6 +189,9 @@ const TableRow = <T extends { id: string }>({
             {renderCell({ cell, column, searchQuery })}
           </Table.Cell>
         ))}
+        {selectedRows.has(cell.id) && (
+          <div className="absolute inset-0 top-[0.75px] bottom-0 bg-marine/14 rounded pointer-events-none" />
+        )}
       </div>
     </div>
   );

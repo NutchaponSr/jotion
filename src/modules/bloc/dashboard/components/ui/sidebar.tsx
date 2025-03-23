@@ -148,7 +148,7 @@ const Sidebar = () => {;
       <aside 
         ref={sidebarRef}
         className={cn(
-          "h-full w-60 overflow-hidden select-none relative flex flex-col z-[100] group [&:has(>.resize-handle:hover)]:shadow-[inset_-2px_0_0_0_rgba(0,0,0,0.1)] dark:[&:has(>.resize-handle:hover)]:shadow-[inset_-2px_0_0_0_rgba(255,255,255,0.1)] bg-[#f7f7f5] dark:bg-[#202020]",
+          "h-full w-60 overflow-hidden select-none relative flex flex-col z-[101] group [&:has(>.resize-handle:hover)]:shadow-[inset_-2px_0_0_0_rgba(0,0,0,0.1)] dark:[&:has(>.resize-handle:hover)]:shadow-[inset_-2px_0_0_0_rgba(255,255,255,0.1)] bg-[#f7f7f5] dark:bg-[#202020]",
           isResetting && "transition-all ease-in-out duration-300",
           isDragging 
             ? "shadow-[inset_-2px_0_0_0_rgba(0,0,0,0.1)] dark:shadow-[inset_-2px_0_0_0_rgba(255,255,255,0.1)]"
@@ -223,7 +223,7 @@ const Sidebar = () => {;
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 h-full z-[999]"
+            className="fixed inset-0 h-full z-[100]"
             onClick={() => toggleInbox(false)}
             aria-hidden="true"
           />
