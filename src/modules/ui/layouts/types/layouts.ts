@@ -125,17 +125,21 @@ type SortStore<T extends object> = {
   onChangeSort: (oldId: keyof T, newId: keyof T) => void;
 }
 
-type PropertiesStore = {
+type PropertiesStore<T extends object> = {
   selectedRows: Set<string>;
+  hideAllColumns: () => void;
+  showAllColumns: () => void;
+  toggleColumnVisible: (id: keyof T) => void;
   toggleRowSelection: (id: string) => void;
   toggleAllSelection: (id: string[]) => void;
+  reorderColumn: (columns: ColumnProps<T>[]) => void;
 }
 
 export type LayoutFilterStore<T extends object> = 
   BaseStore<T> & 
   FilterStore<T> &
   SortStore<T> &
-  PropertiesStore;
+  PropertiesStore<T>;
 
 export interface LayoutFilterProps<T extends object> {
   column: ColumnProps<T>;
@@ -153,7 +157,7 @@ const viewOption = [
   "layout",
   "filter",
   "sort",
-  "groping",
+  "grouping",
   "properties",
   "automations",
 ] as const; 

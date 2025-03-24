@@ -13,7 +13,7 @@ export const inputVariants = cva(
         outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         ghost: "bg-transparent hover:bg-accent hover:text-accent-foreground",
         secondary: "rounded-sm shadow-[inset_0_0_0_1px_rgba(55,53,47,0.16)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.075)] text-sm bg-[#f2f1ee99] dark:bg-[#ffffff0e]",
-        search: "whitespace-pre-wrap break-words grow shadow-[inset_0_0_0_1px_rgba(15,15,15,0.1)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.075)] bg-[#f2f1ee99] focus-visible:outline-none text-primary placeholder:text-[#91918e] dark:bg-[#ffffff0e] dark:placeholder:text-muted focus-within:shadow-[inset_0_0_0_1px_rgba(14,165,233,0.57),0_0_0_2px_rgba(14,165,233,0.35)]",
+        search: "whitespace-pre-wrap break-words grow shadow-[inset_0_0_0_1px_rgba(15,15,15,0.1)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.075)] bg-[#f2f1ee99] focus-visible:outline-none text-primary placeholder:text-secondary placeholder:font-light dark:bg-[#ffffff0e] dark:placeholder:text-muted focus-within:shadow-[inset_0_0_0_1px_rgba(14,165,233,0.57),0_0_0_2px_rgba(14,165,233,0.35)]",
         none: "border-none shadow-none"
       },
       area: {

@@ -22,7 +22,7 @@ const View = {
       </div>
     );
   },
-  Header: ({ label, onClick, onBack } :ViewHeaderProps) => {
+  Header: ({ label, onClose, onBack } :ViewHeaderProps) => {
     return (
       <div className="flex items-center gap-2 px-4 py-3 h-11">
         {onBack && (
@@ -33,7 +33,7 @@ const View = {
         <h2 className="grow font-bold text-sm whitespace-nowrap overflow-hidden text-ellipsis text-primary">
           {label}
         </h2>
-        <button onClick={onClick} className="flex items-center justify-center rounded-full bg-[#37352f0f] size-5 hover:bg-[#37352f29]">
+        <button onClick={onClose} className="flex items-center justify-center rounded-full bg-[#37352f0f] size-5 hover:bg-[#37352f29]">
           <XIcon className="size-3.5 text-[#787874]" />
         </button>
       </div>

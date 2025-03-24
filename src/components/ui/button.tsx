@@ -57,10 +57,11 @@ function Button({
 Button.Icon = function ButtonIcon({
   children,
   className,
+  disabled,
   ...props
 }: React.ComponentProps<"button">) {
   return (
-    <button className={cn(
+    <button disabled={disabled} className={cn(
       "flex items-center justify-center shrink-0 rounded-sm transition",
       className,
     )} {...props}>

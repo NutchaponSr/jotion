@@ -21,7 +21,7 @@ function Command({
     <CommandPrimitive
       data-slot="command"
       className={cn(
-        "bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md focus:outline-none",
+        "text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md focus:outline-none",
         className
       )}
       {...props}
@@ -142,18 +142,27 @@ function CommandEmpty({
 }
 
 function CommandGroup({
+  button,
+  heading,
   className,
+  children,
   ...props
-}: React.ComponentProps<typeof CommandPrimitive.Group>) {
+}: React.ComponentProps<typeof CommandPrimitive.Group> & { button?: React.ReactNode }) {
   return (
     <CommandPrimitive.Group
       data-slot="command-group"
       className={cn(
-        "text-foreground [&_[cmdk-group-heading]]:text-[#373530a6] overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium",
+        "text-foreground overflow-hidden p-1 py-1.5",
         className
       )}
       {...props}
-    />
+    >
+      <div className="flex items-center justify-between px-2 py-1.5">
+        <h2 className="dark:text-muted-foreground text-[#373530a6] text-xs font-medium">{heading}</h2>
+        {button && button}
+      </div>
+      {children}
+    </CommandPrimitive.Group>
   )
 }
 

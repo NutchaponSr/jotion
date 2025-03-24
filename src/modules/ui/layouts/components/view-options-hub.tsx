@@ -15,9 +15,16 @@ import {
   ListIcon 
 } from "@/components/icons";
 
-import { ViewOptions } from "@/modules/ui/layouts/components/ui/view-options";
+import { ViewLayout } from "@/modules/ui/layouts/components/views/view-layout";
+import { ViewProperty } from "@/modules/ui/layouts/components/views/view-property";
 
 import { useViewOption } from "@/modules/ui/layouts/stores/use-view-option";
+import { layouts } from "@/constants/layouts";
+
+const ViewOptions = {
+  Layout: ViewLayout,
+  Property: ViewProperty,
+}
 
 export const ViewsHubs = () => {
   const { layout } = useSetting();
@@ -26,20 +33,22 @@ export const ViewsHubs = () => {
   switch (type) {
     case "layout":
       return <ViewOptions.Layout />;
+    case "properties":
+      return <ViewOptions.Property />;
     default: 
       return (
         <>
-          <View.Header label="View options" onClick={onClose} />
+          <View.Header label="View options" onClose={onClose} />
           <View.Content>
             <View.Item 
-              icon={Table2Icon} 
+              icon={layouts[layout].icon} 
               label="Layout" 
               description={layout} 
               onClick={() => onOpen("layout")} 
             />
           </View.Content>
           <View.Content line>
-            <View.Item icon={ListIcon} label="Properties" description="4 shown" />
+            <View.Item icon={ListIcon} label="Properties" description="4 shown" onClick={() => onOpen("properties")} />
             <View.Item icon={FilterIcon} label="Filter" description="3 filters" />
             <View.Item icon={ArrowUpDownIcon} label="Sort" description="None" />
             <View.Item icon={TableRowsSplitIcon} label="Group" description="None" />

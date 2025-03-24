@@ -67,7 +67,7 @@ export const GroupContent = () => {
       />
       <LayoutsHub 
         data={sortedData} 
-        columns={columns} 
+        columns={columns.filter((column) => !column.isHide).sort((a, b) => a.order - b.order)} 
         searchQuery={searchQuery} 
         renderCell={({ ...props }) => <GroupCells {...props} />}
       />

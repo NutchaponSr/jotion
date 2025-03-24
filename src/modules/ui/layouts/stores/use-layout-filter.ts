@@ -10,7 +10,11 @@ import {
 export const useLayoutFilter = create<LayoutFilterStore<any>>((set) => ({
   // Base State
   columns: [],
-  setColumns: (columns) => set({ columns }),
+  setColumns: (columns) => set({ columns: columns.map((column, index) => ({
+      ...column,
+      order: (index + 1) * 100,
+    })), 
+  }),
 
   // Filter
   isOpenFilter: false,
@@ -134,6 +138,36 @@ export const useLayoutFilter = create<LayoutFilterStore<any>>((set) => ({
 
   // Properties
   selectedRows: new Set<string>(),
+  hideAllColumns: () => set((state) => ({
+    columns: state.columns.map((column) => column.isLock ? column : { ...column, isHide: true, order: 0 }),
+  })),
+  showAllColumns: () => set((state) => {
+    let order = Math.max(...state.columns.filter((column) => !column.isHide).map((column) => column.order), 0);
+
+    return {
+      columns: state.columns.map((column) => column.isHide ? { 
+        ...column, 
+        isHide: false, 
+        order: order += 100, 
+      } : {
+        ...column,
+        isHide: false,
+      })
+      .sort((a, b) => a.order - b.order)
+      .map((column, index) => ({ ...column, order: (index + 1) * 100 }))
+    };
+  }),
+  toggleColumnVisible: (id) => set((state) => {
+    const maxOrder = Math.max(...state.columns.filter((column) => !column.isHide).map((column) => column.order), 0);
+    const updated = state.columns.map((column) => column.id === id ? {
+      ...column,
+      isHide: !column.isHide,
+      order: column.isHide ? maxOrder + 100 : 0,
+    }: column);
+    const visible = updated.filter((column) => !column.isHide).sort((a, b) => a.order - b.order);
+    visible.forEach((column, index) => column.order = (index + 1) * 100);
+    return { columns: updated };
+  }),
   toggleAllSelection: (ids) => set((state) => {
     const selectedRows = new Set(state.selectedRows);
     const allSelected = ids.every((id) => selectedRows.has(id));
@@ -151,4 +185,10 @@ export const useLayoutFilter = create<LayoutFilterStore<any>>((set) => ({
 
     return { selectedRows };
   }),
+  reorderColumn: (columns) => set(() =>  ({
+    columns: columns.map((column, index) => ({
+      ...column,
+      order: (index + 1) * 100,
+    })),
+  })),
 }));

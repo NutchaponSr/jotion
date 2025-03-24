@@ -12,5 +12,5 @@ export interface ViewItemProps {
 export interface ViewHeaderProps { 
   label: string;
   onBack?: () => void;
-  onClick: () => void;
+  onClose: () => void;
 }
