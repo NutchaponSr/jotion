@@ -4,7 +4,8 @@ import {
   useState
 } from "react";
 import { motion } from "framer-motion";
-import { ViewsHubs } from "./view-options-hub";
+
+import { ViewsHubs } from "@/modules/ui/layouts/components/view-options-hub";
 
 export const ViewOption = () => {
   const [height, setHeight] = useState(window.innerHeight);
@@ -36,7 +37,9 @@ export const ViewOption = () => {
     >
       <div className="flex h-full shadow-[inset_0_1px_0_rgb(233,233,231)] dark:shadow-[inset_0_1px_0_rgb(47,47,47)]">
         <div className="flex flex-col min-w-[290px] max-w-[290px] h-full max-h-full">
-          <ViewsHubs />
+          <div className="shrink-0 min-h-12">
+            <ViewsHubs />
+          </div>
         </div>  
         <div className="w-24" />
       </div>

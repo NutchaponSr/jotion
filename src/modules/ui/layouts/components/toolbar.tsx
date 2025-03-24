@@ -7,25 +7,28 @@ import {
   SearchIcon, 
   ZapIcon
 } from "lucide-react";
+import { useToggle } from "react-use";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 
+import { IconVaraint } from "@/types/icon";
+
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
+import { Hint } from "@/components/hint";
+import { CircleCancelIcon } from "@/components/icons";
+
+import { ViewOption } from "@/modules/ui/layouts/components/view-option";
+import { ToolbarFilter } from "@/modules/ui/layouts/components/toolbar-filter";
+
 import { ColumnProps } from "@/modules/ui/layouts/types/layouts";
 
 import { useLayout } from "@/modules/ui/layouts/stores/use-layout";
 import { useLayoutFilter } from "@/modules/ui/layouts/stores/use-layout-filter";
-
-import { Button } from "@/components/ui/button";
-
-import { Hint } from "@/components/hint";
-import { ToolbarFilter } from "@/modules/ui/layouts/components/toolbar-filter";
-import { Input } from "../../../../components/ui/input";
-import { CircleCancelIcon } from "../../../../components/icons";
-import { IconVaraint } from "@/types/icon";
-import { useToggle } from "react-use";
-import { ViewOption } from "@/modules/ui/layouts/components/view-option";
+import { useViewOption } from "../stores/use-view-option";
 
 interface ToolbarProps<T extends object> {
   columns: ColumnProps<T>[];
@@ -52,13 +55,15 @@ export const Toolbar = <T extends object>({
   } = useLayoutFilter();
   const {
     isOpenToolbarFilter,
-    isOpenViewOption,
     onCloseToolbarFilter,
-    onCloseViewOption,
     onOpenToolbarFilter,
     onToggleToolbarFilter,
-    onToogleViewOption
   } = useLayout();
+  const { 
+    isOpen: isOpenViewOption,
+    onClose: onCloseViewOption,
+    onToggle: toggleViewOption 
+  } = useViewOption();
 
   const [isOpenSearch, toggleSearch] = useToggle(false);
 
@@ -179,7 +184,7 @@ export const Toolbar = <T extends object>({
             </motion.div>
           </div>
           <Hint label="Edit and more..." side="top">
-            <Button.Icon className={cn("size-7 hover:bg-popover-foreground", isOpenViewOption && "bg-popover-foreground")} onClick={onToogleViewOption}>
+            <Button.Icon className={cn("size-7 hover:bg-popover-foreground", isOpenViewOption && "bg-popover-foreground")} onClick={toggleViewOption}>
               <MoreHorizontalIcon className="size-4 text-icon" />
             </Button.Icon>
           </Hint>

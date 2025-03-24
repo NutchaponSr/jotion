@@ -1,8 +1,10 @@
+import { useSetting } from "@/stores/use-settings";
+
+import { highlightText } from "@/modules/ui/layouts/utils";
 
 import { ColumnProps } from "@/modules/ui/layouts/types/layouts";
 
 import { Group } from "@/modules/routes/groups/api/use-get-group";
-import { highlightText } from "@/modules/ui/layouts/utils";
 
 interface GroupCellsProps {
   cell: Group;
@@ -11,6 +13,8 @@ interface GroupCellsProps {
 }
 
 export const GroupCells = ({ cell, column, searchQuery }: GroupCellsProps) => {
+  const { showIcon } = useSetting();
+
   const icon = cell["icon"];
   const value = cell[column.id];
 
@@ -18,7 +22,7 @@ export const GroupCells = ({ cell, column, searchQuery }: GroupCellsProps) => {
     case "name": 
       return (
         <>
-          {icon && (
+          {showIcon && icon && (
             <div className="inline-flex items-center justify-center mr-1">
               <div className="flex items-center justify-center size-5 text-lg">
                 {icon}

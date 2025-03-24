@@ -3,6 +3,7 @@ import {
   RendenCellFn, 
   TableBaseProps 
 } from "@/types/table";
+import { LucideIcon } from "lucide-react";
 
 const columnType = ["TEXT", "NUMBER"] as const;
 const sortOrder = ["asc", "desc"] as const;
@@ -167,18 +168,22 @@ type ToolbarFilterProps = {
   onToggleToolbarFilter: () => void;
 }
 
-type ViewOptionProps = {
-  isOpenViewOption: boolean;
-  onCloseViewOption: () => void;
-  onToogleViewOption: () => void;
-}
-
-export type LayoutStore = ToolbarFilterProps & ViewOptionProps;
+export type LayoutStore = ToolbarFilterProps;
 
 export type viewOptionStore = {
   type: ViewOptionType | null;
   isOpen: boolean;
+  onBack: () => void;
   onOpen: (type: ViewOptionType) => void;
   onClose: () => void;
+  onToggle: () => void;
 }
 
+export type PageView = "side" | "center" | "full";
+
+export type PageViewProps = {
+  icon: LucideIcon;
+  label: string;
+  description: string;
+  default?: boolean;
+} 

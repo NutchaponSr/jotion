@@ -1,13 +1,27 @@
-import View from "./ui/view";
+import View from "@/modules/ui/layouts/components/ui/view";
 
-import { useViewOption } from "../stores/use-view-option"
+import { 
+  ArrowUpDownIcon, 
+  Table2Icon, 
+  TableRowsSplitIcon, 
+  ZapIcon 
+} from "lucide-react";
 
-import { FilterIcon, LinkIcon, ListIcon, TableIcon } from "@/components/icons";
-import { ArrowUpDownIcon, TableRowsSplitIcon, ZapIcon } from "lucide-react";
-import { ViewOptions } from "./ui/view-options";
+import { useSetting } from "@/stores/use-settings";
+
+import { 
+  FilterIcon, 
+  LinkIcon, 
+  ListIcon 
+} from "@/components/icons";
+
+import { ViewOptions } from "@/modules/ui/layouts/components/ui/view-options";
+
+import { useViewOption } from "@/modules/ui/layouts/stores/use-view-option";
 
 export const ViewsHubs = () => {
-  const { type, onOpen } = useViewOption();
+  const { layout } = useSetting();
+  const { type, onOpen, onClose } = useViewOption();
 
   switch (type) {
     case "layout":
@@ -15,9 +29,14 @@ export const ViewsHubs = () => {
     default: 
       return (
         <>
-          <View.Header label="View options" />
+          <View.Header label="View options" onClick={onClose} />
           <View.Content>
-            <View.Item icon={TableIcon} label="Layout" description="Table" onClick={() => onOpen("layout")} />
+            <View.Item 
+              icon={Table2Icon} 
+              label="Layout" 
+              description={layout} 
+              onClick={() => onOpen("layout")} 
+            />
           </View.Content>
           <View.Content line>
             <View.Item icon={ListIcon} label="Properties" description="4 shown" />

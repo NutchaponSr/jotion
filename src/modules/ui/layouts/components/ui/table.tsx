@@ -4,6 +4,8 @@ import { GripVerticalIcon, PlusIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
+import { useSetting } from "@/stores/use-settings";
+
 import { 
   TableBodyProps, 
   TableCellProps, 
@@ -14,9 +16,9 @@ import {
   TableSelectRowProps
 } from "@/types/table";
 
-import { useLayout } from "@/modules/ui/layouts/stores/use-layout";
-
 import { Checkbox } from "@/components/ui/checkbox";
+
+import { useLayout } from "@/modules/ui/layouts/stores/use-layout";
 import { useLayoutFilter } from "@/modules/ui/layouts/stores/use-layout-filter";
 
 const TableHeader = <T extends { id: string }>({
@@ -130,12 +132,17 @@ const TableAction = () => {
 }
 
 const TableHead = <T extends { id: string }>({ column }: TableHeadProps<T>) => {
+  const { showVerticalLine } = useSetting();
   const { isOpenToolbarFilter } = useLayout();
 
   return (
     <div
       style={{ width: `${column.width}px` }}
-      className={cn("flex shrink-0 overflow-hidden text-sm border-r border-border", isOpenToolbarFilter && "border-none")}
+      className={cn(
+        "flex shrink-0 overflow-hidden text-sm border-border", 
+        isOpenToolbarFilter && "border-none",
+        showVerticalLine && "border-r",
+      )}
     >
       <div role="button" className="transition flex items-center w-full h-full px-2 hover:bg-popover-foreground cursor-pointer">
         <div className="flex items-center leading-[120%] text-sm flex-auto">
@@ -154,10 +161,15 @@ const TableHead = <T extends { id: string }>({ column }: TableHeadProps<T>) => {
 }
 
 const TableCell = ({ children, width }: TableCellProps) => {
+  const { showVerticalLine } = useSetting();
+
   return (
     <div
       style={{ width: `${width}px` }}
-      className="flex h-full relative border-r border-border"
+      className={cn(
+        "flex h-full relative border-border",
+        showVerticalLine && "border-r",
+      )}
     >
       <div role="button" className="transition relative flex overflow-clip w-full whitespace-normal min-h-8 py-1.5 px-2 items-center">
         {children}
