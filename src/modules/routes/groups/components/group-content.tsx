@@ -1,12 +1,13 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useMount } from "react-use";
 
 import { 
   filterByConditions, 
   sortByColumns 
 } from "@/lib/utils";
+import { groupByColumn } from "@/modules/ui/layouts/utils";
 
 import { groupColumns } from "@/constants/groups";
 
@@ -21,17 +22,25 @@ import { LayoutsHub } from "@/modules/ui/layouts/components/layouts-hub";
 import { GroupCells } from "@/modules/routes/groups/components/group-cells";
 
 import { useGetGroupsByYear } from "@/modules/routes/groups/api/use-get-groups-by-year";
+import { Group } from "../api/use-get-group";
 
 export const GroupContent = () => {
-  const { setColumns, columns, selectedRows } = useLayoutFilter();
+  const { 
+    columns, 
+    groupingHeaders,
+    groupingColumn,
+    selectedRows,
+    setColumns,
+    setGroupingHeader
+  } = useLayoutFilter();
   const { data: groups, isLoading } = useGetGroupsByYear("2025");
 
   useMount(() => setColumns(groupColumns));
 
   const {
+    filteredItems,
     searchQuery,
-    setSearchQuery,
-    filteredItems
+    setSearchQuery
   } = useSearch(groups || [], groupColumns.map((column) => column.id));
 
   const filteredData = useMemo(() => {
@@ -43,9 +52,26 @@ export const GroupContent = () => {
   }, [columns, filteredData]);
 
   const groupMapped = sortedData.filter((item) => selectedRows.has(item.id));
-  
-  // TODO: Global search
-  // TODO: Selection row
+
+  const groupingData = useMemo(() => {
+    if (!groupingColumn) return {} as Record<string, Group[]>;
+
+    return groupByColumn(sortedData, groupingColumn.id as keyof Group);
+  }, [sortedData, groupingColumn]);
+
+  useEffect(() => {
+    if (groupingData && Object.keys(groupingData).length > 0) {
+      const headers = Object.keys(groupingData);
+      const currentHeaders = Object.keys(groupingHeaders || {});
+      const headersChanged = 
+        headers.length !== currentHeaders.length || 
+        headers.some(h => !currentHeaders.includes(h));
+      
+      if (headersChanged) {
+        setGroupingHeader(headers);
+      }
+    }
+  }, [groupingData, groupingHeaders, setGroupingHeader]); 
 
   // TODO: Skleton loading
   if (isLoading) {
@@ -67,13 +93,15 @@ export const GroupContent = () => {
       />
       <LayoutsHub 
         data={sortedData} 
+        groupingData={Object.fromEntries(
+          Object.entries(groupingData).sort(
+            ([keyA], [keyB]) => (groupingHeaders[keyA]?.order ?? 0) - (groupingHeaders[keyB]?.order ?? 0)
+          )
+        )}
         columns={columns.filter((column) => !column.isHide).sort((a, b) => a.order - b.order)} 
         searchQuery={searchQuery} 
         renderCell={({ ...props }) => <GroupCells {...props} />}
       />
-      <pre className="text-xs">
-        {JSON.stringify(columns, null, 2)}
-      </pre>
     </div>
   );
 }

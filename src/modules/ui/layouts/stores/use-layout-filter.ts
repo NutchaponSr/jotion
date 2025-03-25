@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 import { 
   FilterCondition,
+  GroupingProps,
   LayoutFilterStore, 
   SortOrder
 } from "@/modules/ui/layouts/types/layouts";
@@ -191,4 +192,139 @@ export const useLayoutFilter = create<LayoutFilterStore<any>>((set) => ({
       order: (index + 1) * 100,
     })),
   })),
+
+  // Grouping
+  groupingColumn: null,
+  groupingHeaders: {},
+  addGrouping: (column) => set(() => ({ groupingColumn: column })),
+  removeGrouping: () => set(() => ({ groupingColumn: null })),
+  reorderGrouping: (headers) => set((state) => {
+    const updatedHeaders = { ...state.groupingHeaders };
+
+    headers.forEach((header, index) => {
+      if (updatedHeaders[header].isShow) {
+        updatedHeaders[header].order = (index + 1) * 100;
+      }
+    });
+
+    return { groupingHeaders: updatedHeaders };
+  }),
+  setGroupingHeader: (headers) => set(() => ({
+    groupingHeaders: headers.reduce((acc, header, index) => ({
+      ...acc,
+      [header]: {
+        isOpen: false,
+        isShow: true,
+        order: (index + 1) * 100,
+      },
+    }), {}),
+  })),
+  toggleGroupVisible: (header) => set((state) => {
+    const currentHeaders = state.groupingHeaders;
+    const isCurrentlyVisible = currentHeaders[header]?.isShow !== false;
+    
+    // Step 1: Create a list of all headers
+    const allHeaders = Object.keys(currentHeaders);
+    
+    // Step 2: Separate visible and hidden headers (excluding the one being toggled)
+    const visibleHeaders = allHeaders.filter(h => 
+      h !== header && currentHeaders[h]?.isShow !== false
+    );
+    
+    const hiddenHeaders = allHeaders.filter(h => 
+      h !== header && currentHeaders[h]?.isShow === false
+    );
+    
+    // Step 3: Determine the new arrays based on the toggle action
+    let newVisibleHeaders;
+    let newHiddenHeaders;
+    
+    if (isCurrentlyVisible) {
+      // We're hiding this header
+      newVisibleHeaders = visibleHeaders;
+      newHiddenHeaders = [...hiddenHeaders, header];
+    } else {
+      // We're showing this header
+      newVisibleHeaders = [...visibleHeaders, header]; // Add to end of visible list
+      newHiddenHeaders = hiddenHeaders.filter(h => h !== header);
+    }
+    
+    // Step 4: Create the updated headers object with new orders
+    const updatedHeaders = { ...currentHeaders };
+    
+    // Update visible headers with sequential order
+    newVisibleHeaders.forEach((h, index) => {
+      updatedHeaders[h] = {
+        ...updatedHeaders[h],
+        isShow: true,
+        order: (index + 1) * 100
+      };
+    });
+    
+    // Update hidden headers with order 0
+    newHiddenHeaders.forEach(h => {
+      updatedHeaders[h] = {
+        ...updatedHeaders[h],
+        isShow: false,
+        order: 0
+      };
+    });
+    
+    // Step 5: Update the header being toggled
+    updatedHeaders[header] = {
+      ...updatedHeaders[header],
+      isShow: !isCurrentlyVisible,
+      order: !isCurrentlyVisible ? (newVisibleHeaders.length) * 100 : 0
+    };
+    
+    return {
+      groupingHeaders: updatedHeaders
+    };
+  }),
+  showAllHeaders: () => set((state) => {
+    // Get only visible headers and sort them by their current order
+    const visibleHeaders = Object.entries(state.groupingHeaders)
+      .filter(([, value]) => value.isShow)
+      .sort(([, a], [, b]) => a.order - b.order);
+  
+    // Assign new sequential orders to visible headers
+    const orderedHeaders = visibleHeaders.reduce((acc, [key, value], index) => {
+      acc[key] = { ...value, order: (index + 1) * 100 };
+      return acc;
+    }, {} as Record<string, GroupingProps>);
+  
+    // Get hidden headers and append them at the end
+    let newOrder = visibleHeaders.length * 100;
+    const allHeaders = Object.entries(state.groupingHeaders).reduce((acc, [key, value]) => {
+      if (!value.isShow) {
+        newOrder += 100; // Place hidden headers at the end
+        acc[key] = { ...value, isShow: true, order: newOrder };
+      } else {
+        acc[key] = orderedHeaders[key]; // Keep the updated visible headers
+      }
+      return acc;
+    }, {} as Record<string, GroupingProps>);
+  
+    return { groupingHeaders: allHeaders };
+  }),
+  
+  hideAllHeaders: () => set((state) => {
+    const currentHeaders = Object.keys(state.groupingHeaders);
+    
+    // Create updated headers with all hidden and order 0
+    const updatedHeaders = currentHeaders.reduce((acc, header) => {
+      return {
+        ...acc,
+        [header]: {
+          ...state.groupingHeaders[header],
+          isShow: false,
+          order: 0
+        }
+      };
+    }, {});
+    
+    return {
+      groupingHeaders: updatedHeaders
+    };
+  }),
 }));

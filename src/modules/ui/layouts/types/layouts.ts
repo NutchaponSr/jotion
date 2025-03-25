@@ -135,11 +135,30 @@ type PropertiesStore<T extends object> = {
   reorderColumn: (columns: ColumnProps<T>[]) => void;
 }
 
+type GroupingStore<T extends object> = {
+  groupingColumn: ColumnProps<T> | null;
+  groupingHeaders: Record<string, GroupingProps>;
+  addGrouping: (column: ColumnProps<T>) => void;
+  removeGrouping: () => void;
+  reorderGrouping: (headers: string[]) => void;
+  setGroupingHeader: (headers: string[]) => void;
+  toggleGroupVisible: (header: string) => void;
+  hideAllHeaders: () => void;
+  showAllHeaders: () => void;
+}
+
 export type LayoutFilterStore<T extends object> = 
   BaseStore<T> & 
   FilterStore<T> &
   SortStore<T> &
-  PropertiesStore<T>;
+  PropertiesStore<T> &
+  GroupingStore<T>;
+
+export interface GroupingProps {
+  isOpen: boolean;
+  isShow: boolean;
+  order: number;
+}
 
 export interface LayoutFilterProps<T extends object> {
   column: ColumnProps<T>;

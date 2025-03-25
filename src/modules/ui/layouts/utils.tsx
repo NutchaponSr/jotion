@@ -93,3 +93,14 @@ export function highlightText(text: string, highlight: string) {
     </span>
   );
 }
+
+export function groupByColumn<T>(
+  array: T[],
+  key: keyof T
+): Record<string, T[]> {
+  return array.reduce((result, currentValue) => { 
+    const groupKey = String(currentValue[key]);
+    (result[groupKey] = result[groupKey] || []).push(currentValue);
+    return result;
+  }, {} as Record<string, T[]>);
+}

@@ -5,6 +5,7 @@ import { ColumnProps } from "@/modules/ui/layouts/types/layouts";
 export interface TableBaseProps<T extends { id: string }> {
   columns: ColumnProps<T>[];
   data: T[];
+  groupingData: Record<string, T[]>;
   searchQuery: string;
 }
 

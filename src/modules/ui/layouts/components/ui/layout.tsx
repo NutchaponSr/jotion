@@ -59,7 +59,7 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <section className="grow shrink-0 flex flex-col relative">
-      <div className="h-full relative float-left min-w-full select-none lining-nums pb-[180px] px-24">
+      <div className="h-full relative float-left min-w-full lining-nums pb-[180px] px-24">
         {children}
       </div>
     </section>
@@ -243,16 +243,31 @@ const LayoutSort = <T extends object>({ columns }: LayoutSortProps<T>) => {
 }
 
 export const TableLayout = <T extends { id: string }>({ ...props }: LayoutBaseProps<T>) => {
-  const { selectedRows } = useLayoutFilter();
+  const { 
+    selectedRows, 
+    groupingColumn,
+    groupingHeaders
+  } = useLayoutFilter();
 
   const ids = props.data.map((row) => row.id);
   const allSelected = ids.every((id) => selectedRows.has(id));
 
+  if (!groupingColumn) {
+    return (
+      <Layout>
+        <Table.Header {...props} ids={ids} allSelected={allSelected} />
+        <Table.Body {...props} />
+        <Table.Footer />
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
-      <Table.Header {...props} ids={ids} allSelected={allSelected} />
-      <Table.Body {...props} />
-      <Table.Footer />
+      <pre className="text-xs">
+        {/* {JSON.stringify(props.groupingData, null, 2)} */}
+        {JSON.stringify(groupingHeaders, null, 2)}
+      </pre>
     </Layout>
   );
 }

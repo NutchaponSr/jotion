@@ -19,6 +19,7 @@ import {
 import { ViewSort } from "@/modules/ui/layouts/components/views/view-sort";
 import { ViewLayout } from "@/modules/ui/layouts/components/views/view-layout";
 import { ViewFilter } from "@/modules/ui/layouts/components/views/view-filter";
+import { ViewGrouping } from "@/modules/ui/layouts/components/views/view-grouping";
 import { ViewProperty } from "@/modules/ui/layouts/components/views/view-property";
 
 import { useViewOption } from "@/modules/ui/layouts/stores/use-view-option";
@@ -29,6 +30,7 @@ const ViewOptions = {
   Property: ViewProperty,
   Filter: ViewFilter,
   Sort: ViewSort,
+  Grouping: ViewGrouping
 }
 
 export const ViewsHubs = () => {
@@ -36,6 +38,7 @@ export const ViewsHubs = () => {
   const { columns } = useLayoutFilter();
   const { type, onOpen, onClose } = useViewOption();
 
+  const sortCount = columns.filter((column) => column.sort.isSort).length;
   const filterCount = columns.filter((column) => column.filter.isFilter).length;
 
   switch (type) {
@@ -47,6 +50,8 @@ export const ViewsHubs = () => {
       return <ViewOptions.Filter />;
     case "sort":
       return <ViewOptions.Sort />;
+    case "grouping":
+      return <ViewOptions.Grouping />;
     default: 
       return (
         <>
@@ -76,8 +81,17 @@ export const ViewsHubs = () => {
               }
               onClick={() => onOpen("filter")}
             />
-            <View.Item icon={ArrowUpDownIcon} label="Sort" description="None"  onClick={() => onOpen("sort")} />
-            <View.Item icon={TableRowsSplitIcon} label="Group" description="None" />
+            <View.Item 
+              icon={ArrowUpDownIcon} 
+              label="Sort" 
+              description={
+                sortCount > 0 
+                  ? `${sortCount} sort${sortCount > 1 ? "s" : ""}` 
+                  : "None"
+              } 
+              onClick={() => onOpen("sort")} 
+            />
+            <View.Item icon={TableRowsSplitIcon} label="Group" description="None" onClick={() => onOpen("grouping")} />
             <View.Item icon={ZapIcon} label="Automations" description="None" />
           </View.Content>
           <View.Content line>
