@@ -43,6 +43,8 @@ export const GroupContent = () => {
   }, [columns, filteredData]);
 
   const groupMapped = sortedData.filter((item) => selectedRows.has(item.id));
+  
+  // TODO: Global search
   // TODO: Selection row
 
   // TODO: Skleton loading
@@ -69,6 +71,9 @@ export const GroupContent = () => {
         searchQuery={searchQuery} 
         renderCell={({ ...props }) => <GroupCells {...props} />}
       />
+      <pre className="text-xs">
+        {JSON.stringify(columns, null, 2)}
+      </pre>
     </div>
   );
 }

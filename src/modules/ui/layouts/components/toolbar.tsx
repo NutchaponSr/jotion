@@ -27,8 +27,8 @@ import { ToolbarFilter } from "@/modules/ui/layouts/components/toolbar-filter";
 import { ColumnProps } from "@/modules/ui/layouts/types/layouts";
 
 import { useLayout } from "@/modules/ui/layouts/stores/use-layout";
+import { useViewOption } from "@/modules/ui/layouts/stores/use-view-option";
 import { useLayoutFilter } from "@/modules/ui/layouts/stores/use-layout-filter";
-import { useViewOption } from "../stores/use-view-option";
 
 interface ToolbarProps<T extends object> {
   columns: ColumnProps<T>[];
@@ -74,7 +74,7 @@ export const Toolbar = <T extends object>({
   const isSomeFilter = columns.some((column) => column.filter.isFilter && column.filter.searchQuery !== "");
 
   useEffect(() => {
-    const noFilters = columns.every((column) => !column.filter?.isFilter);
+    const noFilters = columns.every((column) => !column.filter.isFilter && !column.sort.isSort);
     if (noFilters) {
       onCloseToolbarFilter();
     }

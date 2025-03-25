@@ -45,6 +45,8 @@ export const ViewsHubs = () => {
       return <ViewOptions.Property />;
     case "filter": 
       return <ViewOptions.Filter />;
+    case "sort":
+      return <ViewOptions.Sort />;
     default: 
       return (
         <>
@@ -74,7 +76,7 @@ export const ViewsHubs = () => {
               }
               onClick={() => onOpen("filter")}
             />
-            <View.Item icon={ArrowUpDownIcon} label="Sort" description="None" />
+            <View.Item icon={ArrowUpDownIcon} label="Sort" description="None"  onClick={() => onOpen("sort")} />
             <View.Item icon={TableRowsSplitIcon} label="Group" description="None" />
             <View.Item icon={ZapIcon} label="Automations" description="None" />
           </View.Content>

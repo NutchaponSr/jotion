@@ -29,7 +29,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-import { PlusIcon, TrashIcon } from "../../../../components/icons";
+import { PlusIcon, TrashIcon } from "@/components/icons";
 
 interface SortContentProps<T extends object> {
   columns: ColumnProps<T>[];  

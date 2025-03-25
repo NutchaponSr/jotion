@@ -23,7 +23,6 @@ import { useLayoutFilter } from "@/modules/ui/layouts/stores/use-layout-filter";
 import {
   Command,
   CommandEmpty,
-  CommandGroup,
   CommandInput,
   CommandItem,
   CommandList

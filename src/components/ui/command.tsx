@@ -157,10 +157,14 @@ function CommandGroup({
       )}
       {...props}
     >
-      <div className="flex items-center justify-between px-2 py-1.5">
-        <h2 className="dark:text-muted-foreground text-[#373530a6] text-xs font-medium">{heading}</h2>
-        {button && button}
-      </div>
+      {button ? (
+        <div className="flex items-center justify-between px-2 py-1.5">
+          <h2 className="dark:text-muted-foreground text-[#373530a6] text-xs font-medium mt-0.5">{heading}</h2>
+          {button && button}
+        </div>
+      ) : (
+        <h2 className="dark:text-muted-foreground text-[#373530a6] text-xs font-medium py-1.5">{heading}</h2>
+      )}
       {children}
     </CommandPrimitive.Group>
   )
