@@ -43,8 +43,6 @@ export const GroupContent = () => {
   }, [columns, filteredData]);
 
   const groupMapped = sortedData.filter((item) => selectedRows.has(item.id));
-  
-  // TODO: Global search
   // TODO: Selection row
 
   // TODO: Skleton loading

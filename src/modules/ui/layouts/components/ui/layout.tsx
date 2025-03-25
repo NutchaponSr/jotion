@@ -102,20 +102,18 @@ const LayoutPopover = <T extends object>({
         <PopoverContent align={align} className="p-0 w-60">
           <Command>
             <CommandInput placeholder={placeholder} />
-            <CommandList>
+            <CommandList className="p-1 text-primary">
               <CommandEmpty>No Result</CommandEmpty>
-              <CommandGroup>
-                {data.map((item, index) => (
-                  <CommandItem 
-                    key={index}
-                    value={item.label}
-                    onSelect={() => onSelect(item.id)}
-                    className="gap-2 leading-[120%] w-full min-h-[30px] text-sm px-2 py-1"
-                  >
-                    {item.label}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
+              {data.map((item, index) => (
+                <CommandItem 
+                  key={index}
+                  value={item.label}
+                  onSelect={() => onSelect(item.id)}
+                  className="gap-2 leading-[120%] w-full min-h-[30px] text-sm px-2 py-1"
+                >
+                  {item.label}
+                </CommandItem>
+              ))}
             </CommandList>
           </Command>
           {showAdvanced && (

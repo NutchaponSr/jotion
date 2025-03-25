@@ -110,7 +110,7 @@ type FilterStore<T extends object> = {
   addFilter: (id: keyof T) => void;
   removeFilter: (id: keyof T) => void;
   onCondition: (id: keyof T, condition: FilterCondition) => void;
-  onSearchQuery: (query: string) => void;
+  onSearchQuery: (query: string, id: keyof T) => void;
 }
 
 type SortStore<T extends object> = {

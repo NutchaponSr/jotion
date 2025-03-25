@@ -80,10 +80,10 @@ const Text = <T extends object>({ column }: LayoutFilterProps<T>) => {
         <ClearableInput 
           area="sm"
           value={column.filter.searchQuery}
-          onChange={(e) => onSearchQuery(e.target.value)}
+          onChange={(e) => onSearchQuery(e.target.value, column.id)}
           variant="search"
           placeholder="Type a value..."
-          onClear={() => onSearchQuery("")}
+          onClear={() => onSearchQuery("", column.id)}
         />
       </div>
     </div>

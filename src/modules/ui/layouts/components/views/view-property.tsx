@@ -5,6 +5,7 @@ import {
   CircleHelpIcon, 
   GripVerticalIcon 
 } from "lucide-react";
+import { useRef } from "react";
 import { Reorder } from "framer-motion";
 
 import { cn } from "@/lib/utils";
@@ -25,7 +26,6 @@ import { EyeIcon, EyeOffIcon } from "@/components/icons";
 
 import { useViewOption } from "@/modules/ui/layouts/stores/use-view-option";
 import { useLayoutFilter } from "@/modules/ui/layouts/stores/use-layout-filter";
-import { useRef } from "react";
 
 export const ViewProperty = () => {
   const { 

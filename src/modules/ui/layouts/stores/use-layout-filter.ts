@@ -48,14 +48,14 @@ export const useLayoutFilter = create<LayoutFilterStore<any>>((set) => ({
       },
     } : col)
   })),
-  onSearchQuery: (query) => set((state) => ({
-    columns: state.columns.map((col) => ({ 
-      ...col, 
-      filter: { 
-        ...col.filter, 
-        searchQuery: query 
-      },
-    })),
+  onSearchQuery: (query, id) => set((state) => ({
+    columns: state.columns.map((column) => column.id === id ? {
+      ...column,
+      filter: {
+        ...column.filter,
+        searchQuery: query,
+      }
+    } : column),
   })),
 
   // Sort
