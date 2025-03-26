@@ -1,7 +1,7 @@
 import { JSX } from "react";
 
 export interface ViewItemProps {
-  label: string;
+  label?: string;
   icon?: React.ElementType;
   description?: string;
   sub?: boolean;

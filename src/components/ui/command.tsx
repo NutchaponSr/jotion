@@ -163,7 +163,6 @@ function CommandGroup({
           {button && button}
         </div>
       ) : null}
-      {heading && <h2 className="dark:text-muted-foreground text-[#373530a6] text-xs font-medium py-1.5">{heading}</h2>}
       {children}
     </CommandPrimitive.Group>
   )

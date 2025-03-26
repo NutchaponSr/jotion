@@ -28,10 +28,11 @@ export const GroupContent = () => {
   const { 
     columns, 
     groupingHeaders,
+    groupingOptions,
     groupingColumn,
     selectedRows,
     setColumns,
-    setGroupingHeader
+    setGrouping
   } = useLayoutFilter();
   const { data: groups, isLoading } = useGetGroupsByYear("2025");
 
@@ -56,22 +57,25 @@ export const GroupContent = () => {
   const groupingData = useMemo(() => {
     if (!groupingColumn) return {} as Record<string, Group[]>;
 
-    return groupByColumn(sortedData, groupingColumn.id as keyof Group);
-  }, [sortedData, groupingColumn]);
+    return groupByColumn(
+      sortedData, 
+      groupingColumn.id as keyof Group,
+      groupingOptions["by"]
+    );
+  }, [sortedData, groupingColumn, groupingOptions]);
 
   useEffect(() => {
-    if (groupingData && Object.keys(groupingData).length > 0) {
-      const headers = Object.keys(groupingData);
-      const currentHeaders = Object.keys(groupingHeaders || {});
-      const headersChanged = 
-        headers.length !== currentHeaders.length || 
-        headers.some(h => !currentHeaders.includes(h));
-      
-      if (headersChanged) {
-        setGroupingHeader(headers);
-      }
+    const headers = Object.keys(groupingData);
+
+    if (headers.join(",") !== Object.keys(groupingHeaders).join(",") && groupingColumn) {
+      setGrouping(headers);
     }
-  }, [groupingData, groupingHeaders, setGroupingHeader]); 
+  }, [
+    groupingData,
+    groupingHeaders,
+    groupingColumn,
+    setGrouping
+  ]); 
 
   // TODO: Skleton loading
   if (isLoading) {

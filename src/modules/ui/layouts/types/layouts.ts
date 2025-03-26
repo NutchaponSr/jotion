@@ -8,7 +8,7 @@ import { LucideIcon } from "lucide-react";
 const columnType = ["TEXT", "NUMBER"] as const;
 const sortOrder = ["asc", "desc"] as const;
 
-type ColumnType = (typeof columnType)[number];
+export type ColumnType = (typeof columnType)[number];
 export type SortOrder = (typeof sortOrder)[number];
 
 export enum FilterCondition {
@@ -138,13 +138,15 @@ type PropertiesStore<T extends object> = {
 type GroupingStore<T extends object> = {
   groupingColumn: ColumnProps<T> | null;
   groupingHeaders: Record<string, GroupingProps>;
+  groupingOptions: Record<string, string>;
   addGrouping: (column: ColumnProps<T>) => void;
   removeGrouping: () => void;
   reorderGrouping: (headers: string[]) => void;
-  setGroupingHeader: (headers: string[]) => void;
+  setGrouping: (headers: string[]) => void;
   toggleGroupVisible: (header: string) => void;
   hideAllHeaders: () => void;
   showAllHeaders: () => void;
+  onOption: (key: string, value: string) => void;
 }
 
 export type LayoutFilterStore<T extends object> = 
@@ -158,6 +160,69 @@ export interface GroupingProps {
   isOpen: boolean;
   isShow: boolean;
   order: number;
+}
+
+// export type GroupingOptionKey = "by" | "sort";
+
+const textBy = ["exact", "alphabetical"] as const;
+const textSort = ["manual", "alphabetical", "reverseAlphabetical"] as const;
+const numberSort = sortOrder;
+
+export type TextBy = (typeof textBy)[number];
+type TextSort = (typeof textSort)[number];
+type NumberSort = (typeof numberSort)[number];
+
+interface OptionCategory<T extends string> {
+  label: string;
+  options: Record<T, string>;
+}
+
+interface TextOptions {
+  by: OptionCategory<TextBy>;
+  sort: OptionCategory<TextSort>;
+}
+
+export const textOptions: TextOptions = {
+  by: {
+    label: "Text by",
+    options: {
+      exact: "Exact",
+      alphabetical: "Alphabetical",
+    }
+  },
+  sort: {
+    label: "Sort",
+    options: {
+      manual: "Manual",
+      alphabetical: "Alphabetical",
+      reverseAlphabetical: "Reverse alphabetical",
+    },
+  },
+}
+
+interface NumberOptions {
+  by?: never,
+  sort: OptionCategory<NumberSort>;
+}
+
+export const numberOptions: NumberOptions = {
+  sort: {
+    label: "Sort",
+    options: {
+      asc: "Ascending",
+      desc: "Descending",
+    },
+  },
+}
+
+interface GroupingOption {
+  TEXT: TextOptions,
+  NUMBER: NumberOptions,
+}
+
+export const groupOptionCatalog: GroupingOption = {
+  TEXT: textOptions,
+  NUMBER: numberOptions,
 }
 
 export interface LayoutFilterProps<T extends object> {

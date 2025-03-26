@@ -1,4 +1,4 @@
-import { ColumnProps, FilterCondition } from "./types/layouts";
+import { ColumnProps, ColumnType, FilterCondition, TextBy } from "./types/layouts";
 
 function applyCondition(
   condition: FilterCondition,
@@ -96,11 +96,51 @@ export function highlightText(text: string, highlight: string) {
 
 export function groupByColumn<T>(
   array: T[],
-  key: keyof T
+  key: keyof T,
+  condition: string
 ): Record<string, T[]> {
+
   return array.reduce((result, currentValue) => { 
-    const groupKey = String(currentValue[key]);
+    let groupKey = String(currentValue[key]);
+
+    if (condition === "alphabetical") {
+      groupKey = groupKey.charAt(0).toUpperCase(); 
+    }
+
     (result[groupKey] = result[groupKey] || []).push(currentValue);
     return result;
   }, {} as Record<string, T[]>);
 }
+
+// export function groupByColumn<T>(
+//   array: T[], 
+//   key: keyof T, 
+//   type: ColumnType, 
+//   groupOptions: Record<string, string>
+// ): Record<string, T[]> {
+//   const textBy = groupOptions["by"] as TextBy;
+
+//   console.log(textBy);
+
+//   const groupingData = array.reduce((result, currentValue) => {
+//     let groupKey = String(currentValue[key]);
+
+//     // Apply alphabetical grouping if specified
+//     if (textBy === "alphabetical") {
+//       groupKey = groupKey.charAt(0).toUpperCase(); // Group by first letter of text
+//     }
+
+//     // Push item into the appropriate group
+//     (result[groupKey] = result[groupKey] || []).push(currentValue);
+//     return result;
+//   }, {} as Record<string, T[]>);
+
+//   // Sort groups alphabetically if needed
+//   if (textBy === "alphabetical") {
+//     return Object.fromEntries(
+//       Object.entries(groupingData).sort(([a], [b]) => a.localeCompare(b))
+//     );
+//   }
+
+//   return groupingData;
+// }

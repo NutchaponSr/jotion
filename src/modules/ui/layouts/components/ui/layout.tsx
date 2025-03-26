@@ -246,7 +246,8 @@ export const TableLayout = <T extends { id: string }>({ ...props }: LayoutBasePr
   const { 
     selectedRows, 
     groupingColumn,
-    groupingHeaders
+    groupingHeaders,
+    groupingOptions
   } = useLayoutFilter();
 
   const ids = props.data.map((row) => row.id);
@@ -265,7 +266,7 @@ export const TableLayout = <T extends { id: string }>({ ...props }: LayoutBasePr
   return (
     <Layout>
       <pre className="text-xs">
-        {/* {JSON.stringify(props.groupingData, null, 2)} */}
+        {JSON.stringify(groupingOptions, null, 2)}
         {JSON.stringify(groupingHeaders, null, 2)}
       </pre>
     </Layout>
